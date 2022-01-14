@@ -32,3 +32,29 @@ def create(request):
     post.save()
 
     return redirect('posts:detail', post_id=post.id)
+
+
+def edit(request, post_id):
+    post = Post.objects.get(id=post_id)
+    context = {
+        'post': post
+    }
+
+    return render(request, 'posts/edit.html', context)
+
+
+def update(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.product_name = request.POST.get('product_name')
+    post.brand = request.POST.get('brand')
+    post.save()
+
+    return redirect('posts:detail', post_id=post.id)
+
+
+def delete(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.delete()
+
+    return redirect('posts:index')
+

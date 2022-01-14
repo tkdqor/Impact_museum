@@ -19,7 +19,9 @@
             <p>상품 정보가 없습니다.</p>
         {% endif %}        
     </div> 
-    
+
+    <a href="{% url 'posts:edit' post.id %}">상품 정보 수정하기</a>
     <a href="{% url 'posts:index' %}">상품 목록으로 돌아가기</a>
+    <a href="{% url 'posts:delete' post.id %}">해당 상품 삭제하기</a>
 </body>
 </html>
