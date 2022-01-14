@@ -1,0 +1,29 @@
+/* index.html */
+h1, h2 {
+    color: #535353;
+    font-size: 16px;
+}
+
+div#product_container {
+    width: 20%;
+    height: 20%;
+    border: 1px solid #535353;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+div#product_new {
+    margin: 10px 10px 10px 10px;
+}
+
+
+/* detail.html */
+div#detail_container {
+    width: 50%;
+    height: 50%;
+}
+
+

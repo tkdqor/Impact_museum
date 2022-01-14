@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 상세 정보</title>
+</head>
+<body>
+    <div id="detail_container">
+        {% if post %}    
+            <h1>{{ post.product_name }}</h1>
+            <h2>{{ post.brand }}</h2>
+            <img src="{% static 'posts/images/gattaca.png' %}" alt="가타카">
+        {% else %}
+            <p>상품 정보가 없습니다.</p>
+        {% endif %}        
+    </div> 
+    
+    <a href="{% url 'posts:index' %}">상품 목록으로 돌아가기</a>
+</body>
+</html>

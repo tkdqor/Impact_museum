@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact museum</title>
+</head>
+<body>
+    {% if posts %}
+    <div id="product_container">
+        {% for post in posts %}    
+        <a href="{% url 'posts:detail' post.id %}">
+            <div id="container_detail">
+                <h1>{{ post.product_name }}</h1>
+                <h2>{{ post.brand }}</h2>
+                <img src="{% static 'posts/images/gattaca.png' %}" alt="가타카">    
+                {% endfor %}
+                {% else %}
+                    <p>상품 정보가 없습니다.</p>
+                {% endif %}    
+            </div>
+        </a>
+    </div> 
+    
+    <div id="product_new">
+        <a href="{% url 'posts:new' %}">상품 추가</a>
+    </div>
+</body>
+</html>
