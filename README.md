@@ -24,7 +24,13 @@
 - 이 서비스의 핵심 기능은 ...입니다.
 <details>
   <summary>핵심 기능 설명 펼치기</summary>
-  4.1 DRF(Django Rest Framework)를 기반으로 CRUD API 서버 구축
+  4.1 상품 정보에 관련된 기본적인 CRUD 구축
+  
+  4.2 DRF(Django Rest Framework)를 기반으로 CRUD API 서버 구축
+  
+  4.3 URL Configuration으로 app별 URL 관리
+  
+  4.4 Template 및 Static namespacing 관리
 </details>
 <br>
 
