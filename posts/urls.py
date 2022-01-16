@@ -1,5 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from .views import helloAPI, Postinfo
+from rest_framework import routers
+
+
+# DefaultRouter 설정
+router = routers.DefaultRouter()
+router.register('viewset', views.PostViewSet)
 
 app_name = 'posts'
 urlpatterns = [
@@ -10,4 +17,8 @@ urlpatterns = [
     path('<int:post_id>/edit/', views.edit, name='edit'),
     path('<int:post_id>/update/', views.update, name='update'),
     path('<int:post_id>/delete/', views.delete, name='delete'),
+    path('hello/', helloAPI),
+    path('<int:post_id>/postinfo', Postinfo),
+    path('', include(router.urls)),
 ]
+

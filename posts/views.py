@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Post
 from django.utils import timezone
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import PostSerializer
+from rest_framework import viewsets
 
 # Create your views here.
 
@@ -58,3 +62,25 @@ def delete(request, post_id):
 
     return redirect('posts:index')
 
+
+
+
+# RDF를 이용한 문자열 응답 API
+@api_view(['GET'])
+def helloAPI(request):
+    return Response("Hello World!")
+
+
+# RDF를 이용한 상품 정보 1개에 대한 API
+@api_view(['GET'])
+def Postinfo(request, post_id):
+    post = Post.objects.get(id=post_id)
+    serializer = PostSerializer(post)
+
+    return Response(serializer.data)
+
+
+# RDF를 이용한 CRUD API 
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
