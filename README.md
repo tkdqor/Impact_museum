@@ -22,7 +22,7 @@
 
 ## 4. 핵심 기능
 - 이 서비스의 핵심 기능은 ...입니다.
-<details open>
+<details>
   <summary>핵심 기능 설명 펼치기</summary>
   4.1 DRF(Django Rest Framework)를 이용한 CRUD API 서버 구축
 </details>
