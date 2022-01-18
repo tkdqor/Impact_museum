@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="{% static 'posts/style.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/css/detail.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품 상세 정보</title>
 </head>
@@ -19,6 +19,11 @@
             <p>상품 정보가 없습니다.</p>
         {% endif %}        
     </div> 
+
+    <!-- 장바구니 & 구매하기 버튼 -->
+    <button><a href="{% url 'posts:cart' %}">장바구니에 담기</a></button>
+    <button><a href="{% url 'posts:checkout' %}">구매하기</a></button>
+    <button><a href="">찜하기</a></button>
 
     <a href="{% url 'posts:edit' post.id %}">상품 정보 수정하기</a>
     <a href="{% url 'posts:index' %}">상품 목록으로 돌아가기</a>

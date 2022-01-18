@@ -1,33 +1,37 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="{% static 'posts/style.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impact museum</title>
-</head>
-<body>
-    {% if posts %}
-    <div id="product_container">
-        {% for post in posts %}    
-        <a href="{% url 'posts:detail' post.id %}">
-            <div id="container_detail">
-                <h1>{{ post.product_name }}</h1>
-                <h2>{{ post.brand }}</h2>
-                <img src="{% static 'posts/images/gattaca.png' %}" alt="가타카">    
-                {% endfor %}
-                {% else %}
-                    <p>상품 정보가 없습니다.</p>
-                {% endif %}    
-            </div>
-        </a>
-    </div> 
-    
-    <div id="product_new">
+
+{% block content %}    
+    <nav>
+        <button><a href="">로그인</a></button>
+        <button><a href="">회원가입</a></button>
+        <button><a href="{% url 'posts:cart' %}">장바구니</a></button>
+        <button><input type="text">검색하기</button>
         <a href="{% url 'posts:new' %}">상품 추가</a>
+    </nav>
+
+    <!-- 상품 전체 정보 -->
+    <div class="product_container">
+        {% if posts %}
+        
+            {% for post in posts %}   
+            <div class="product_detail">     
+                <a href="{% url 'posts:detail' post.id %}">
+                    <img src="{% static 'posts/images/gattaca.png' %}" alt="가타카">
+                    <h1>{{ post.brand }}</h1>
+                    <h2>{{ post.product_name }}</h2>
+                    <h3>{{ post.price }}</h3> 
+                </a>
+            </div>    
+            {% endfor %}    
+                         
+        {% else %}
+            <p>상품 정보가 없습니다.</p>
+            
+        {% endif %}       
     </div>
-</body>
-</html>
+{% endblock %}    
+
+<!-- </body> -->
+<!-- </html> -->

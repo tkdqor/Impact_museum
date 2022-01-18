@@ -1,0 +1,33 @@
+/* index.html */
+h1, h2, h3 {
+    color: #535353;
+    font-size: 16px;
+}
+
+.product_container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 90vw;
+    height: 20vh;
+    /* border: 1px solid #535353; */
+}
+
+.product_detail img {
+    width: 100%;
+    height: 100%;
+}
+
+
+.product_detail {
+    width: 20%;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+
+

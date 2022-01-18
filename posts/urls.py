@@ -8,6 +8,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('viewset', views.PostViewSet)
 
+# URL 설정
 app_name = 'posts'
 urlpatterns = [
     path('', views.index, name='index'),
@@ -20,5 +21,7 @@ urlpatterns = [
     path('hello/', helloAPI),
     path('<int:post_id>/postinfo', Postinfo),
     path('', include(router.urls)),
+    path('cart/', views.cart, name='cart'),
+    path('checkout/', views.checkout, name='checkout'),
 ]
 

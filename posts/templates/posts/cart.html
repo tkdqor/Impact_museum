@@ -1,0 +1,27 @@
+{% load static %}
+
+<h3>장바구니 화면</h3>
+
+
+
+<div>
+    <table>
+        <tr>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>옵션</th>
+            <th>수량</th>
+            <th><button><a href="{% url 'posts:checkout' %}">구매하기</a></button></th>
+            <th><button><a href="">삭제하기</a></button></th>
+        </tr>
+
+        <tr>
+            <th><img src="{% static 'posts/images/gattaca.png' %}" width="100px" height="100px">상품명</th>
+            <th>가격</th>
+            <th>옵션</th>
+            <th>수량</th>
+            <th><button><a href="{% url 'posts:checkout' %}">구매하기</a></button></th>
+            <th><button><a href="">삭제하기</a></button></th>
+        </tr>
+    </table>
+</div>

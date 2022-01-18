@@ -9,6 +9,8 @@ from rest_framework import viewsets
 
 # Create your views here.
 
+
+# 메인 화면
 def index(request):
     posts = Post.objects.all()
     context = {
@@ -17,6 +19,7 @@ def index(request):
     return render(request, 'posts/index.html', context)
 
 
+# 상품 1개 조회
 def detail(request, post_id):
     post = Post.objects.get(id=post_id)
     context = {
@@ -25,10 +28,12 @@ def detail(request, post_id):
     return render(request, 'posts/detail.html', context)
 
 
+# 상품 1개 생성
 def new(request):
     return render(request, 'posts/new.html')
 
 
+# 상품 1개 생성
 def create(request):
     product_name = request.POST.get('product_name')
     brand = request.POST.get('brand')
@@ -38,6 +43,7 @@ def create(request):
     return redirect('posts:detail', post_id=post.id)
 
 
+# 상품 1개 수정
 def edit(request, post_id):
     post = Post.objects.get(id=post_id)
     context = {
@@ -47,6 +53,7 @@ def edit(request, post_id):
     return render(request, 'posts/edit.html', context)
 
 
+# 상품 1개 수정
 def update(request, post_id):
     post = Post.objects.get(id=post_id)
     post.product_name = request.POST.get('product_name')
@@ -56,11 +63,28 @@ def update(request, post_id):
     return redirect('posts:detail', post_id=post.id)
 
 
+# 상품 1개 삭제
 def delete(request, post_id):
     post = Post.objects.get(id=post_id)
     post.delete()
 
     return redirect('posts:index')
+
+
+# 장바구니 화면
+def cart(request):
+    context = {}
+
+    return render(request, 'posts/cart.html', context)
+
+
+# 결제 화면
+def checkout(request):
+    context = {}
+
+    return render(request, 'posts/checkout.html', context)
+
+
 
 
 

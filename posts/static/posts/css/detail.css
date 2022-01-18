@@ -1,4 +1,4 @@
-/* index.html */
+/* detail.html */
 h1, h2 {
     color: #535353;
     font-size: 16px;
@@ -15,15 +15,7 @@ img {
     height: 100%;
 }
 
-div#product_new {
-    margin: 10px 10px 10px 10px;
-}
-
-
-/* detail.html */
 div#detail_container {
     width: 50%;
     height: 50%;
 }
-
-
