@@ -32,6 +32,8 @@
   4.3 URL Configuration으로 app별 URL 관리
   
   4.4 Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료
+  
+  4.5 DB 구성 및 ERD 설계 
 </details>
 <br>
 
