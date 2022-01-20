@@ -41,7 +41,7 @@
 <br>
 
 ## 6. 그 외 트러블 슈팅
-- ㅇㅇㅇ
+- models.py 설정 시 FloatField 및 IntegerField의 경우 default=0 처럼 default 값 설정 필요
 <br>
 
 ## 7. 회고 / 느낀점
