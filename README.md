@@ -17,7 +17,7 @@
 <br>
 
 ## 3. ERD 설계
-- ...
+<img src="https://user-images.githubusercontent.com/95380638/150262590-29403524-27cf-4329-8733-5a75ca70a8f8.png">
 <br>
 
 ## 4. 핵심 기능     
@@ -31,7 +31,7 @@
   
   4.3 URL Configuration으로 app별 URL 관리
   
-  4.4 Template 및 Static namespacing 관리
+  4.4 Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료
 </details>
 <br>
 
