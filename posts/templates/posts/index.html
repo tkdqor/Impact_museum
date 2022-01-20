@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'posts/css/main.css' %}">
+{% endblock %}
 
-{% block content %}    
+{% block content %}  
+    <!-- nav 정보 -->
     <nav>
         <button><a href="">로그인</a></button>
         <button><a href="">회원가입</a></button>
@@ -11,27 +15,32 @@
         <a href="{% url 'posts:new' %}">상품 추가</a>
     </nav>
 
-    <!-- 상품 전체 정보 -->
+    <!-- 상품 목록 리스트 -->
     <div class="product_container">
         {% if posts %}
         
-            {% for post in posts %}   
-            <div class="product_detail">     
-                <a href="{% url 'posts:detail' post.id %}">
-                    <img src="{% static 'posts/images/gattaca.png' %}" alt="가타카">
-                    <h1>{{ post.brand }}</h1>
-                    <h2>{{ post.product_name }}</h2>
-                    <h3>{{ post.price }}</h3> 
-                </a>
+        {% for post in posts %}   
+            <div class="product_list">     
+                    <div class="product_image_frame">
+                        <a href="{% url 'posts:detail' post.id %}">
+                            <img id="product_image" src="{% static 'posts/images/gattaca.png' %}" alt="가타카">
+                        </a>
+                    </div>    
+                    <div class="product_info">    
+                        <h1 class="product_info_brand">{{ post.brand }}</h1>
+                        <h2 class="product_info_name">{{ post.product_name }}</h2>
+                        <h3 class="product_info_price">{{ post.price }}</h3> 
+                    </div>    
             </div>    
-            {% endfor %}    
+        {% endfor %}    
                          
         {% else %}
-            <p>상품 정보가 없습니다.</p>
-            
+            <p>상품 정보가 없습니다.</p>    
         {% endif %}       
     </div>
+
+
+
+
 {% endblock %}    
 
-<!-- </body> -->
-<!-- </html> -->

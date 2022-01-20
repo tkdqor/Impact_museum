@@ -1,3 +1,8 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
 /* detail.html */
 h1, h2 {
     color: #535353;
