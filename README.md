@@ -33,7 +33,7 @@
   
   4.4 Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료
   
-  4.5 DB 구성 및 ERD 설계 완료
+  4.5 DB 구성 및 ERD 설계 완료(이미지 저장 및 랜더링 가능)
 </details>
 <br>
 
