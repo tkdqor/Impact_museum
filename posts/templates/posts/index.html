@@ -23,7 +23,7 @@
             <div class="product_list">     
                     <div class="product_image_frame">
                         <a href="{% url 'posts:detail' post.id %}">
-                            <img id="product_image" src="{% static 'posts/images/gattaca.png' %}" alt="가타카">
+                            <img id="product_image" src="{{ post.imageURL }}" alt="상품 이미지">
                         </a>
                     </div>    
                     <div class="product_info">    

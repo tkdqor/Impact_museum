@@ -14,7 +14,7 @@
         {% if post %}    
             <h1>{{ post.product_name }}</h1>
             <h2>{{ post.brand }}</h2>
-            <img src="{% static 'posts/images/gattaca.png' %}" alt="가타카">
+            <img src="{{ post.imageURL }}" alt="상품 상세 이미지">
         {% else %}
             <p>상품 정보가 없습니다.</p>
         {% endif %}        

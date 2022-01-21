@@ -26,6 +26,14 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.product_name}: {self.brand}'
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = 'posts/'
+        return url            
+
 
 # Order 모델
 class Order(models.Model):
