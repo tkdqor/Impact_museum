@@ -32,6 +32,8 @@
   4.3 URL Configuration으로 app별 URL 관리
   
   4.4 Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료
+  
+  4.5 DB 구성 및 ERD 설계 완료(이미지 저장 및 랜더링 가능)
 </details>
 <br>
 
@@ -41,7 +43,8 @@
 <br>
 
 ## 6. 그 외 트러블 슈팅
-- ㅇㅇㅇ
+- models.py 설정 시 FloatField 및 IntegerField의 경우 default=0 처럼 default 값 설정 필요
+- DB에서 ImageField 설정 시 이미지를 업로드 하지 않으면 html template에서 ValueError 발생 -> models.py에서 관련 모델에 @property를 설정해서 오류 방지
 <br>
 
 ## 7. 회고 / 느낀점
