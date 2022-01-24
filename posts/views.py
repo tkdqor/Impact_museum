@@ -71,16 +71,39 @@ def delete(request, post_id):
     return redirect('posts:index')
 
 
+
 # 장바구니 화면
 def cart(request):
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)  # 완료된 주문인지 잡아준다는게 뭘까..
+        # 로그인한 customer에 해당하는 사람을 Order 모델에서도 찾아서, 즉 같은 customer를 찾아서 그 사람이 주문한 order만
+        # 가져와주는 것 아닐까? 
+        # 그리고 이 코드를 쓰는 이유는, 그냥 DB상 데이터 생성의 중복을 막을 수 있기 때문이다!!
+        # 그리고 생각해보니!!!! 위의 코드에서 complete=False를 아예 안써야 하는 거 아닌가?!?!?!
+        items = order.orderitem_set.all()   
+    else:
+        items = []  # cart.html에 아무것도 보내주지 않는다는 것을 의미 
+        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것   
+
+    context = {'items': items, 'order':order}
 
     return render(request, 'posts/cart.html', context)
 
 
+
+
 # 결제 화면
 def checkout(request):
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+        items = order.orderitem_set.all()   
+    else:
+        items = []  # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
+        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것   
+
+    context = {'items': items, 'order':order}
 
     return render(request, 'posts/checkout.html', context)
 
@@ -108,3 +131,5 @@ def Postinfo(request, post_id):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+

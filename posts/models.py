@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from urllib3 import encode_multipart_formdata
 
 
 # Create your models here.
@@ -45,6 +46,21 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.id}'
 
+    @property
+    # 장바구니에 담은 모든 상품들의 총 금액을 계산하는 코드
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+    # 장바구니에 담은 모든 상품들의 수를 계산하는 코드
+    def get_cart_items(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderitems])
+        return total
+
+
+
 
 # Order item 모델
 class OrderItem(models.Model):
@@ -55,6 +71,13 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'{self.product}'
+
+    # 장바구니에서 총 합계를 볼 수 있도록 property operator를 설정
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
+
 
 
 # Shipping Address 모델

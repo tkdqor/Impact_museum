@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block content %}  
+
+
+    
     <!-- nav 정보 -->
     <nav>
         <button><a href="">로그인</a></button>
@@ -29,7 +32,7 @@
                     <div class="product_info">    
                         <h1 class="product_info_brand">{{ post.brand }}</h1>
                         <h2 class="product_info_name">{{ post.product_name }}</h2>
-                        <h3 class="product_info_price">{{ post.price }}</h3> 
+                        <h3 class="product_info_price">{{ post.price|floatformat:"0g" }}</h3> 
                     </div>    
             </div>    
         {% endfor %}    
@@ -39,8 +42,6 @@
         {% endif %}       
     </div>
 
-
-
-
 {% endblock %}    
+
 

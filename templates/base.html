@@ -8,9 +8,18 @@
     {% endblock %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impact Museum</title>
+
+    <!-- 자바스크립트 코드 -->
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+    </script>
 </head>
 <body>
     {% block content %}
     {% endblock %}
+
+
+<!-- 자바스크립트 코드 -->
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>    
 </body>
 </html>

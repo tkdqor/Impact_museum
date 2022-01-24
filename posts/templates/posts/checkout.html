@@ -1,5 +1,8 @@
+{% extends 'base.html' %}
 {% load static %}
 
+
+{% block content %}
 <h3>결제 화면</h3>
 
 <form action="">
@@ -16,12 +19,33 @@
 <h4>상품 정보</h4>
 <table>
     <tr>
-        <th><img src="{% static 'posts/images/gattaca.png' %}" width="100px" height="100px">상품명</th>
-        <th>가격</th>
-        <th>옵션</th>
-        <th>수량</th>
+        <th>상품명</th>
+            <th>가격</th>
+            <th>옵션</th>
+            <th>수량</th>
+            <th>총액</th>
     </tr>
+        
+    <!-- 결제가 이루어질 상품에 대한 정보 보여주기 -->
+    {% for item in items %}
+    <tr>
+        <th><img src="{{ item.product.imageURL }}" width="100px" height="100px">{{ item.product.product_name }}</th>
+        <th>{{ item.product.price|floatformat:"0g" }}원</th>
+        <th>옵션</th>
+        <th>{{ item.quantity }}개</th>
+        <th>{{ item.get_total|floatformat:"0g" }}원</th>
+    </tr>
+    {% endfor %}
 </table>
+
+
+<!-- 결제가 이루어질 총 상품 개수와 결제금액을 보여주기 -->
+<div>
+    <p>총 주문상품 {{ order.get_cart_items }}개</p>
+    <p>총 결제금액 {{ order.get_cart_total|floatformat:"0g" }}원</p>
+</div>
     
 
 <button><a href="">~~~원 결제하기</a></button>
+
+{% endblock %}
