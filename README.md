@@ -39,6 +39,8 @@
   4.4 Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료
   
   4.5 DB 구성 및 ERD 설계 완료(이미지 저장 및 랜더링 가능)
+  
+  4.6 상품 1개 조회 페이지에서 장바구니 버튼 클릭 시, 장바구니 페이지에 추가 및 DB 저장 
 </details>
 <br>
 
