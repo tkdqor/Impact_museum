@@ -24,7 +24,8 @@
             <th>{{ item.product.price|floatformat:"0g" }}원</th>
             <th>옵션</th>
             <th>{{ item.quantity }}</th>
-            <th>{{ item.get_total|floatformat:"0g" }}원</th>
+            <th>{{ item.get_total|floatformat:"0g" }}원</th>      
+            <!-- OrderItem 모델에 설정한 property decoration으로 get_total를 메소드처럼 사용 -> 그래서 1개 상품의 가격*수량 값을 가져오기 -->
             <th><button><a href="{% url 'posts:checkout' %}">구매하기</a></button></th>
             <th><button><a href="">삭제하기</a></button></th>
         </tr>
@@ -32,7 +33,7 @@
     </table>
 
     <div>
-        <p>총 수량: {{ order.get_cart_items }}개</p>
+        <p>총 수량: {{ cartItems }}개</p>
         <p>총 금액: {{ order.get_cart_total|floatformat:"0g" }}원</p>
     </div>
 </div>

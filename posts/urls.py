@@ -23,5 +23,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('cart/', views.cart, name='cart'),
     path('checkout/', views.checkout, name='checkout'),
+    path('<int:post_id>/update_item/', views.updatedItem, name='update_item'),
 ]
 

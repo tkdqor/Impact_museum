@@ -1,22 +1,40 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import PostSerializer
 from rest_framework import viewsets
+import json
 
 # Create your views here.
 
 
 # 메인 화면
 def index(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+        items = order.orderitem_set.all()  
+
+        cartItems = order.get_cart_items          # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
+    else:
+        items = []  # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
+        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것 
+        cartItems = order['get_cart_items']    
+        # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
+        # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
+
+
     posts = Post.objects.all()
     context = {
-        'posts': posts
+        'posts': posts,
+        'cartItems': cartItems    # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
         }
     return render(request, 'posts/index.html', context)
+
+
 
 
 # 상품 1개 조회
@@ -76,17 +94,21 @@ def delete(request, post_id):
 def cart(request):
     if request.user.is_authenticated:
         customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)  # 완료된 주문인지 잡아준다는게 뭘까..
-        # 로그인한 customer에 해당하는 사람을 Order 모델에서도 찾아서, 즉 같은 customer를 찾아서 그 사람이 주문한 order만
-        # 가져와주는 것 아닐까? 
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)  
+        # 로그인한 customer에 해당하는 사람을 Order 모델에서도 찾아서, 즉 같은 customer를 찾아서 그 사람이 주문한 order를 가져오는데,
+        # complete 필드가 False인 DB 정보를 가져와주는 것(만약 없다면 생성)
         # 그리고 이 코드를 쓰는 이유는, 그냥 DB상 데이터 생성의 중복을 막을 수 있기 때문이다!!
-        # 그리고 생각해보니!!!! 위의 코드에서 complete=False를 아예 안써야 하는 거 아닌가?!?!?!
-        items = order.orderitem_set.all()   
+        items = order.orderitem_set.all()  # order 모델에서 orderitem 모델에 접근하여 -> 해당 order의 orderitem DB 전부를 가져오기 
+
+        cartItems = order.get_cart_items   # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
     else:
         items = []  # cart.html에 아무것도 보내주지 않는다는 것을 의미 
-        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것   
+        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것 
+        cartItems = order['get_cart_items']              
+        # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
+        # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정 
 
-    context = {'items': items, 'order':order}
+    context = {'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
 
     return render(request, 'posts/cart.html', context)
 
@@ -99,13 +121,52 @@ def checkout(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False) 
         items = order.orderitem_set.all()   
+
+        cartItems = order.get_cart_items    # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
     else:
         items = []  # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
         order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것   
+        cartItems = order['get_cart_items']               
+        # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
+        # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
 
-    context = {'items': items, 'order':order}
+    context = {'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
 
     return render(request, 'posts/checkout.html', context)
+
+
+
+
+# 장바구니 추가 기능
+def updatedItem(request, post_id):
+    data = json.loads(request.body)     # cart.js에서 보내준 body의 정보를 json 형태로 불러오기 
+    postID = data['postID']             # cart.js의 fetch -> body에서 정의한 변수의 이름과 같게 설정.
+    action = data['action']
+    print(data)                         # 장바구니 버튼을 클릭할 때 받은 데이터가 cart.js로부터 전달되었는지 터미널로 먼저 확인하기.
+    print('postID:' , postID)           # 해당 정보들을 id와 action으로 구분지어서 확인하기.
+    print('action:' , action)
+
+    customer = request.user.customer    # 로그인 된 해당 유저를 Customer 모델에서 가져온다는 의미(user모델에서 OneonOne관계로 customer모델로 접근)
+    post = Post.objects.get(id=postID)  # 장바구니를 누른 해당 상품의 id로 Post DB에 저장되어있는 정보 가져오기.
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)     
+    # Order 모델에서 로그인 된 해당 customer의 order가 이미 있다면 -> 생성하지 말고 그냥 가져오기  /  없다면 order DB 생성하기
+    # .get_or_create(~~~, ~~~) -> 이렇게 괄호안에 있는 내용들이 모두 조건인가? 그래서 해당 조건을 만족하는 DB가 있으면 가져오고 없으면 생성?
+    # 또한, complete=False로 설정했기 때문에 가져올 때 주문이 완료 되지 않은 정보만 가져오라는 의미인 것 같다! 
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=post)     
+    # OrderItem 모델 - order 필드에 위에서 가져온 order와 동일한 order_id 그리고 product 필드에는 장바구니를 누른 해당 상품이 
+    # 새롭게 들어가야 하므로 DB에서 새로운 데이터가 생성된다!(기존에는 이러한 값을 가진 데이터가 없었기 때문 / order_id는 같을지라도 상품은 없었다.)
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)    # 만약 button을 누를 때 action이 add이면 orderItem 변수에 있는 db정보의 quantity를 1 증가 시키기.
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)    # 만약 button를 누를 때 action이 remove이면 orderItem 변수에 있는 db정보의 quantity를 1 감소 시키기.
+
+    orderItem.save()      # 위에서 변경된 내용 저장.
+
+    if orderItem.quantity <= 0:         # 만약 장바구니로 추가된 상품의 수량이 0과 같거나 작으면 해당 데이터 삭제
+        orderItem.delete()
+
+    return JsonResponse('Item added', safe=False)
 
 
 
@@ -132,4 +193,9 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+
+
+
+ 
+    
 

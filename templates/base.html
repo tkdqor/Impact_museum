@@ -11,9 +11,29 @@
 
     <!-- 자바스크립트 코드 -->
     <script type="text/javascript">
-        var user = '{{request.user}}'
+        var user = '{{request.user}}'       // 로그인된 유저 정보를 user라는 변수로 정의 -> cart.js에서 해당 변수 사용가능
+
+        // 자바스크립트 csrf_token             // POST method로 정보를 전송하기 위해 필요한 작업
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
     </script>
 </head>
+
 <body>
     {% block content %}
     {% endblock %}

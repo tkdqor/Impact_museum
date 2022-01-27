@@ -41,7 +41,7 @@
 
 <!-- 결제가 이루어질 총 상품 개수와 결제금액을 보여주기 -->
 <div>
-    <p>총 주문상품 {{ order.get_cart_items }}개</p>
+    <p>총 주문상품 {{ cartItems }}개</p>
     <p>총 결제금액 {{ order.get_cart_total|floatformat:"0g" }}원</p>
 </div>
     
