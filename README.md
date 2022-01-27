@@ -18,6 +18,11 @@
 
 ## 3. ERD 설계
 <img src="https://user-images.githubusercontent.com/95380638/150262590-29403524-27cf-4329-8733-5a75ca70a8f8.png">
+
+- Customer 모델은 User 모델과 1:1관계로 설정
+- Order 모델은 Customer 모델과 1:N관계로 설정 - 1명의 사용자가 쇼핑몰에서 여러 번 주문할 수 있음
+- Shipping Address 모델은 Customer 모델 & Order 모델과 1:N관계로 설정 - 1명의 사용자가 다양한 배송 주소지를 생성할 수 있고, 1개의 주문 건이 배송 취소 및 실패 등으로 다양한 배송 주소지를 가질 수 있음
+- Order Item 모델(장바구니 기능을 생각하기)은 Product 모델 & Order 모델과 1:N관계로 설정 - 1개의 상품이 여러 번 장바구니에 포함될 수 있고, 1개의 주문 건에 많은 상품들이 장바구니에 추가될 수 있음
 <br>
 
 ## 4. 핵심 기능     
