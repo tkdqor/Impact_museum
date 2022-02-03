@@ -7,11 +7,11 @@
 
 <form action="">
     <div>
-        <h4>수령자 정보<h4>
+        <h4>배송지 정보<h4>
         <input type="text" placeholder="수령인">
         <input type="text" placeholder="휴대전화">
         <input type="text" placeholder="배송지 주소">
-        <input type="text" placeholder="배송 메모">
+        <input type="text" placeholder="배송 시 요청사항(드롭다운 필요)">  
     </div>
 </form>
 
@@ -25,8 +25,19 @@
             <th>수량</th>
             <th>총액</th>
     </tr>
+
+    {% if post %}    <!-- 상품 1개 조회 페이지에서 결제하기를 누른다면 post가 있으니 상품 1개에 대한 정보만 보여주기 -->
+    <tr>
+        <th><img src="{{ post.imageURL }}" width="100px" height="100px">{{ post.product_name }}</th>
+        <th>{{ post.price|floatformat:"0g" }}원</th>
+        <th>옵션</th>
+        <th>{{ post.item.quantity }}개</th>
+        <th>원</th>
+    </tr>
+    
+    {% else %}
         
-    <!-- 결제가 이루어질 상품에 대한 정보 보여주기 -->
+    <!-- 장바구니 페이지에서 결제할 때 보여주는 상품 정보 -->
     {% for item in items %}
     <tr>
         <th><img src="{{ item.product.imageURL }}" width="100px" height="100px">{{ item.product.product_name }}</th>
@@ -36,6 +47,8 @@
         <th>{{ item.get_total|floatformat:"0g" }}원</th>
     </tr>
     {% endfor %}
+
+    {% endif %}
 </table>
 
 
@@ -45,6 +58,16 @@
     <p>총 결제금액 {{ order.get_cart_total|floatformat:"0g" }}원</p>
 </div>
     
+
+<!-- 결제수단 선택하기 -->
+<div>
+    <h4>결제 방법</h4>
+    <ul>
+        <li>카드결제</li>
+        <li>현금결제</li>
+        <li>휴대폰결제</li>
+    </ul>
+</div>
 
 <button><a href="">~~~원 결제하기</a></button>
 

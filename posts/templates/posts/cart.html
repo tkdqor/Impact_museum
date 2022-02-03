@@ -23,7 +23,12 @@
             <th><img src="{{ item.product.imageURL }}" width="100px" height="100px">{{ item.product.product_name }}</th>
             <th>{{ item.product.price|floatformat:"0g" }}원</th>
             <th>옵션</th>
-            <th>{{ item.quantity }}</th>
+            <th>
+                <!-- 수량 증가 및 감소 버튼 -->
+                <button data-post="{{item.product.id}}" data-action="add" class="cart-update" onClick="window.location.href=window.location.href">+</button>
+                {{ item.quantity }}
+                <button data-post="{{item.product.id}}" data-action="remove" class="cart-update" onClick="window.location.href=window.location.href">-</button>
+            </th>
             <th>{{ item.get_total|floatformat:"0g" }}원</th>      
             <!-- OrderItem 모델에 설정한 property decoration으로 get_total를 메소드처럼 사용 -> 그래서 1개 상품의 가격*수량 값을 가져오기 -->
             <th><button><a href="{% url 'posts:checkout' %}">구매하기</a></button></th>

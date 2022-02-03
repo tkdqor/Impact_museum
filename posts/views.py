@@ -16,6 +16,10 @@ def index(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+
+        print(order)
+        print(created)
+
         items = order.orderitem_set.all()  
 
         cartItems = order.get_cart_items          # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
@@ -115,14 +119,19 @@ def cart(request):
 
 
 
-# 결제 화면
-def checkout(request):
+# 상품 1개 조회 페이지 -> 결제 화면
+def checkout2(request, post_id):
     if request.user.is_authenticated:
+        
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False) 
         items = order.orderitem_set.all()   
 
         cartItems = order.get_cart_items    # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
+
+        post = Post.objects.get(id=post_id)     # 해당 상품 데이터를 Post 모델에서 가져오고
+        # Order 모델에 새로운 일자로 데이터 생성해야 됨..?!   
+
     else:
         items = []  # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
         order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것   
@@ -130,9 +139,35 @@ def checkout(request):
         # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
         # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
 
-    context = {'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
+    context = {'post': post, 'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
 
     return render(request, 'posts/checkout.html', context)
+
+
+
+# 장바구니 페이지 -> 결제 화면
+def checkout1(request):
+    if request.user.is_authenticated:
+        
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+        items = order.orderitem_set.all()   
+
+        cartItems = order.get_cart_items    # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
+
+        
+    else:
+        items = []  # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
+        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것   
+        cartItems = order['get_cart_items']               
+        # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
+        # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
+
+    context = {'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.     
+    
+    return render(request, 'posts/checkout.html', context)
+
+
 
 
 

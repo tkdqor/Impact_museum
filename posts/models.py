@@ -13,7 +13,7 @@ class Customer(models.Model):
     email = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'user: {self.user} | name: {self.name} | email: {self.email}'
 
 
 # Products 모델
@@ -25,7 +25,7 @@ class Post(models.Model):
     created_at = models.DateTimeField()
 
     def __str__(self):
-        return f'{self.product_name}: {self.brand}'
+        return f'product_name: {self.product_name} | brand: {self.brand} | price: {self.price} | image: {self.image} |created_at: {self.created_at}'
 
     @property
     def imageURL(self):
@@ -44,7 +44,8 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return f'{self.id}'
+        return f'id: {self.id} | customer: {self.customer} | date_ordered: {self.date_ordered} | complete: {self.complete} | transaction_id: {self.transaction_id}'
+
 
     @property
     # 장바구니에 담은 모든 상품들의 총 금액을 계산하는 코드
@@ -70,7 +71,8 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.product}'
+        return f'id: {self.id} | product: {self.product} | order: {self.order} | quantity: {self.quantity} | date_added: {self.date_added}'
+
 
     # 장바구니에서 총 합계를 볼 수 있도록 property operator를 설정
     @property

@@ -35,7 +35,8 @@ function updateUserOrder(postID,action){
     })  
     .then((data) =>{              // 우리가 받은 response를 data라고 해주고, console에 출력 해주기   
         console.log('data:', data)
-        // location.reload()         // 장바구니 화면 자동으로 새로고침 설정할 수 있음
+        location.reload()         // 장바구니 화면 자동으로 새로고침 설정할 수 있음 -> 장바구니 화면에서 수량 +- 버튼 클릭 시 바로 화면에 보여줄 수 있다.  ==> 근데 잘 안되서 일단 주석처리 
+                
     })                                             
 }
 
