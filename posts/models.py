@@ -8,8 +8,8 @@ from urllib3 import encode_multipart_formdata
 
 # Customer 모델
 class Customer(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)    # User모델과 1대1 관계 / null=True는 비워도 괜찮다는 것. / on delete를 사용해서 회원이 지워지면 고객도 지워지게 한다.
-    name = models.CharField(max_length=100, null=True)          # 캐릭터 필드
+    user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE, default=1)    # User모델과 1대1 관계 / null=True는 비워도 괜찮다는 것. / on delete를 사용해서 회원이 지워지면 고객도 지워지게 한다.
+    name = models.CharField(max_length=100, null=False, default=1)          # 디폴트 값을 미지정으로 수정
     email = models.CharField(max_length=100)
 
     def __str__(self):
@@ -20,9 +20,10 @@ class Customer(models.Model):
 class Post(models.Model):
     product_name = models.CharField(max_length=100)
     brand = models.TextField()
-    price = models.FloatField(default=0)              # 숫자니까 Float 필드 선택
-    image = models.ImageField(null=True, blank=True)     # 이미지이니까 Image 필드 선택
-    created_at = models.DateTimeField()
+    price = models.PositiveIntegerField(default=0)              # 가격이니까 실수가 아닌 정수 필드로 수정
+    image = models.ImageField(null=True, blank=True)            # 이미지이니까 Image 필드 선택
+    created_at = models.DateTimeField(auto_now_add=True)        # 상품 db에 추가할 때 날짜 설정
+    updated_at = models.DateTimeField(auto_now=True)            # 수정될 떄마다 날짜 설정
 
     def __str__(self):
         return f'product_name: {self.product_name} | brand: {self.brand} | price: {self.price} | image: {self.image} |created_at: {self.created_at}'
@@ -38,7 +39,7 @@ class Post(models.Model):
 
 # Order 모델
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)    # Customer가 회원탈퇴 하더라도 주문 내역을 유지하기
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=True, null=True, blank=True)
     transaction_id = models.CharField(max_length=200, null=True)
@@ -67,7 +68,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Post, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
-    quantity = models.IntegerField(default=0, null=True, blank=True)
+    quantity = models.IntegerField(default=0, null=False, blank=False)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -93,3 +94,7 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return f'{self.address}'
+
+
+
+        
