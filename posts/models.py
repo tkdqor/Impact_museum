@@ -8,8 +8,8 @@ from urllib3 import encode_multipart_formdata
 
 # Customer 모델
 class Customer(models.Model):
-    user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE, default=1)    # User모델과 1대1 관계 / null=True는 비워도 괜찮다는 것. / on delete를 사용해서 회원이 지워지면 고객도 지워지게 한다.
-    name = models.CharField(max_length=100, null=False, default=1)          # 디폴트 값을 미지정으로 수정
+    user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE, default=1)    # User모델과 1대1 관계 / on delete를 사용해서 회원이 지워지면 고객도 지워지게 한다.
+    name = models.CharField(max_length=100, null=False, default=1)          
     email = models.CharField(max_length=100)
 
     def __str__(self):
@@ -20,7 +20,7 @@ class Customer(models.Model):
 class Post(models.Model):
     product_name = models.CharField(max_length=100)
     brand = models.TextField()
-    price = models.PositiveIntegerField(default=0)              # 가격이니까 실수가 아닌 정수 필드로 수정
+    price = models.PositiveIntegerField(default=0)              # 가격이니까 실수가 아닌 정수 필드로 수정 / 가격이 음수가 될 수 없으니 타이트하게 필드 설정
     image = models.ImageField(null=True, blank=True)            # 이미지이니까 Image 필드 선택
     created_at = models.DateTimeField(auto_now_add=True)        # 상품 db에 추가할 때 날짜 설정
     updated_at = models.DateTimeField(auto_now=True)            # 수정될 떄마다 날짜 설정
@@ -66,8 +66,8 @@ class Order(models.Model):
 
 # Order item 모델
 class OrderItem(models.Model):
-    product = models.ForeignKey(Post, on_delete=models.SET_NULL, blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    product = models.ForeignKey(Post, on_delete=models.SET_NULL, blank=True, null=True)   # Post 모델과 1:N관계 / 장바구니 기록을 남기기 위해 Post가 사라져도 남게끔 설정
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)    # Order 모델과 1:N관계 / 주문내역이 사라져도 장바구니 기록을 남길 수 있게 설정
     quantity = models.IntegerField(default=0, null=False, blank=False)
     date_added = models.DateTimeField(auto_now_add=True)
 
