@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-from django.conf import settings
+from django.conf import settings             # settings.py 참조를 위한 import
 from posts import views
 
 
 urlpatterns = [
+    # admin 페이지 관련 URL
     path('admin/', admin.site.urls),
 
     # posts App과 관련된 URL
@@ -32,9 +33,9 @@ urlpatterns = [
 ]
 
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
+# 이미지 URL 설정 - media 파일의 경우, django 개발 서버에서 서빙을 지원하지 않으므로 직접 URL를 추가해야 한다.
+if settings.DEBUG:                                            # settings의 DEBUG 옵션이 TRUE일 경우에만 이미지 파일 serving 허용
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

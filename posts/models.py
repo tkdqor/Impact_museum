@@ -21,12 +21,13 @@ class Post(models.Model):
     product_name = models.CharField(max_length=100)
     brand = models.TextField()
     price = models.PositiveIntegerField(default=0)              # 가격이니까 실수가 아닌 정수 필드로 수정 / 가격이 음수가 될 수 없으니 타이트하게 필드 설정
-    image = models.ImageField(null=True, blank=True)            # 이미지이니까 Image 필드 선택
+    image = models.ImageField(null=True, blank=True, upload_to='posts/post/%Y/%m/%d')            # 이미지이니까 Image 필드 선택
     created_at = models.DateTimeField(auto_now_add=True)        # 상품 db에 추가할 때 날짜 설정
     updated_at = models.DateTimeField(auto_now=True)            # 수정될 떄마다 날짜 설정
 
     def __str__(self):
         return f'product_name: {self.product_name} | brand: {self.brand} | price: {self.price} | image: {self.image} |created_at: {self.created_at}'
+
 
     @property
     def imageURL(self):
@@ -39,7 +40,7 @@ class Post(models.Model):
 
 # Order 모델
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)    # Customer가 회원탈퇴 하더라도 주문 내역을 유지하기
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)    # Customer가 회원탈퇴 하더라도 주문 내역을 유지하기 / 어뷰징 회원일 수도 있기 때문에 주문 내역 자료가 필요할 수 있다.
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=True, null=True, blank=True)
     transaction_id = models.CharField(max_length=200, null=True)
@@ -96,5 +97,7 @@ class ShippingAddress(models.Model):
         return f'{self.address}'
 
 
+
+        
 
         

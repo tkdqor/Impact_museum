@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from .serializers import PostSerializer
 from rest_framework import viewsets
 import json
+from django.db.models import Q     # 검색기능구현 시, filter 조건을 or로 설정하기 위해 Q 함수 import
 
 # Create your views here.
 
@@ -32,9 +33,17 @@ def index(request):
 
 
     posts = Post.objects.all()
+
+    # 검색기능을 위해 query라는 변수를 지정하고 GET 방식으로 들어온 데이터를 조회
+    query = request.GET.get('query', '')
+    if query:
+        posts = Post.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query))  
+        # 만약 검색한 데이터가 있다면, Post 모델에서 필터기능으로 해당 단어가 포함된 데이터만 전달 / 상품명 또는 브랜드를 검색할 수 있게 Q 함수 사용
+
     context = {
         'posts': posts,
-        'cartItems': cartItems    # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
+        'cartItems': cartItems,    # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
+        'query': query,
         }
     return render(request, 'posts/index.html', context)
 
@@ -231,6 +240,5 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 
- 
-    
+
 

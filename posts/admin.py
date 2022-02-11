@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from django.utils.safestring import mark_safe
 
 # Register your models here.
 
@@ -10,7 +11,12 @@ class CustomerAdmin(admin.ModelAdmin):           # admin(패키지)모듈의 Mod
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['product_name', 'brand', 'price', 'image', 'created_at', 'updated_at']
+    list_display = ['product_name', 'brand', 'price', 'image_tag', 'created_at', 'updated_at']
+
+    def image_tag(self, post):                        # image_tag라는 함수를 정의해서 image 필드에 경로가 있는 경우 admin에도 보여줄 수 있도록 설정
+        if post.image:
+            return mark_safe(f'<img src="{post.image.url}" style="width: 150px; height: 150px;" />') # mark_safe 함수로 안전함을 표시해야 admin 페이지에 사진 표시 가능
+        return None    
 
 
 @admin.register(Order)
