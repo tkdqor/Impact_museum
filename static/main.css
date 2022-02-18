@@ -1,3 +1,16 @@
+/* navbar */
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+    height: 80px;
+}
+
+
+#product-search {
+    margin-top: 5px;
+    margin-left: 250px;
+}
+
+
+
 /* index.html */
 h1, h2, h3 {
     color: #535353;

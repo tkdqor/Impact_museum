@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'main.css' %}">     <!-- 프로젝트 루트에 위치한 main.css 파일 연동 -->
     {% block style %}
     {% endblock %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,27 +40,40 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="">Impact museum</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Impact museum이란</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">입점 소셜벤처</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">카테고리</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">상품추가</a>
-              </li>
-            </ul>
-          </div>
+        <div class="container-fluid"> 
+          <a class="navbar-brand" href="{% url 'main' %}">IMPACT MUSEUM</a>   <!-- 도메인으로 접속했을 때의 url name으로 설정 -->
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Impact museum이란</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">입점 소셜벤처</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">카테고리</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">회원가입</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="{% url 'posts:cart' %}">장바구니({{ cartItems }})</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="{% url 'posts:new' %}">상품추가</a>
+                    </li>
+                    <!-- 검색창 만들기 -->
+                    <li class="nav-item">
+                        <form id="product-search" action="{% url 'posts:index' %}" method="GET">     <!-- form element의 action attribute를 비워두게 되면, 현재 form이 있는 같은 주소를 의미 -->
+                          <input type="text" name="query" value="{{ query }}">                       <!-- value로 검색 후에도 키워드가 남아있게끔 설정 -->
+                          <input type="submit" value="검색하기">
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
       </nav>
 

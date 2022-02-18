@@ -9,7 +9,7 @@ router = routers.DefaultRouter()
 router.register('viewset', views.PostViewSet)
 
 
-# URL 설정
+# URL name 설정
 app_name = 'posts'
 
 

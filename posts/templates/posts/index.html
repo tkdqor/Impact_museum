@@ -7,21 +7,6 @@
 
 {% block content %}  
 
-
-    
-    <!-- nav 정보 -->
-    <nav>
-        <button><a href="">로그인</a></button>
-        <button><a href="">회원가입</a></button>
-        <button><a href="{% url 'posts:cart' %}">장바구니 {{ cartItems }}</a></button>
-        <!-- 검색창 만들기 -->
-        <form action="" method="GET">          <!-- form element의 action attribute를 비워두게 되면, 현재 form이 있는 같은 주소를 의미 -->
-            <input type="text" name="query" value="{{ query }}">   <!-- value로 검색 후에도 키워드가 남아있게끔 설정 -->
-            <input type="submit" value="검색하기">
-        </form>
-        <a href="{% url 'posts:new' %}">상품 추가</a>
-    </nav>
-
     <!-- 상품 목록 리스트 -->
     <div class="product_container">
         
