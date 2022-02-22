@@ -29,6 +29,10 @@ class Post(models.Model):
         return f'product_name: {self.product_name} | brand: {self.brand} | price: {self.price} | image: {self.image} |created_at: {self.created_at}'
 
 
+    class Meta:              # Post 모델안에 Meta 클래스 속성으로 id필드에 대한 역순을 설정할 수도 있음 -> 최신 상품목록을 보여주기 위함
+        ordering = ['-id']   # 그런데, View 함수에서 Post.objects.all().order_by로 설정하면 Meta 클래스는 무시됨
+
+
     @property
     def imageURL(self):
         try:
@@ -57,7 +61,7 @@ class Order(models.Model):
         return total
 
     # 장바구니에 담은 모든 상품들의 수를 계산하는 코드
-    def get_cart_items(self):
+    def get_cart_items(self):                   
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total
@@ -95,6 +99,7 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return f'{self.address}'
+
 
 
 

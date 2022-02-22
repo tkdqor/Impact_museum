@@ -14,25 +14,25 @@ from django.db.models import Q     # 검색기능구현 시, filter 조건을 or
 
 # 메인 화면
 def index(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated:      # 로그인이 되었을 경우, 로그인된 유저의 정보와 연동된 customer 인스턴스를 customer 변수에 저장
         customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+        order, created = Order.objects.get_or_create(customer=customer, complete=False) # 그 customer 인스턴스가 pk로 있는 order 인스턴스를 저장
 
         print(order)
         print(created)
 
         items = order.orderitem_set.all()  
 
-        cartItems = order.get_cart_items          # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
+        cartItems = order.get_cart_items                  # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기 - Order모델에 정의된 get_cart_items 함수 사용
     else:
-        items = []  # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
+        items = []                                        # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
         order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것 
         cartItems = order['get_cart_items']    
         # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
         # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
 
 
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-id')[:8] # Post 모델 데이터 전체에서 id필드 기준 역순으로 8개만 가져오기
 
     # 검색기능을 위해 query라는 변수를 지정하고 GET 방식으로 들어온 데이터를 조회
     query = request.GET.get('query', '')
