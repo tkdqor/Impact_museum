@@ -7,11 +7,18 @@
 
 {% block content %}  
 
+
+    <!-- 상품 목록 리스트 title -->
+    <div class="product-container-info">
+        <p class="product-container-info-text">오늘의 신상품</p>
+        <span>최근에 추가된 상품들을 구매해 보세요!</span>
+    </div>
+
     <!-- 상품 목록 리스트 -->
-    <div class="product_container">
+    <div class="col-xs-12 col-md-12" id="product_container">
         
         {% for post in posts %}   
-            <div class="product_list">     
+            <div class="col-xs-3 col-md-6" id="product_list">     
                     <div class="product_image_frame">
                         <a href="{% url 'posts:detail' post.id %}">
                             <img id="product_image" src="{{ post.imageURL }}" alt="상품 이미지">
@@ -20,7 +27,7 @@
                     <div class="product_info">    
                         <h1 class="product_info_brand">{{ post.brand }}</h1>
                         <h2 class="product_info_name">{{ post.product_name }}</h2>
-                        <h3 class="product_info_price">{{ post.price|floatformat:"0g" }}</h3> 
+                        <h3 class="product_info_price">{{ post.price|floatformat:"0g" }}원</h3> 
                     </div>    
             </div>    
         {% endfor %}    
