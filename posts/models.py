@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from urllib3 import encode_multipart_formdata
+# from urllib3 import encode_multipart_formdata
 
 
 # Create your models here.

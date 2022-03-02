@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.urls import path, include
 from . import views
 from .views import helloAPI, Postinfo
@@ -36,6 +37,5 @@ urlpatterns = [
     path('<int:post_id>/checkout/', views.checkout2, name='checkout_id'),     # 상품 1개 조회 페이지에서 클릭한 결제 버튼
     path('<int:post_id>/update_item/', views.updatedItem, name='update_item'),
 ]
-
 
 

@@ -8,6 +8,7 @@ from .serializers import PostSerializer
 from rest_framework import viewsets
 import json
 from django.db.models import Q     # 검색기능구현 시, filter 조건을 or로 설정하기 위해 Q 함수 import
+from django.http import Http404    # 상품 1개 조회 시, 예외처리를 위한 Http404 import 
 
 # Create your views here.
 
@@ -52,19 +53,24 @@ def index(request):
 
 # 상품 1개 조회
 def detail(request, post_id):
-    post = Post.objects.get(id=post_id)
-    context = {
-        'post': post
-    }
+
+    try:
+        post = Post.objects.get(id=post_id)
+        context = {
+            'post': post
+        }
+    except Post.DoesNotExist:           # DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄우게 설정
+        raise Http404
+
     return render(request, 'posts/detail.html', context)
 
 
-# 상품 1개 생성
+# 상품 1개 생성 페이지
 def new(request):
     return render(request, 'posts/new.html')
 
 
-# 상품 1개 생성
+# 상품 1개 생성 기능
 def create(request):
     product_name = request.POST.get('product_name')
     brand = request.POST.get('brand')
@@ -74,7 +80,7 @@ def create(request):
     return redirect('posts:detail', post_id=post.id)
 
 
-# 상품 1개 수정
+# 상품 1개 수정 페이지
 def edit(request, post_id):
     post = Post.objects.get(id=post_id)
     context = {
@@ -84,7 +90,7 @@ def edit(request, post_id):
     return render(request, 'posts/edit.html', context)
 
 
-# 상품 1개 수정
+# 상품 1개 수정 기능
 def update(request, post_id):
     post = Post.objects.get(id=post_id)
     post.product_name = request.POST.get('product_name')
