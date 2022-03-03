@@ -9,6 +9,18 @@
 }
 
 
+#logout-button {
+    border: 0;
+    background-color: transparent;
+}
+
+
+#logout-form {
+    display: flex;
+}
+
+
+
 
 /* index.html */
 h1, h2, h3 {

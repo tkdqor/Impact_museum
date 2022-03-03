@@ -22,8 +22,6 @@ def index(request):
         print(order)
         print(created)
 
-        items = order.orderitem_set.all()  
-
         cartItems = order.get_cart_items                  # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기 - Order모델에 정의된 get_cart_items 함수 사용
     else:
         items = []                                        # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
@@ -34,6 +32,7 @@ def index(request):
 
 
     posts = Post.objects.all().order_by('-id')[:8] # Post 모델 데이터 전체에서 id필드 기준 역순으로 8개만 가져오기
+
 
     # 검색기능을 위해 query라는 변수를 지정하고 GET 방식으로 들어온 데이터를 조회
     query = request.GET.get('query', '')

@@ -8,4 +8,6 @@ urlpatterns = [
     path('sign_up/', views.sign_up, name='sign_up'),
     # 로그인 페이지 URL
     path('login/', views.login, name='login'),
+    # 로그아웃 URL
+    path('logout/', views.logout, name='logout'),
 ]

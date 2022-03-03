@@ -51,13 +51,15 @@
                 <input class="form-control" id="email" type="email" name="email" placeholder="이메일을 입력해주세요!">
             </div>
 
+            
             <!-- 사용자의 관심 사회문제 정보 받기 -->
-            <!-- 이건 버튼으로 후보군을 줘서 선택하게 해야할 것 같다... -->
             <div class="mb-3 col-md-6">
-                <label class="form-label" for="social">사회문제</label>
-                <label><input class="form-control" id="social" type="checkbox" name="social" value="environment">환경</label>
-                <label><input class="form-control" id="social" type="checkbox" name="social" value="employ">고용</label>
-                <!-- 사회문제 더 추가하기 -->
+                <label class="form-label" for="social">관심있는 사회문제(중복 가능)</label><br>
+                <input id="social" type="checkbox" name="social" value="environment"> 환경
+                <input id="social" type="checkbox" name="social" value="employ"> 고용
+                <input id="social" type="checkbox" name="social" value="disabled"> 장애인
+                <input id="social" type="checkbox" name="social" value="education"> 교육
+                <input id="social" type="checkbox" name="social" value="elders"> 노인
             </div>
 
             <!-- 회원가입 버튼 -->
