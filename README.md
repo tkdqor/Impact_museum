@@ -69,6 +69,10 @@
   2.41 bootstrap의 navbar를 이용해서 반응형 웹사이트가 될 수 있게 설정
        - 아직 메인 상품 목록은 되지 않음 / navbar만 반응
        - 상품 상세 페이지도 아직 미반영
+  
+  2.42 상품 1개 조회 시, DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄울 수 있게 설정
+       - 그래서 posts 앱의 views.py에 상품 1개 조회 시, 예외처리를 위해 Http404 import 진행
+       - 404에러는 서버에서 요청한 리소스를 찾을 수 없는 경우를 의미
 
 </details>
 <br>
