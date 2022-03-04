@@ -17,11 +17,11 @@ class Customer(models.Model):
 
 
 # Products 모델
-class Post(models.Model):
+class Product(models.Model):
     product_name = models.CharField(max_length=100)
     brand = models.TextField()
     price = models.PositiveIntegerField(default=0)              # 가격이니까 실수가 아닌 정수 필드로 수정 / 가격이 음수가 될 수 없으니 타이트하게 필드 설정
-    image = models.ImageField(null=True, blank=True, upload_to='posts/post/%Y/%m/%d')            # 이미지이니까 Image 필드 선택
+    image = models.ImageField(null=True, blank=True, upload_to='posts/product/%Y/%m/%d')            # 이미지이니까 Image 필드 선택
     created_at = models.DateTimeField(auto_now_add=True)        # 상품 db에 추가할 때 날짜 설정
     updated_at = models.DateTimeField(auto_now=True)            # 수정될 떄마다 날짜 설정
 
@@ -29,8 +29,8 @@ class Post(models.Model):
         return f'product_name: {self.product_name} | brand: {self.brand} | price: {self.price} | image: {self.image} |created_at: {self.created_at}'
 
 
-    class Meta:              # Post 모델안에 Meta 클래스 속성으로 id필드에 대한 역순을 설정할 수도 있음 -> 최신 상품목록을 보여주기 위함
-        ordering = ['-id']   # 그런데, View 함수에서 Post.objects.all().order_by로 설정하면 Meta 클래스는 무시됨
+    class Meta:              # Product 모델안에 Meta 클래스 속성으로 id필드에 대한 역순을 설정할 수도 있음 -> 최신 상품목록을 보여주기 위함
+        ordering = ['-id']   # 그런데, View 함수에서 Product.objects.all().order_by로 설정하면 Meta 클래스는 무시됨
 
 
     @property
@@ -71,7 +71,7 @@ class Order(models.Model):
 
 # Order item 모델
 class OrderItem(models.Model):
-    product = models.ForeignKey(Post, on_delete=models.SET_NULL, blank=True, null=True)   # Post 모델과 1:N관계 / 장바구니 기록을 남기기 위해 Post가 사라져도 남게끔 설정
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)   # Post 모델과 1:N관계 / 장바구니 기록을 남기기 위해 Post가 사라져도 남게끔 설정
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)    # Order 모델과 1:N관계 / 주문내역이 사라져도 장바구니 기록을 남길 수 있게 설정
     quantity = models.IntegerField(default=0, null=False, blank=False)
     date_added = models.DateTimeField(auto_now_add=True)

@@ -11,16 +11,16 @@
 </head>
 <body>
     <h1>상품 정보 수정하기</h1>
-    <form method="POST" action="{% url 'posts:update' post.id %}">
+    <form method="POST" action="{% url 'posts:update' product.id %}">
         {% csrf_token %}
         <div>
             <label for="product_name">상품 이름</label>
-            <input id="product_name" type="text" name="product_name" value="{{ post.product_name }}">
+            <input id="product_name" type="text" name="product_name" value="{{ product.product_name }}">
         </div>
         
         <div>
             <label for="product_brand">상품 브랜드</label>
-            <input id="product_brand" type="text" name="brand" value="{{ post.brand }}">
+            <input id="product_brand" type="text" name="brand" value="{{ product.brand }}">
         </div>    
 
         <input type="submit" value="상품 정보 수정하기">

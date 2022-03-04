@@ -25,9 +25,9 @@
             <th>옵션</th>
             <th>
                 <!-- 수량 증가 및 감소 버튼 -->
-                <button data-post="{{item.product.id}}" data-action="add" class="cart-update" onClick="window.location.href=window.location.href">+</button>
+                <button data-product="{{item.product.id}}" data-action="add" class="cart-update" onClick="window.location.href=window.location.href">+</button>
                 {{ item.quantity }}
-                <button data-post="{{item.product.id}}" data-action="remove" class="cart-update" onClick="window.location.href=window.location.href">-</button>
+                <button data-product="{{item.product.id}}" data-action="remove" class="cart-update" onClick="window.location.href=window.location.href">-</button>
             </th>
             <th>{{ item.get_total|floatformat:"0g" }}원</th>      
             <!-- OrderItem 모델에 설정한 property decoration으로 get_total를 메소드처럼 사용 -> 그래서 1개 상품의 가격*수량 값을 가져오기 -->

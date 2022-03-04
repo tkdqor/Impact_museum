@@ -26,12 +26,12 @@
             <th>총액</th>
     </tr>
 
-    {% if post %}    <!-- 상품 1개 조회 페이지에서 결제하기를 누른다면 post가 있으니 상품 1개에 대한 정보만 보여주기 -->
+    {% if product %}    <!-- 상품 1개 조회 페이지에서 결제하기를 누른다면 product가 있으니 상품 1개에 대한 정보만 보여주기 -->
     <tr>
-        <th><img src="{{ post.imageURL }}" width="100px" height="100px">{{ post.product_name }}</th>
-        <th>{{ post.price|floatformat:"0g" }}원</th>
+        <th><img src="{{ product.imageURL }}" width="100px" height="100px">{{ product.product_name }}</th>
+        <th>{{ product.price|floatformat:"0g" }}원</th>
         <th>옵션</th>
-        <th>{{ post.item.quantity }}개</th>
+        <th>{{ product.item.quantity }}개</th>
         <th>원</th>
     </tr>
     

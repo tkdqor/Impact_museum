@@ -4,7 +4,7 @@ from .models import *
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import PostSerializer
+from .serializers import ProductSerializer
 from rest_framework import viewsets
 import json
 from django.db.models import Q     # 검색기능구현 시, filter 조건을 or로 설정하기 위해 Q 함수 import
@@ -31,17 +31,17 @@ def index(request):
         # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
 
 
-    posts = Post.objects.all().order_by('-id')[:8] # Post 모델 데이터 전체에서 id필드 기준 역순으로 8개만 가져오기
+    products = Product.objects.all().order_by('-id')[:8] # Product 모델 데이터 전체에서 id필드 기준 역순으로 8개만 가져오기
 
 
     # 검색기능을 위해 query라는 변수를 지정하고 GET 방식으로 들어온 데이터를 조회
     query = request.GET.get('query', '')
     if query:
-        posts = Post.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query))  
-        # 만약 검색한 데이터가 있다면, Post 모델에서 필터기능으로 해당 단어가 포함된 데이터만 전달 / 상품명 또는 브랜드를 검색할 수 있게 Q 함수 사용
+        products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query))  
+        # 만약 검색한 데이터가 있다면, Product 모델에서 필터기능으로 해당 단어가 포함된 데이터만 전달 / 상품명 또는 브랜드를 검색할 수 있게 Q 함수 사용
 
     context = {
-        'posts': posts,
+        'products': products,
         'cartItems': cartItems,    # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
         'query': query,
         }
@@ -51,14 +51,14 @@ def index(request):
 
 
 # 상품 1개 조회
-def detail(request, post_id):
+def detail(request, product_id):
 
     try:
-        post = Post.objects.get(id=post_id)
+        product = Product.objects.get(id=product_id)
         context = {
-            'post': post
+            'product': product,
         }
-    except Post.DoesNotExist:           # DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄우게 설정
+    except Product.DoesNotExist:           # DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄우게 설정
         raise Http404
 
     return render(request, 'posts/detail.html', context)
@@ -73,36 +73,36 @@ def new(request):
 def create(request):
     product_name = request.POST.get('product_name')
     brand = request.POST.get('brand')
-    post = Post(product_name=product_name, brand=brand, created_at=timezone.now())
-    post.save()
+    product = Product(product_name=product_name, brand=brand, created_at=timezone.now())
+    product.save()
 
-    return redirect('posts:detail', post_id=post.id)
+    return redirect('posts:detail', product_id=product.id)
 
 
 # 상품 1개 수정 페이지
-def edit(request, post_id):
-    post = Post.objects.get(id=post_id)
+def edit(request, product_id):
+    product = Product.objects.get(id=product_id)
     context = {
-        'post': post
+        'product': product
     }
 
     return render(request, 'posts/edit.html', context)
 
 
 # 상품 1개 수정 기능
-def update(request, post_id):
-    post = Post.objects.get(id=post_id)
-    post.product_name = request.POST.get('product_name')
-    post.brand = request.POST.get('brand')
-    post.save()
+def update(request, product_id):
+    product = Product.objects.get(id=product_id)
+    product.product_name = request.POST.get('product_name')
+    product.brand = request.POST.get('brand')
+    product.save()
 
-    return redirect('posts:detail', post_id=post.id)
+    return redirect('posts:detail', product_id=product.id)
 
 
 # 상품 1개 삭제
-def delete(request, post_id):
-    post = Post.objects.get(id=post_id)
-    post.delete()
+def delete(request, product_id):
+    product = Product.objects.get(id=product_id)
+    product.delete()
 
     return redirect('posts:index')
 
@@ -134,7 +134,7 @@ def cart(request):
 
 
 # 상품 1개 조회 페이지 -> 결제 화면
-def checkout2(request, post_id):
+def checkout2(request, product_id):
     if request.user.is_authenticated:
         
         customer = request.user.customer
@@ -143,7 +143,7 @@ def checkout2(request, post_id):
 
         cartItems = order.get_cart_items    # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
 
-        post = Post.objects.get(id=post_id)     # 해당 상품 데이터를 Post 모델에서 가져오고
+        product = Product.objects.get(id=product_id)     # 해당 상품 데이터를 Product 모델에서 가져오고
         # Order 모델에 새로운 일자로 데이터 생성해야 됨..?!   
 
     else:
@@ -153,7 +153,7 @@ def checkout2(request, post_id):
         # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
         # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
 
-    context = {'post': post, 'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
+    context = {'product': product, 'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
 
     return render(request, 'posts/checkout.html', context)
 
@@ -187,21 +187,21 @@ def checkout1(request):
 
 
 # 장바구니 추가 기능
-def updatedItem(request, post_id):
+def updatedItem(request, product_id):
     data = json.loads(request.body)     # cart.js에서 보내준 body의 정보를 json 형태로 불러오기 
-    postID = data['postID']             # cart.js의 fetch -> body에서 정의한 변수의 이름과 같게 설정.
+    productID = data['productID']             # cart.js의 fetch -> body에서 정의한 변수의 이름과 같게 설정.
     action = data['action']
     print(data)                         # 장바구니 버튼을 클릭할 때 받은 데이터가 cart.js로부터 전달되었는지 터미널로 먼저 확인하기.
-    print('postID:' , postID)           # 해당 정보들을 id와 action으로 구분지어서 확인하기.
+    print('productID:' , productID)           # 해당 정보들을 id와 action으로 구분지어서 확인하기.
     print('action:' , action)
 
     customer = request.user.customer    # 로그인 된 해당 유저를 Customer 모델에서 가져온다는 의미(user모델에서 OneonOne관계로 customer모델로 접근)
-    post = Post.objects.get(id=postID)  # 장바구니를 누른 해당 상품의 id로 Post DB에 저장되어있는 정보 가져오기.
+    product = Product.objects.get(id=productID)  # 장바구니를 누른 해당 상품의 id로 Post DB에 저장되어있는 정보 가져오기.
     order, created = Order.objects.get_or_create(customer=customer, complete=False)     
     # Order 모델에서 로그인 된 해당 customer의 order가 이미 있다면 -> 생성하지 말고 그냥 가져오기  /  없다면 order DB 생성하기
     # .get_or_create(~~~, ~~~) -> 이렇게 괄호안에 있는 내용들이 모두 조건인가? 그래서 해당 조건을 만족하는 DB가 있으면 가져오고 없으면 생성?
     # 또한, complete=False로 설정했기 때문에 가져올 때 주문이 완료 되지 않은 정보만 가져오라는 의미인 것 같다! 
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=post)     
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)     
     # OrderItem 모델 - order 필드에 위에서 가져온 order와 동일한 order_id 그리고 product 필드에는 장바구니를 누른 해당 상품이 
     # 새롭게 들어가야 하므로 DB에서 새로운 데이터가 생성된다!(기존에는 이러한 값을 가진 데이터가 없었기 때문 / order_id는 같을지라도 상품은 없었다.)
 
@@ -230,17 +230,17 @@ def helloAPI(request):
 
 # RDF를 이용한 상품 정보 1개에 대한 API
 @api_view(['GET'])
-def Postinfo(request, post_id):
-    post = Post.objects.get(id=post_id)
-    serializer = PostSerializer(post)
+def Productinfo(request, product_id):
+    product = Product.objects.get(id=product_id)
+    serializer = ProductSerializer(product)
 
     return Response(serializer.data)
 
 
 # RDF를 이용한 CRUD API 
-class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 
 
