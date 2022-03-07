@@ -85,7 +85,7 @@
               <form id="logout-form" method="POST" action="{% url 'accounts:logout' %}">
                 {% csrf_token %} 
                   <button id="logout-button" type="submit">로그아웃</button>
-                  <a class="nav-link active" aria-current="page" href="">마이페이지</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'accounts:mypage' %}">마이페이지</a>
               </form>
               {% else %}
                 <li class="nav-item">

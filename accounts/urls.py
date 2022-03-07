@@ -10,4 +10,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     # 로그아웃 URL
     path('logout/', views.logout, name='logout'),
+    # 마이페이지 URL
+    path('mypage/', views.mypage, name='mypage'),
 ]

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<h1>마이페이지</h1>
+
+<p>아이디 : {{ request.user.get_username }}</p>
+<p>관리자 여부 : {{ request.user.is_staff }}</p>   <!-- 관리자 여부는 is_staff 메소드를 사용해서 True / False를 반환 -->
+<p>닉네임 : {{ request.user.customer.name }}</p>
+<p>이메일 : {{ request.user.customer.email }}</p>
+<p>관심있는 사회문제 : {{ request.user.customer.problem }}</p>
+{% endblock %}

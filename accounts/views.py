@@ -22,8 +22,9 @@ def sign_up(request):
 
             name = request.POST.get('nickname')           # 회원가입 시 입력한 nickname 데이터를 name 변수에 저장
             email = request.POST.get('email')             # 회원가입 시 입력한 email 데이터를 email 변수에 저장
-            customer = Customer(user=new_user, name=name, email=email)   
-            # 회원가입이 되면, User 모델과 1:1관계로 되어있는 Customer 모델의 user 필드 / name 필드 / email 필드에 값을 저장
+            problem = request.POST.get('social')          # 회원가입 시 선택한 problem 데이터를 problem 변수에 저장
+            customer = Customer(user=new_user, name=name, email=email, problem=problem)   
+            # 회원가입이 되면, User 모델과 1:1관계로 되어있는 Customer 모델의 user 필드 / name 필드 / email 필드 / problem 필드에 값을 저장
             customer.save()
 
 
@@ -66,9 +67,17 @@ def login(request):
     return render(request, 'accounts/login.html', context)  # POST방식이 아니라면 로그인 페이지 보여주기
 
 
+
 # 로그아웃 기능
 def logout(request):
     if request.method == 'POST':                # 만약 HTTP Request가 POST방식이라면,
         auth.logout(request)                    # auth 모듈의 logout 함수를 통해 쿠키와 세션 정보를 초기화해서 로그아웃 시키기
 
     return redirect('posts:index')              # POST방식이 아니라면 메인 페이지 보여주기
+
+
+
+# 마이페이지 기능
+def mypage(request):
+
+    return render(request, 'accounts/mypage.html')
