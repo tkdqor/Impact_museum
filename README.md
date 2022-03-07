@@ -83,6 +83,13 @@
       - 앱 내부 views.py의 login View에서는, GET방식일 경우 로그인 페이지를 랜더링하고 POST방식일 경우 로그인 절차 진행 => POST방식으로 전달한 username / password 데이터가 있다면, auth 모듈의 authenticate 함수를 사용해서 username / password 데이터를 가진 유저가 있는지 확인 진행 -> 유저가 있다면 user 인스턴스를 return하므로, 그렇다면 auth 모듈의 login함수를 사용해서 로그인 시켜주고 바로 메인페이지로 redirect -> 만약, 그런 유저가 없다면 context에 error key 저장해서 에러 메세지 띄우기 -> 로그인 정보를 다 받지 못한다면 모두 입력하라는 에러 메세지 띄우기      
       - 앱 내부 views.py의 logout View는 POST방식일 경우 auth모듈의 logout함수를 사용해서 로그아웃 진행 -> 서버 내 쿠키와 세션 정보를 초기화        
       - +++ 추가해야 할 사항 : Customer 모델의 필드가 현재 user / name / email 이렇게 되어있는데, 여기에 사회문제와 관련된 필드를 추가해서 -> 회원가입 시 받은 정보를 DB에 저장하게끔 하기
+  
+  2.6 모델 이름을 Post에서 -> Product로 수정
+      - 상품과 관련된 필드들이 Post라는 이름의 모델에 정의되어 있는 것이 맞지 않다고 판단        
+      - 먼저 python manage.py migrate posts zero -> 이렇게 입력하고나서 앱이름/migrations/ 내의 마이그레이션 파일을 모두 삭제       
+      - 그리고 앱 내부 파일들을 하나씩 보면서 모델명 변경으로 인해 수정해야 할 사항들 수정         
+      - 그리고 나서 python manage.py make migrations posts 를 진행 -> migrations 파일 0001 생성        
+      - 마지막으로 python manage.py migrate posts 진행
 
 
 </details>
@@ -107,6 +114,19 @@
 
 - Customer 모델의 name과 user 필드의 null, blank를 False로 변경했으나 -> migrations에서 문제 발생. 필드를 non-nullable로 바꾸는데 default를 주지 않았던 게 문제였음. 그래서 name과 user 필드에 default='미지정' 이라고 수정한 다음 migrations를 진행하고 migrate를 했으나 ValueError: Field 'id' expected a number but got '미지정' 라는 오류 발생. 해당 오류를 보고 default=0으로 수정하고 다시 migration/migrate 진행했으나 똑같은 오류발생.
   - Customer 모델의 user필드는 User모델과의 OneToOneField로 설정되어 있기 때문에, default값이 문자나 0이 아닌 1이상의 숫자로 설정해야 User모델의 pk와 충돌하지 않게 된다. pk는 자동적으로 1부터 증가하기 때문이다. 그래서 Customer 모델의 user와 name 필드 모두 default=1로 수정하고 / python manage.py showmigrations 명령어를 통해 아직 적용되지 않은 2개의 migration 파일을 삭제한 다음, 다시 migration / migrate 진행하여 오류 해결.
+
+
+- 상품 상세 페이지에서 장바구니 버튼을 눌렀을 때 추가가 되지 않았음     
+  - https://born-dev.tistory.com/28 처럼 Broken pipe 오류 였는데, HTTP Request가 최초에 진행되고 서버에서 작업을 완료해서 Response를 하기전에 네트워크가 끊겨서 생기는 문제였다.    
+  - cart.js 파일에서 .then((data) =>{ console.log('data:', data) location.reload() 이러한 코드가 있었는데, 이렇게 location.reload() 로 응답을 받기전에 새로고침이 되어서 오류가 발생.     - 이 부분을 주석처리 하니까 오류가 해결됨
+
+
+- 새로운 username으로 회원가입 시, IntegrityError at /accounts/sign_up/ 그리고 UNIQUE constraint failed: auth_user.username 라는 에러가 발생함
+  - 알고보니, 이미 가입된 username으로 다시 회원가입을 시도해서 발생하는 에러
+  - 이걸 막기 위해 코드를 추가해야 한다. 중복된 username이 있는 경우, 회원가입을 막을 수 있도록 해보기.
+
+
+
 <br>
 
 ## 7. 회고 / 느낀점
