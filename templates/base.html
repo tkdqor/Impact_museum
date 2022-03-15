@@ -46,7 +46,7 @@
           <a class="nav-link active" aria-current="page" href="#">카테고리</a>
           <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">로그인</a>
           <a class="nav-link active" aria-current="page" href="{% url 'accounts:sign_up' %}">회원가입</a>
-          <a class="nav-link active" href="{% url 'posts:cart' %}">장바구니({{ cartItems }})</a>
+          <a class="nav-link active" href="{% url 'products:cart' %}">장바구니({{ cartItems }})</a>
         </div>
       </div>
 
@@ -73,10 +73,10 @@
                 <a class="nav-link active" aria-current="page" href="#">카테고리</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'posts:cart' %}">장바구니({{ cartItems }})</a>
+                <a class="nav-link active" href="{% url 'products:cart' %}">장바구니({{ cartItems }})</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'posts:new' %}">상품추가</a>
+                <a class="nav-link active" href="{% url 'products:new' %}">상품추가</a>
               </li>
 
               <!-- 로그인 되었을 때 로그아웃 버튼과 멘트 표시 -->
@@ -98,7 +98,7 @@
 
             </ul>
             <!-- 검색창 만들기 -->
-            <form class="d-flex" action="{% url 'posts:index' %}" method="GET">
+            <form class="d-flex" action="{% url 'products:index' %}" method="GET">
               <input id="product-search" class="form-control me-2" type="search" aria-label="Search" name="query" value="{{ query }}">
               <!-- 검색어를 input의 name인 query에 담아서 HTTP Request GET방식으로 전달 -->
               <!-- value로 검색 후에도 키워드가 남아있게끔 설정 -->

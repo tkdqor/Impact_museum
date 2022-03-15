@@ -17,16 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings             # settings.py 참조를 위한 import
-from posts import views
+from products import views
 
 
 urlpatterns = [
     # admin 페이지 관련 URL
     path('admin/', admin.site.urls),
 
-    # posts App과 관련된 URL
+    # products App과 관련된 URL
     path('', views.index, name='main'),                   # request URL이 없이 도메인으로 접속했을 떄 메인화면 보여주기
-    path('posts/', include('posts.urls')),
+    path('products/', include('products.urls')),
 
     # accounts App과 관련된 URL
     path('accounts/', include('accounts.urls')),

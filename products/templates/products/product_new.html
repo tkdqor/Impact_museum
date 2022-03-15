@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block content %}
+        <h1>상품 추가하기</h1>
+        <form method="POST" action="{% url 'products:create' %}">
+            {% csrf_token %}
+            <div>
+                <label for="product_name">상품 이름</label>
+                <input id="product_name" type="text" name="product_name">
+            </div>
+            
+            <div>
+                <label for="product_brand">상품 브랜드</label>
+                <input id="product_brand" type="text" name="brand">
+            </div>    
+
+            <input type="submit" value="상품 추가하기">
+        </form>
+
+        <a href="{% url 'products:index' %}">상품 목록으로 돌아가기</a>
+    {% endblock %}    

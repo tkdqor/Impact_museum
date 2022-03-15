@@ -19,7 +19,7 @@ for(var i = 0 ; i < updatedBtns.length; i++){
 function updateUserOrder(productID,action){
     console.log('로그인 되었으니 정보를 보냅니다.')                 // 로그인이 된 사용자라면 일단 개발자도구 console에 출력
 
-    var url ='/posts/' + productID + '/update_item/'           
+    var url ='/products/' + productID + '/update_item/'           
     // url를 새롭게 정의하는데 -> 우리가 앱 단위 urls.py에서 설정한 url를 입력 -> views에서 updatedItem라는 장바구니 추가 기능 함수가 실행되게끔 설정
 
     fetch(url,{                               // fetch()를 이용해서 정보를 views.py로 전달  

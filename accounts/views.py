@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User  # django에 내장된 User 모델 import
 from django.contrib import auth              # django에 내장된 auth 모델 import
-from posts.models import Customer            # posts앱의 Customer 모델 import
+from .models import Customer            # posts앱의 Customer 모델 import
 
 # Create your views here.
 
@@ -30,7 +30,7 @@ def sign_up(request):
 
             auth.login(request, new_user)             # 회원가입이 완료 되면, auth 모듈의 login 함수를 이용해서 해당 유저를 로그인 시키기
 
-            return redirect('posts:index')            # 로그인이 된 다음에는 메인 페이지 보여주기
+            return redirect('products:index')            # 로그인이 된 다음에는 메인 페이지 보여주기
 
         else:
             context['error'] = '아이디와 비밀번호를 다시 입력해주세요.'   
@@ -55,7 +55,7 @@ def login(request):
 
             if user is not None:             # authenticate 함수 결과로 유저가 있으면 user 인스턴스가 return되고 없으면 None를 return
                 auth.login(request, user)    # 유저가 인증되면 login 함수로 로그인 시켜주기
-                return redirect('posts:index')  # 로그인 후 메인페이지 보여주기
+                return redirect('products:index')  # 로그인 후 메인페이지 보여주기
 
             else:                               # authenticate 함수 결과로 None를 반환하면, context 딕셔너리에 error key를 저장
                 context['error'] = '아이디와 비밀번호를 다시 입력해주세요!' 
@@ -73,7 +73,7 @@ def logout(request):
     if request.method == 'POST':                # 만약 HTTP Request가 POST방식이라면,
         auth.logout(request)                    # auth 모듈의 logout 함수를 통해 쿠키와 세션 정보를 초기화해서 로그아웃 시키기
 
-    return redirect('posts:index')              # POST방식이 아니라면 메인 페이지 보여주기
+    return redirect('products:index')              # POST방식이 아니라면 메인 페이지 보여주기
 
 
 
