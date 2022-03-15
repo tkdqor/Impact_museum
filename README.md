@@ -17,7 +17,7 @@
 <br>
 
 ## 3. ERD 설계
-<img src="https://user-images.githubusercontent.com/95380638/150262590-29403524-27cf-4329-8733-5a75ca70a8f8.png">
+![impact_museum](https://user-images.githubusercontent.com/95380638/158409944-43ced178-01d5-4acf-99ea-8956dcae65ec.png)
 
 - Customer 모델은 User 모델과 1:1관계로 설정
 - Order 모델은 Customer 모델과 1:N관계로 설정 - 1명의 사용자가 쇼핑몰에서 여러 번 주문할 수 있음
