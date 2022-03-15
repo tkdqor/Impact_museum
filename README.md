@@ -17,7 +17,7 @@
 <br>
 
 ## 3. ERD 설계
-<img src="https://user-images.githubusercontent.com/95380638/150262590-29403524-27cf-4329-8733-5a75ca70a8f8.png">
+![impact_museum](https://user-images.githubusercontent.com/95380638/158409944-43ced178-01d5-4acf-99ea-8956dcae65ec.png)
 
 - Customer 모델은 User 모델과 1:1관계로 설정
 - Order 모델은 Customer 모델과 1:N관계로 설정 - 1명의 사용자가 쇼핑몰에서 여러 번 주문할 수 있음
@@ -90,7 +90,18 @@
       - 그리고 앱 내부 파일들을 하나씩 보면서 모델명 변경으로 인해 수정해야 할 사항들 수정         
       - 그리고 나서 python manage.py make migrations posts 를 진행 -> migrations 파일 0001 생성        
       - 마지막으로 python manage.py migrate posts 진행
+  
+  2.7 Customer 모델에 problem이라는 필드 추가    
+      - 회원가입 시 유저의 관심있는 사회문제를 1개 받고 그 값을 Customer 모델에 추가하기 위함 / 관심있는 한가지의 문제가 없을수도 있으니 null=True 설정    
+      - Admin.py에 Customer 모델 관련해서 list_display 리스트에 problem 필드 추가.     
+      - accounts 앱의 views.py -> sign_up View에서 problem = request.POST.get('social') -> 이렇게 유저가 회원가입 시 선택한 사회문제를 받아서 변수로 저장하고 customer = Customer(user=new_user, name=name, email=email, problem=problem) -> 이렇게 Customer 모델에 값을 입력하도록 설정      
+  
+  2.7 마이페이지 메뉴 클릭 시, 유저의 정보를 출력해서 보여주기      
+      - accounts App 내부에 urls.py에서 마이페이지 URL를 설정하고, mypage라는 View 함수 설정     
+      - 그리고 accounts 디렉터리 내부에 mypage.html을 생성해서 유저 정보 출력 / request.user.is_staff로 관리자 여부를 True/False로 확인 가능 
 
+
+ 
 
 </details>
 <br>
