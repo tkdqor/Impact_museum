@@ -64,6 +64,8 @@ def detail(request, product_id):
     return render(request, 'products/product.html', context)
 
 
+
+
 # 상품 1개 생성 페이지
 def new(request):
     return render(request, 'products/product_new.html')

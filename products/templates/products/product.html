@@ -3,7 +3,7 @@
 
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'products/css/detail.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/product.css' %}">
 {% endblock %}
 
 
@@ -23,8 +23,7 @@
             <button data-product="{{ product.id }}" data-action="add" class="cart-update"><a href="{% url 'products:cart' %}">장바구니에 담기</a></button>
             <!-- 장바구니 클릭 버튼에 data attribute를 추가해서 클릭하는 순간, 데이터를 함께 보내주기 -->
             <!-- cart-update라는 클래스 이름으로 cart.js라는 자바스크립트 파일과 연동되어있음 -->
-            <button><a href="{% url 'products:checkout_id' product.id %}">구매하기</a></button>
-            <button><a href="">찜하기</a></button>
+            <button class="checkout_button"><a href="{% url 'products:checkout_id' product.id %}">구매하기</a></button>
         </div>
         {% else %}
         {% endif %}

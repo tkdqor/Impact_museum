@@ -17,10 +17,10 @@ img {
 }
 
 div#detail_container {
-    border: 1px solid #535353;
+    border: 0.5px solid #535353;
     display: flex;
     margin: 0px auto;
-    margin-top: 20px;
+    margin-top: 40px;
     height: 100%;
 }
 
@@ -56,4 +56,38 @@ div#detail_container {
 
 .detail_info > h3 {
     font-size: 24px;
+}
+
+
+/* 장바구니 버튼 */
+.cart-update {
+    background: none;
+    border: none;
+    background-color: #708090;
+    width: 200px;
+    height: 30px;
+    margin-top: 200px;
+}
+
+
+.cart-update > a {
+    text-decoration: none;
+    color: white;
+}
+
+
+/* 구매 버튼 */
+.checkout_button {
+    background: none;
+    border: none;
+    background-color: #708090;
+    width: 200px;
+    height: 30px;
+    margin-top: 200px;
+}
+
+
+.checkout_button > a {
+    text-decoration: none;
+    color: white;
 }
