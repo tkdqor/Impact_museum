@@ -99,9 +99,13 @@
   2.7 마이페이지 메뉴 클릭 시, 유저의 정보를 출력해서 보여주기      
       - accounts App 내부에 urls.py에서 마이페이지 URL를 설정하고, mypage라는 View 함수 설정     
       - 그리고 accounts 디렉터리 내부에 mypage.html을 생성해서 유저 정보 출력 / request.user.is_staff로 관리자 여부를 True/False로 확인 가능 
+  
+  2.8 products App 생성 및 모델 위치 수정      
+      - 원래 posts 앱에 있었던 Customer 모델을 accounts 앱에 models.py로 이동시킴 -> 이유는 posts 앱에 모든 모델을 구성하는 것이 비효율적이라고 생각했기 때문       
+      - products라는 App 생성 -> 이유는 posts App에 게시판이 아닌 상품들 관련 기능들이 있었기에 products라는 App에 해당 기능을 수행할 수 있도록 수정        
+      - 기존 posts App에는 게시판을 위한 Post 모델을 posts 앱 내부 models.py에 설정
 
-
- 
+  
 
 </details>
 <br>
@@ -135,6 +139,13 @@
 - 새로운 username으로 회원가입 시, IntegrityError at /accounts/sign_up/ 그리고 UNIQUE constraint failed: auth_user.username 라는 에러가 발생함
   - 알고보니, 이미 가입된 username으로 다시 회원가입을 시도해서 발생하는 에러
   - 이걸 막기 위해 코드를 추가해야 한다. 중복된 username이 있는 경우, 회원가입을 막을 수 있도록 해보기.
+
+
+- Django database is locked 라는 에러가 발생      
+  - python manage.py migrate posts zero를 실행하는 과정에서 위에 에러가 발생      
+  - 에러가 발생하는 이유는 DB Browser for SQLite 라는 프로그램을 통해 SQLite 데이터를 조회하고 있었기 때문 / 즉, migration 하려는 데이터베이스를 다른 프로그램을 통해 조회 또는 수정중이었기 때문     
+  - 해당 SQLite 를 조회하고 있던 프로그램(DB Browser for SQLite)을 종료한 뒤, migrate 명령을 다시 실행하면 에러없이 진행됨
+
 
 
 
