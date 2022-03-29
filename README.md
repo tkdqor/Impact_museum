@@ -147,6 +147,12 @@
   - 해당 SQLite 를 조회하고 있던 프로그램(DB Browser for SQLite)을 종료한 뒤, migrate 명령을 다시 실행하면 에러없이 진행됨
 
 
+- Related Field got invalid lookup: icontains 라는 에러 발생
+  - Product 모델의 brand 필드를 Brand 모델과 1:N 관계로 설정한 이후, 검색 시 해당 에러가 발생 
+  - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query)) -> 이렇게 ForeignKey가 검색 필드에 포함되서 나타나는 문제
+  - ㅇㅇㅇ
+
+
 
 
 <br>
