@@ -149,8 +149,8 @@
 
 - Related Field got invalid lookup: icontains 라는 에러 발생
   - Product 모델의 brand 필드를 Brand 모델과 1:N 관계로 설정한 이후, 검색 시 해당 에러가 발생 
-  - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query)) -> 이렇게 ForeignKey가 검색 필드에 포함되서 나타나는 문제
-  - ㅇㅇㅇ
+  - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query)) -> 다음과 같이 ForeignKey가 검색 필드에 포함되서 나타나는 문제
+  - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__name__icontains=query)) -> 이렇게 ForeingKey로 연결된 필드는 필드 이름만 입력하는 게 아니라 해당 모델의 필드를 자세히 입력해주기. 그래서 brand가 아니라 brand__name으로 필드를 설정하면 검색이 되고 에러가 발생하지 않는다. 
 
 
 
