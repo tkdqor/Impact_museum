@@ -1,0 +1,40 @@
+/* 브랜드 소개 */
+#brand_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#brand_info_title {
+    font-size: 28px;
+    font-weight: 400;
+}
+
+/* 브랜드 리스트 */
+#brand_frame {
+    display: flex;
+    justify-content: center;
+}
+
+
+.row > #brand_frame {
+    padding: 20px;
+}
+
+
+.card-image {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+

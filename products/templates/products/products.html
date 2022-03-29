@@ -15,10 +15,10 @@
     </div>
 
     <!-- 상품 목록 리스트 -->
-    <div class="col-xs-12 col-md-12" id="product_container">
-        
+    <div class="row">
+        <div class="col-lg-3 col-md-6" id="product_container">
         {% for product in products %}   
-            <div class="col-xs-3 col-md-6" id="product_list">     
+            <div id="product_list">     
                     <div class="product_image_frame">
                         <a href="{% url 'products:detail' product.id %}">
                             <img id="product_image" src="{{ product.imageURL }}" alt="상품 이미지">
@@ -29,10 +29,22 @@
                         <h2 class="product_info_name">{{ product.product_name }}</h2>
                         <h3 class="product_info_price">{{ product.price|floatformat:"0g" }}원</h3> 
                     </div>    
-            </div>    
-        {% endfor %}    
+            </div>        
+        {% endfor %} 
+        </div>   
                          
     </div>
+
+
+<!-- 반응형 따로 연습한 흔적 -->
+    <!-- <div class="row" id="product_list_frame">
+        {% for product in products %}  
+        <div class="col-lg-3 col-md-6" id="product_frame">
+
+            <p>{{ product.brand }}</p>
+        </div>
+        {% endfor %}
+    </div> -->
 
 {% endblock %}    
 

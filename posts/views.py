@@ -2,20 +2,22 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .serializers import ProductSerializer
-from rest_framework import viewsets
-import json
-from django.db.models import Q     # 검색기능구현 시, filter 조건을 or로 설정하기 위해 Q 함수 import
-from django.http import Http404    # 상품 1개 조회 시, 예외처리를 위한 Http404 import 
+from django.views.generic import ListView
 
 # Create your views here.
 
 
 
+# 입점 소셜벤처 보여주기
+class BrandListView(ListView):              # Brand 모델 데이터 ListVIew로 가져오기
+    model = Brand
+    template_name = 'posts/brands.html'
+    queryset = Brand.objects.all().order_by('-id')  # 쿼리셋 설정으로 데이터 순서 내림차순 정렬
 
 
 
+def brand(request, brand_id):
+
+    return render(request, 'posts/brand.html')
 
 

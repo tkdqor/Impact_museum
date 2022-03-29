@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from accounts.models import Customer
+from posts.models import Brand
 
 
 # Create your models here.
@@ -9,9 +10,11 @@ from accounts.models import Customer
 # Products 모델
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
-    brand = models.TextField()
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, blank=True, null=True, related_name='brand_product') # Brand 모델과 1:N관계 / 자체 PB 상품일수도 있으니 null, blank True 설정
     price = models.PositiveIntegerField(default=0)              # 가격이니까 실수가 아닌 정수 필드로 수정 / 가격이 음수가 될 수 없으니 타이트하게 필드 설정
     image = models.ImageField(null=True, blank=True, upload_to='products/product/%Y/%m/%d')            # 이미지이니까 Image 필드 선택
+    image2 = models.ImageField(null=True, blank=True, upload_to='products/product/%Y/%m/%d')
+    image3 = models.ImageField(null=True, blank=True, upload_to='products/product/%Y/%m/%d')
     created_at = models.DateTimeField(auto_now_add=True)        # 상품 db에 추가할 때 날짜 설정
     updated_at = models.DateTimeField(auto_now=True)            # 수정될 떄마다 날짜 설정
 

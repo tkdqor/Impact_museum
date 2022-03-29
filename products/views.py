@@ -37,7 +37,7 @@ def index(request):
     # 검색기능을 위해 query라는 변수를 지정하고 GET 방식으로 들어온 데이터를 조회
     query = request.GET.get('query', '')
     if query:
-        products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query))  
+        products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__name__icontains=query))  
         # 만약 검색한 데이터가 있다면, Product 모델에서 필터기능으로 해당 단어가 포함된 데이터만 전달 / 상품명 또는 브랜드를 검색할 수 있게 Q 함수 사용
 
     context = {

@@ -5,8 +5,9 @@ from django.utils.safestring import mark_safe
 # Register your models here.
 
 
-
-
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ['name']
 
 
 

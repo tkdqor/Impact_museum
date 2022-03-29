@@ -30,6 +30,9 @@ urlpatterns = [
 
     # accounts App과 관련된 URL
     path('accounts/', include('accounts.urls')),
+
+    # posts App과 관련된 URL
+    path('posts/', include('posts.urls')),
 ]
 
 

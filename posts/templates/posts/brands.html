@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'posts/css/brands.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- 소개 멘트 -->
+<div class="row">
+    <div class="col-lg-12" id="brand_info">
+        <p id="brand_info_title">입점 소셜벤처</p>
+        <p>Impact museum에 입점한 소셜벤처를 살펴보세요!</p>
+    </div>
+</div>
+
+<!-- 브랜드 리스트 -->
+<div class="row">
+    {% for brand in object_list %}                      <!-- ListView 사용 시 object_list 변수 사용 -->
+    <div class="col-lg-3 col-md-6" id="brand_frame">
+        <div class="card" style="width: 20rem;">
+            <div class="card-image">
+                <a href="{% url 'posts:brand' brand.id %}"><img src="{{ brand.logo.url }}" class="card-img-top" alt="브랜드 로고"></a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}

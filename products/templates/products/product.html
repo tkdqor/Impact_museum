@@ -7,30 +7,49 @@
 {% endblock %}
 
 
-{% block content %}  
-    <div class="col-md-8" id="detail_container">
-        {% if product %}    
-        <div class="detail_image_frame">
-            <img class="detail_image" src="{{ product.imageURL }}" alt="상품 상세 이미지">
+{% block content %} 
+<div class="row"> 
+    <div class="col-lg-10 col-md-12" id="product_frame">
+        <div id="detail_container">
+            {% if product %}    
+            <div class="detail_image_frame">
+                <img class="detail_image" src="{{ product.imageURL }}" alt="상품 상세 이미지">
+            </div>
+
+            <div class="detail_info">
+                <h1>{{ product.product_name }}</h1>
+                <h2>{{ product.brand }}</h2>
+                <h3>{{ product.price|floatformat:"0g" }}원</h3>
+
+
+                <!-- 장바구니 & 구매하기 버튼 -->
+                <div class="buttons">
+                    <button data-product="{{ product.id }}" data-action="add" class="cart-update"><a href="{% url 'products:cart' %}">장바구니에 담기</a></button>
+                    <!-- 장바구니 클릭 버튼에 data attribute를 추가해서 클릭하는 순간, 데이터를 함께 보내주기 -->
+                    <!-- cart-update라는 클래스 이름으로 cart.js라는 자바스크립트 파일과 연동되어있음 -->
+                    <button class="checkout_button"><a href="{% url 'products:checkout_id' product.id %}">구매하기</a></button>
+                </div>
+            </div>
+            {% else %}
+            {% endif %}
+        </div> 
+    </div>  
+</div>    
+
+
+<!-- 제품 다른 사진 보여주기 -->
+<div class="row">
+    <div class="col-lg-10 col-md-12" id="product_images_container">
+        <div class="product_images_frame">
+            <img src="{{ product.image.url }}" alt="제품 기타 사진" class="product_images">
+            <img src="{{ product.image.url }}" alt="제품 기타 사잔" class="product_images">
         </div>
 
-        <div class="detail_info">
-            <h1>{{ product.product_name }}</h1>
-            <h2>{{ product.brand }}</h2>
-            <h3>{{ product.price|floatformat:"0g" }}원</h3>
+    </div>
+</div>
 
-            <!-- 장바구니 & 구매하기 버튼 -->
-            <button data-product="{{ product.id }}" data-action="add" class="cart-update"><a href="{% url 'products:cart' %}">장바구니에 담기</a></button>
-            <!-- 장바구니 클릭 버튼에 data attribute를 추가해서 클릭하는 순간, 데이터를 함께 보내주기 -->
-            <!-- cart-update라는 클래스 이름으로 cart.js라는 자바스크립트 파일과 연동되어있음 -->
-            <button class="checkout_button"><a href="{% url 'products:checkout_id' product.id %}">구매하기</a></button>
-        </div>
-        {% else %}
-        {% endif %}
-    </div> 
-
-    <a href="{% url 'products:edit' product.id %}">상품 정보 수정하기</a>
+    <!-- <a href="{% url 'products:edit' product.id %}">상품 정보 수정하기</a>
     <a href="{% url 'products:index' %}">상품 목록으로 돌아가기</a>
-    <a href="{% url 'products:delete' product.id %}">해당 상품 삭제하기</a>
+    <a href="{% url 'products:delete' product.id %}">해당 상품 삭제하기</a> -->
 
 {% endblock %} 
