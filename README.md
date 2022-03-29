@@ -17,12 +17,14 @@
 <br>
 
 ## 3. ERD 설계
-![impact_museum](https://user-images.githubusercontent.com/95380638/158409944-43ced178-01d5-4acf-99ea-8956dcae65ec.png)
+![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/160554111-2d5650bb-0f79-41d9-8abe-ea84680678b7.png)
+
 
 - Customer 모델은 User 모델과 1:1관계로 설정
 - Order 모델은 Customer 모델과 1:N관계로 설정 - 1명의 사용자가 쇼핑몰에서 여러 번 주문할 수 있음
 - Shipping Address 모델은 Customer 모델 & Order 모델과 1:N관계로 설정 - 1명의 사용자가 다양한 배송 주소지를 생성할 수 있고, 1개의 주문 건이 배송 취소 및 실패 등으로 다양한 배송 주소지를 가질 수 있음
 - Order Item 모델(장바구니 기능을 생각하기)은 Product 모델 & Order 모델과 1:N관계로 설정 - 1개의 상품이 여러 번 장바구니에 포함될 수 있고, 1개의 주문 건에 많은 상품들이 장바구니에 추가될 수 있음
+- Post 모델과 Brand 모델 추가
 <br>
 
 ## 4. 핵심 기능     
@@ -145,6 +147,12 @@
   - python manage.py migrate posts zero를 실행하는 과정에서 위에 에러가 발생      
   - 에러가 발생하는 이유는 DB Browser for SQLite 라는 프로그램을 통해 SQLite 데이터를 조회하고 있었기 때문 / 즉, migration 하려는 데이터베이스를 다른 프로그램을 통해 조회 또는 수정중이었기 때문     
   - 해당 SQLite 를 조회하고 있던 프로그램(DB Browser for SQLite)을 종료한 뒤, migrate 명령을 다시 실행하면 에러없이 진행됨
+
+
+- Related Field got invalid lookup: icontains 라는 에러 발생
+  - Product 모델의 brand 필드를 Brand 모델과 1:N 관계로 설정한 이후, 검색 시 해당 에러가 발생 
+  - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query)) -> 다음과 같이 ForeignKey가 검색 필드에 포함되서 나타나는 문제
+  - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__name__icontains=query)) -> 이렇게 ForeingKey로 연결된 필드는 필드 이름만 입력하는 게 아니라 해당 모델의 필드를 자세히 입력해주기. 그래서 brand가 아니라 brand__name으로 필드를 설정하면 검색이 되고 에러가 발생하지 않는다. 
 
 
 
