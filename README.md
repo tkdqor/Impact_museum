@@ -107,12 +107,12 @@
       - products라는 App 생성 -> 이유는 posts App에 게시판이 아닌 상품들 관련 기능들이 있었기에 products라는 App에 해당 기능을 수행할 수 있도록 수정        
       - 기존 posts App에는 게시판을 위한 Post 모델을 posts 앱 내부 models.py에 설정
   
-  version 2.9 posts App에 Brand 모델 생성
-      - posts App에 Brand 모델 생성 / 추가한 이유는, 입점 소셜벤처 페이지에서 브랜드를 소개 및 브랜드 상세 페이지를 보여주기 위해 추가
+  version 2.9 posts App에 Brand 모델 생성   
+      - posts App에 Brand 모델 생성 / 추가한 이유는, 입점 소셜벤처 페이지에서 브랜드를 소개 및 브랜드 상세 페이지를 보여주기 위해 추가   
       - 또한, Brand모델과 Product 모델 관계를 1:N으로 설정해서 입점된 브랜드의 상품들을 관리하게끔 설정
-      - ERD에 해당 내용 반영
+      - ERD에 해당 내용 반영    
       - Product 모델에 이미지 필드 2개 추가 → 상품 상세 페이지에서 추가 이미지를 보여주기 위함
-      - 입점 소셜벤처 페이지는 ListView를 상속받아서 View로 설정
+      - 입점 소셜벤처 페이지는 ListView를 상속받아서 View로 설정     
       - 상품 상세페이지 수정 + 입점 소셜벤처 페이지 생성
 
 
