@@ -25,7 +25,7 @@
 <br>
 
 ## 3. ERD 설계
-![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/161479206-309dad19-2780-484e-ab73-0694ea6946a9.png)
+![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/161485125-6a660318-d5a6-47a4-8716-64d204b011cc.png)
 
 
 - Customer 모델은 User 모델과 1:1관계로 설정
