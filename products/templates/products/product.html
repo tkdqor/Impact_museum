@@ -18,7 +18,7 @@
 
             <div class="detail_info">
                 <h1>{{ product.product_name }}</h1>
-                <h2>{{ product.brand }}</h2>
+                <h2><a href="{% url 'posts:brand' product.brand.id %}">{{ product.brand }}</a></h2>
                 <h3>{{ product.price|floatformat:"0g" }}원</h3>
 
 

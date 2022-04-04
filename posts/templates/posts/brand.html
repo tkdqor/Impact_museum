@@ -2,8 +2,71 @@
 {% load static %}
 
 {% block style %}
+<link rel="stylesheet" href="{% static 'posts/css/brand.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>브랜드 디테일 페이지</h1>
+
+<!-- 브랜드 상세 페이지 탑 이미지 -->
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="brand_top_image_frame">
+            <img src="{{ brand.image.url }}" alt="브랜드 상세 페이지 이미지" class="brand_top_image">
+        </div>
+    </div>
+
+
+<!-- 브랜드 로고 및 상세 내용 -->
+<div class="row" style="margin-top: 50px;">
+    <div class="col-lg-4 col-md-12">
+        <div class="brand_logo_image_frame">
+            <img src="{{ brand.logo.url }}" alt="브랜드 로고 이미지" class="brand_logo_image">
+        </div>
+        <div class="brand_logo_info_frame">
+            <h1>{{ brand.name }}</h1>
+            <button class="brand_homepage_button" type="button" OnClick=window.open("{{ brand.homepage }}")>홈페이지</button>
+        </div>
+    </div>
+
+
+    <div class="col-lg-8 col-md-8">
+        <div class="brand_info_frame">
+            <h2>{{ brand.short_content }}</h2>
+            <p>{{ brand.long_content }}</p>
+
+            <h3 style="margin-top: 100px;">현재 판매하고 있는 상품들</h3>
+
+            <!-- Carousel로 지금 판매중인 상품들을 보여주기 -->
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for product in products %}
+                        {% if forloop.first %}  <!-- Carousel의 첫번째 페이지일 경우 -->
+                        <div class="carousel-item active" data-bs-interval="2000">
+                            <a href="{% url 'products:detail' product.id %}"><img src="{{ product.image.url }}" class="d-block w-100" alt="해당 브랜드 제품 이미지"></a>
+                        </div>
+                        {% else %}              <!-- Carousel의 첫번째 페이지가 아닐 경우 -->
+                        <div class="carousel-item" data-bs-interval="2000">
+                            <a href="{% url 'products:detail' product.id %}"><img src="{{ product.image.url }}" class="d-block w-100" alt="해당 브랜드 제품 이미지"></a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>    
+
+
+
+
+
+
 {% endblock %}
