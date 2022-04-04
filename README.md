@@ -25,7 +25,7 @@
 <br>
 
 ## 3. ERD 설계
-![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/161479206-309dad19-2780-484e-ab73-0694ea6946a9.png)
+![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/161485125-6a660318-d5a6-47a4-8716-64d204b011cc.png)
 
 
 - Customer 모델은 User 모델과 1:1관계로 설정
@@ -122,6 +122,11 @@
       - Product 모델에 이미지 필드 2개 추가 → 상품 상세 페이지에서 추가 이미지를 보여주기 위함
       - 입점 소셜벤처 페이지는 ListView를 상속받아서 View로 설정     
       - 상품 상세페이지 수정 + 입점 소셜벤처 페이지 생성
+  
+  version 2.91 Brand 모델 및 Customer 모델 수정      
+      - Brand 모델의 problem 필드 추가 / 해당 브랜드가 해결하고자 하는 사회문제를 구분해 카테고리 페이지에서 분류할 수 있도록 설정         
+      - Customer 모델의 user/name/email 필드에 unique 속성 부여 / 사용자ID와 닉네임, 이메일이 중복되지 않게 설정
+  
 
 
 </details>
