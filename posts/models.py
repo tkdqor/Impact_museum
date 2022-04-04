@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
@@ -22,6 +23,7 @@ class Brand(models.Model):
     logo = models.ImageField(null=True, blank=True, upload_to='posts/Brand/%Y/%m/%d')
     homepage = models.CharField(max_length=200)   # 해당 브랜드의 홈페이지 주소를 담기위해 설정
     problem = models.CharField(max_length=50, default="None")     # 해당 브랜드가 해결하고자 하는 사회문제를 구분해 카테고리 페이지에서 분류할 수 있도록 설정
+    image = models.ImageField(null=True, blank=True, upload_to='posts/Brand/%Y/%m/%d') 
 
     def __str__(self):
         return f'{self.name}'
