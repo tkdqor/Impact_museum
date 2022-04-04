@@ -122,6 +122,11 @@
       - Product 모델에 이미지 필드 2개 추가 → 상품 상세 페이지에서 추가 이미지를 보여주기 위함
       - 입점 소셜벤처 페이지는 ListView를 상속받아서 View로 설정     
       - 상품 상세페이지 수정 + 입점 소셜벤처 페이지 생성
+  
+  version 2.91 Brand 모델 및 Customer 모델 수정      
+      - Brand 모델의 problem 필드 추가 / 해당 브랜드가 해결하고자 하는 사회문제를 구분해 카테고리 페이지에서 분류할 수 있도록 설정         
+      - Customer 모델의 user/name/email 필드에 unique 속성 부여 / 사용자ID와 닉네임, 이메일이 중복되지 않게 설정
+  
 
 
 </details>
