@@ -130,6 +130,12 @@
   version 2.92 Brand 모델 수정      
       - Brand 모델에 image 필드 추가 / 브랜드 상세 페이지에서 보여줄 대표 이미지를 위해 필드 추가
   
+  version 2.93 브랜드 상세페이지 업데이트      
+      - 홈페이지 버튼 클릭 시 DB에 저장된 url로 해당 브랜드 홈페이지로 이동      
+      - Brand DB에 저장된 short_content / long_content 표시      
+      - 현재 판매되고 있는 해당 브랜드 제품을 Carousel을 이용해 자동으로 보여주기      
+      - 이 때, 해당 상품 이미지 클릭 시 제품 상세페이지가 나오게끔 설정     
+      - 제품 상세페이지에서 브랜드명 클릭 시, 브랜드 상세페이지가 나오게끔 설정
 
 
 </details>
@@ -176,6 +182,11 @@
   - Product 모델의 brand 필드를 Brand 모델과 1:N 관계로 설정한 이후, 검색 시 해당 에러가 발생 
   - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query)) -> 다음과 같이 ForeignKey가 검색 필드에 포함되서 나타나는 문제
   - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__name__icontains=query)) -> 이렇게 ForeingKey로 연결된 필드는 필드 이름만 입력하는 게 아니라 해당 모델의 필드를 자세히 입력해주기. 그래서 brand가 아니라 brand__name으로 필드를 설정하면 검색이 되고 에러가 발생하지 않는다. 
+
+
+- Bootstrap Carousel로 입력 시, for문의 첫번째 항목에는 div element의 class가 carousel-item active로 되어 있어야 하는 부분이 있었음      
+  - {% for product in products %} 다음에 {% if forloop.first %} 이렇게 입력       
+  - forloop은 https://docs.djangoproject.com/en/4.0/ref/templates/builtins/ django 공식 문서에 나와있듯이, for문에서 사용할 수 있는 변수로 forloop.first가 for문의 첫번째 항목이기에 해당 항목일 경우 div class="carousel-item active"를 출력하고 아닐 경우에는 class="carousel-item"로 출력해서 Carousel 기능 설정
 
 
 
