@@ -22,6 +22,12 @@
 **개발환경**
 - VSCode
 
+**DBMS**
+- MySQL 8.0.28
+
+**DB 관리 툴**
+- DBeaver 22.0.2
+
 <br>
 
 ## 3. ERD 설계
