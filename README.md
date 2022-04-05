@@ -210,7 +210,12 @@
   - forloop은 https://docs.djangoproject.com/en/4.0/ref/templates/builtins/ django 공식 문서에 나와있듯이, for문에서 사용할 수 있는 변수로 forloop.first가 for문의 첫번째 항목이기에 해당 항목일 경우 div class="carousel-item active"를 출력하고 아닐 경우에는 class="carousel-item"로 출력해서 Carousel 기능 설정
 
 
-- version 3.0에서 .gitignore를 설정했으나 적용 안됨
+- version 3.0에서 .gitignore를 설정했으나 적용 안됨     
+  - https://stackoverflow.com/questions/11451535/gitignore-is-ignored-by-git
+  - https://coding-groot.tistory.com/59
+  - https://jojoldu.tistory.com/307
+  - 해당 글들을 참고하여 git에 있는 인덱스 파일만 삭제하여 git 캐시를 전부 삭제하고 다시 git 커밋을 실행해서 적용 완료
+  - **아직 settings.py는 적용 안됨 -> 알아보기**
 
 
 
