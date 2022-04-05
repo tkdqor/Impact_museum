@@ -28,6 +28,13 @@
 **DB 관리 툴**
 - DBeaver 22.0.2
 
+**클라우드 서버 활용**
+- AWS(Amazon Web Service)
+
+**버전관리**
+- Git
+- Github
+
 <br>
 
 ## 3. ERD 설계
