@@ -136,6 +136,21 @@
       - 현재 판매되고 있는 해당 브랜드 제품을 Carousel을 이용해 자동으로 보여주기      
       - 이 때, 해당 상품 이미지 클릭 시 제품 상세페이지가 나오게끔 설정     
       - 제품 상세페이지에서 브랜드명 클릭 시, 브랜드 상세페이지가 나오게끔 설정
+  
+  version 3.0 DBMS를 MySQL로 설정     
+      - MySQL로 설정한 이유는, 현재 시점에서 Oracle다음으로 가장 많이 사용하는 DBMS이기 때문에 안정적이라고 판단해서 MySQL로 설정하게 됨(https://db-engines.com/en/ranking 여기서 확인 가능)
+      - 먼저 AWS에 들어가서 RDS로 들어감 -> 그리고 데이터베이스 생성 클릭. MySQL 버전은 8.0.28      
+      - 해당 템플릿은 프리티어로 1년 무료 선택       
+      - 해당 DB인스턴스는 → db.t3.micro 사양으로 2 vCPUs, 1GiB RAM, 네트워크: 2,085Mbps / 스토리지는 범용 SSD(gp2), 할당된 스토리지는 20 GiB / 최대 스토리지 임계값은 1,000 GiB       - AWS RDS에서 VPC 보안 그룹 설정하기       
+      - DB 관리 툴인 DBeaver를 사용해서 우리가 생성한 데이터베이스 서버 연결 / DBeaver는 22.0.2버전 사용       
+      - 그리고나서 DBeaver를 이용해서 impactmuseum이라는 이름의 DB생성 → DBeaver의 좌측 Navigator에 DB 생성 확인      
+      - 이제 django의 settings.py로 가서 DB 엔진을 sqlite3에서 mysql로 바꾸고 값 추가해서 설정       
+      - DB에 붙는 것을 도와주는 어댑터 역할, 콘센트 역할을 하는 클라이언트인 mysqlclient 설치         
+      - 다시 python manage.py migrate를 진행        
+        - **이 과정에서 해당 경고 발생, 알아보기** --> WARNINGS:
+?: (mysql.W002) MySQL Strict Mode is not set for database connection 'default'
+        HINT: MySQL's Strict Mode fixes many data integrity problems in MySQL, such as data truncation upon insertion, by escalating warnings into errors. It is strongly recommended you activate it. See: https://docs.djangoproject.com/en/3.2/ref/databases/#mysql-sql-mode       
+      - DBeaver에서 새로고침하면 테이블이 생성되어 데이터 추가 완료
 
 
 </details>
