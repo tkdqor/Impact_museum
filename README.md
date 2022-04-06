@@ -26,7 +26,7 @@
 - MySQL 8.0.28
 
 **DB 관리 툴**
-- DBeaver 22.0.2
+- DBeaver 22.0.2 (GUI(Graphical User Interface)가 제공되기 때문에 손쉽게 데이터베이스를 관리할 수 있어 선택)
 
 **클라우드 서버 활용**
 - AWS(Amazon Web Service)
