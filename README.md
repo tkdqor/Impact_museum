@@ -5,7 +5,7 @@
 <br>
 
 ## 1. 제작 기간 & 참여 인원
-- 2021년 1월 14일 ~
+- 2021년 2월 12일 ~
 - 개인 프로젝트
 <br>
 
@@ -26,7 +26,7 @@
 - MySQL 8.0.28
 
 **DB 관리 툴**
-- DBeaver 22.0.2
+- DBeaver 22.0.2 (GUI(Graphical User Interface)가 제공되기 때문에 손쉽게 데이터베이스를 관리할 수 있어 선택)
 
 **클라우드 서버 활용**
 - AWS(Amazon Web Service)
@@ -38,7 +38,7 @@
 <br>
 
 ## 3. ERD 설계
-![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/161485125-6a660318-d5a6-47a4-8716-64d204b011cc.png)
+![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/162469471-75ac1835-d2c5-4a49-ad4f-9c521a140ca8.png)
 
 
 - Customer 모델은 User 모델과 1:1관계로 설정
@@ -46,6 +46,7 @@
 - Shipping Address 모델은 Customer 모델 & Order 모델과 1:N관계로 설정 - 1명의 사용자가 다양한 배송 주소지를 생성할 수 있고, 1개의 주문 건이 배송 취소 및 실패 등으로 다양한 배송 주소지를 가질 수 있음
 - Order Item 모델(장바구니 기능을 생각하기)은 Product 모델 & Order 모델과 1:N관계로 설정 - 1개의 상품이 여러 번 장바구니에 포함될 수 있고, 1개의 주문 건에 많은 상품들이 장바구니에 추가될 수 있음
 - Post 모델과 Brand 모델 추가
+- Problem 모델 추가 - Brand모델과 1:N 관계 설정
 <br>
 
 ## 4. 핵심 기능     
@@ -223,6 +224,12 @@
   - https://jojoldu.tistory.com/307
   - 해당 글들을 참고하여 git에 있는 인덱스 파일만 삭제하여 git 캐시를 전부 삭제하고 다시 git 커밋을 실행해서 적용 완료
   - **아직 settings.py는 적용 안됨 -> 알아보기**
+
+
+- AWS로 연결한 MySQL이 DBeaver에서 connect timed out 에러가 발생    
+  - https://stackoverflow.com/questions/9500803/cant-connect-to-mysql-remote 해당 답변에서 connect timed out은 server가 busy하거나 방화벽 문제 둘 중 한가지 원인이라는 것을 확인     
+  - 그래서, AWS Console의 DB 인스턴스 인바운드 규칙에 설정된 내용을 전부 삭제한 뒤 다시 재설정하고 DBeaver에 연결했더니 성공
+  - 추가로, https://www.codingfactory.net/12934 해당 내용을 참고해서 데이터베이스를 잠시 연결하지 않으면 끊어지는 상황을 방지하기 위해, 작업을 하지 않아도 연결이 되게끔 DBeaver의 Keep-Alive을 120으로 설정
 
 
 
