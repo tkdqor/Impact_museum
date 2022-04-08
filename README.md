@@ -165,6 +165,13 @@
 ?: (mysql.W002) MySQL Strict Mode is not set for database connection 'default'
         HINT: MySQL's Strict Mode fixes many data integrity problems in MySQL, such as data truncation upon insertion, by escalating warnings into errors. It is strongly recommended you activate it. See: https://docs.djangoproject.com/en/3.2/ref/databases/#mysql-sql-mode       
       - DBeaver에서 새로고침하면 테이블이 생성되어 데이터 추가 완료
+  
+  version 3.1 Posts 앱 내부 models.py에 Problem이라는 모델 클래스 추가    
+      - 사회문제 모델 테이블을 만들어서 “사회문제” 페이지에서 각 문제들을 소개하고 그 문제에 속해있는 입점 브랜드들을 보여주기 위해 추가     
+      - 일단은 name / image / content 필드로 구성     
+      - 그리고 Brand 모델에 있는 problem 필드를 ForeignKey로 바꿔서 Problem 모델과 Brand 모델이 1:N관계가 되게끔 설정      
+      - ForeignKey 설정 시, on_delete=models.PROTECT로 설정한 이유는 규정한 사회문제가 없어져도 일단 입점된 브랜드의 정보들은 그대로 유지하기 위함
+  
 
 
 </details>
