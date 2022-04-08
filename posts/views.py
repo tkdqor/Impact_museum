@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import *
@@ -29,5 +30,17 @@ def brand(request, brand_id):
     }
 
     return render(request, 'posts/brand.html', context)
+
+
+# 사회문제 페이지 보여주기
+def socialproblem(request):
+
+    problems = Problem.objects.all()
+
+    context = {
+        'problems': problems,
+    }
+
+    return render(request, 'posts/socialproblem.html', context)
 
 

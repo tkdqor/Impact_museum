@@ -13,6 +13,9 @@ urlpatterns = [
 
     # 소셜벤처 디테일 URL
     path('brands/<int:brand_id>/', views.brand, name='brand'),
+
+    # 사회문제 URL
+    path('socialproblem/', views.socialproblem, name='socialproblem'),
 ]
 
 

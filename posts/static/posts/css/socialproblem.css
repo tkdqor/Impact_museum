@@ -1,0 +1,24 @@
+/* 사회문제 소개 */
+#problem_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#problem_info_title {
+    font-size: 28px;
+    font-weight: 400;
+}
+
+
+
+/* 사회문제 종류 선택하기 */
+#problem_frame {
+    display: flex;
+    justify-content: center;
+    border: 0.5px solid #535353;
+    border-radius: 5px;
+}
+
+

@@ -10,4 +10,7 @@ class BrandAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
+@admin.register(Problem)
+class ProblemAdmin(admin.ModelAdmin):
+    list_display = ['name']
 

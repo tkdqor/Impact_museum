@@ -64,7 +64,7 @@ class Order(models.Model):
 
 # Order item 모델
 class OrderItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)   # Post 모델과 1:N관계 / 장바구니 기록을 남기기 위해 Post가 사라져도 남게끔 설정
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)   # Product 모델과 1:N관계 / 장바구니 기록을 남기기 위해 Post가 사라져도 남게끔 설정
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)    # Order 모델과 1:N관계 / 주문내역이 사라져도 장바구니 기록을 남길 수 있게 설정
     quantity = models.IntegerField(default=0, null=False, blank=False)
     date_added = models.DateTimeField(auto_now_add=True)
