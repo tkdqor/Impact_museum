@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>마이페이지 정보 수정하기</h1>
+
+<form action="{% url 'accounts:mypage_update' %}" method="POST">
+    {% csrf_token %}
+
+    <div>
+        <label for="id">아이디</label>
+        <input id="id" type="text" name="id" value="{{ request.user.get_username }}">
+    </div>
+
+    <div>
+        <label for="nickname">닉네임</label>
+        <input id="nickname" type="text" name="nickname" value="{{ request.user.customer.name }}">
+    </div>
+
+    <div>
+        <label for="email">이메일</label>
+        <input id="email" type="email" name="email" value="{{ request.user.customer.email }}">
+    </div>
+
+    <div>
+        <label for="problem">관심있는 사회문제</label>
+        <input id="problem" type="text" name="problem" value="{{ request.user.customer.problem }}">
+    </div>
+
+    <input type="submit" value="수정하기">
+
+</form>
+{% endblock %}

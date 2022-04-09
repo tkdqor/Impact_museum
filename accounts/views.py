@@ -81,3 +81,19 @@ def logout(request):
 def mypage(request):
 
     return render(request, 'accounts/mypage.html')
+
+
+# 마이페이지 수정
+def mypage_update(request):
+    if request.method == 'POST':                         # 마이페이지 정보 수정인 POST방식으로 요청이 올 때
+        request.user.username = request.POST.get('id')   # 로그인한 유저의 id를 수정하기 위해 해당 코드 작성
+        customer = request.user.customer                 # 로그인한 유저의 customer 정보에 접근
+        customer.name = request.POST.get('nickname')     # 해당 customer의 정보 수정
+        customer.email = request.POST.get('email')
+        customer.problem = request.POST.get('problem')
+        request.user.save()                              # 수정된 id 정보 저장
+        customer.save()                                  # 수정된 customer 정보 저장
+
+        return redirect('accounts:mypage')
+
+    return render(request, 'accounts/mypage_update.html')
