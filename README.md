@@ -172,6 +172,13 @@
       - 그리고 Brand 모델에 있는 problem 필드를 ForeignKey로 바꿔서 Problem 모델과 Brand 모델이 1:N관계가 되게끔 설정      
       - ForeignKey 설정 시, on_delete=models.PROTECT로 설정한 이유는 규정한 사회문제가 없어져도 일단 입점된 브랜드의 정보들은 그대로 유지하기 위함
   
+  version 3.11 사회문제 페이지 구성 진행     
+      - 사회문제 페이지를 클릭했을 때, 우리나라에 존재하는 사회문제 리스트를 보여주고 해당 문제 클릭 시 문제에 대한 설명과 함께 그 문제를 해결하기 위해 노력하는 소셜벤처 보여주기      
+      - Problem 모델에 short_content 필드 추가
+  
+  
+
+  
 
 
 </details>
