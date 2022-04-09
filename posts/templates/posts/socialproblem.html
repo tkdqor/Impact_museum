@@ -10,17 +10,51 @@
 <div class="row">
     <div class="col-lg-12" id="problem_info">
         <p id="problem_info_title">존재하는 사회문제</p>
+        <p>사회문제를 선택해보세요!</p>
     </div>
 </div>
 
+
 <!-- 사회문제 종류 선택하기 -->
-<div class="row" style="padding-left: 50px; padding-right: 50px;">
+<div class="row" style="padding-left: 100px; padding-right: 100px; margin-top: 30px;">
     {% for problem in problems %}
     <div class="col-lg-3 col-md-6" id="problem_frame">
-        <p class="problem_title">{{ problem.name }}</p>
+        <form action="" method="GET">
+            <!-- 버튼 클릭 시, 해당 사회문제 pk를 form으로 보내주기 -->
+            <button name="socialproblem" value="{{ problem.id }}" class="problem_button"><p class="problem_title">{{ problem.name }}</p></button>
+        </form>
     </div>
     {% endfor %}
 </div>
 
+
+<!-- 선택된 사회문제 보여주기 -->
+{% if selected_problem %}
+<div class="row">
+    <div class="col-lg-12 col-md-12" id="selected_frame">
+        <p class="selected_title">{{ selected_problem.name }} 문제</p>
+        <hr style="border: solid 2px black; width: 10%;">
+        <i><p class="selected_short_content">"{{ selected_problem.short_content }}"</p></i>
+        <!-- 사회문제 이미지 -->
+        <div class="selected_img_frame">
+            <img class="selected_img" src="{{ selected_problem.image.url }}" alt="사회문제 이미지">
+        </div>
+        <!-- 사회문제 content -->
+        <div class="selected_content">
+            <p>{{ selected_problem.content|slice:":176" }}</p>
+            <p>{{ selected_problem.content|slice:"177:352" }}</p>
+            <p>{{ selected_problem.content|slice:"353:" }}</p>
+        </div>
+        <!-- 해당 사회문제를 해결하는 브랜드 보여주기 -->
+        <div class="selected_brand">
+            <p class="selected_brand_title">이 문제를 해결하기 위해 노력하는 소셜벤처들</p>
+            <hr style="border: solid 2px black; width: 60%;">
+            {% for brand in selected_brands %}
+                <a href="{% url 'posts:brand' brand.id %}"><i><p class="selected_brand_info">{{ brand.name }}</p></i></a>
+            {% endfor %}
+        </div>
+    </div>    
+</div>
+{% endif %}
 {% endblock %}
 

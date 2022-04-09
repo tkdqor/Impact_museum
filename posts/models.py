@@ -31,6 +31,7 @@ class Brand(models.Model):
 class Problem(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(null=True, blank=True, upload_to='posts/Problem/%Y/%m/%d')
+    short_content = models.CharField(max_length=200, null=True, blank=True)  
     content = models.TextField()      # 많은 양의 글자를 담기 위해 TextField 설정
 
     def __str__(self):
