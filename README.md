@@ -165,6 +165,13 @@
 ?: (mysql.W002) MySQL Strict Mode is not set for database connection 'default'
         HINT: MySQL's Strict Mode fixes many data integrity problems in MySQL, such as data truncation upon insertion, by escalating warnings into errors. It is strongly recommended you activate it. See: https://docs.djangoproject.com/en/3.2/ref/databases/#mysql-sql-mode       
       - DBeaver에서 새로고침하면 테이블이 생성되어 데이터 추가 완료
+  
+  version 3.1 Posts 앱 내부 models.py에 Problem이라는 모델 클래스 추가    
+      - 사회문제 모델 테이블을 만들어서 “사회문제” 페이지에서 각 문제들을 소개하고 그 문제에 속해있는 입점 브랜드들을 보여주기 위해 추가     
+      - 일단은 name / image / content 필드로 구성     
+      - 그리고 Brand 모델에 있는 problem 필드를 ForeignKey로 바꿔서 Problem 모델과 Brand 모델이 1:N관계가 되게끔 설정      
+      - ForeignKey 설정 시, on_delete=models.PROTECT로 설정한 이유는 규정한 사회문제가 없어져도 일단 입점된 브랜드의 정보들은 그대로 유지하기 위함
+  
 
 
 </details>
@@ -230,6 +237,12 @@
   - https://stackoverflow.com/questions/9500803/cant-connect-to-mysql-remote 해당 답변에서 connect timed out은 server가 busy하거나 방화벽 문제 둘 중 한가지 원인이라는 것을 확인     
   - 그래서, AWS Console의 DB 인스턴스 인바운드 규칙에 설정된 내용을 전부 삭제한 뒤 다시 재설정하고 DBeaver에 연결했더니 성공
   - 추가로, https://www.codingfactory.net/12934 해당 내용을 참고해서 데이터베이스를 잠시 연결하지 않으면 끊어지는 상황을 방지하기 위해, 작업을 하지 않아도 연결이 되게끔 DBeaver의 Keep-Alive을 120으로 설정
+
+
+- Posts 앱 내부 models.py 코드 설정 시 오류     
+  - Posts 앱 내부 models.py에 problem = models.ForeignKey(Problem, on_delete=models.PROTECT)와 같이 코드를 입력했을 때, 같은 위치에 있는 Problem이라는 모델을 VSCode가 인식하지 못함
+  - 그래서 https://docs.djangoproject.com/en/4.0/ref/models/fields/ 해당 공식문서에 내용을 바탕으로, problem = models.ForeignKey('Problem', on_delete=models.PROTECT) 이렇게 모델 이름을 문자열로 설정했더니 인식이 되어 migration, migrate를 실행할 수 있었음
+
 
 
 
