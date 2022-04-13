@@ -253,6 +253,12 @@
   - 그래서 https://docs.djangoproject.com/en/4.0/ref/models/fields/ 해당 공식문서에 내용을 바탕으로, problem = models.ForeignKey('Problem', on_delete=models.PROTECT) 이렇게 모델 이름을 문자열로 설정했더니 인식이 되어 migration, migrate를 실행할 수 있었음
 
 
+- 지속적으로 AWS로 연결한 MySQL이 DBeaver에서 connect timed out 에러가 계속 발생      
+  - DBeaver의 Keep-Alive을 120으로 설정한 이후에도, 계속 connect timed out 에러가 발생됨     
+  - 기존에는 AWS에서 인바운드 규칙을 **22포트(SSH) / 내 IP, HTTPS / Anywhere-IPv4, HTTP / Anywhere-IPv4, 3306포트(MySQL) / 내 IP** 이렇게 설정했었는데, 접속 환경 상 매번 접속 아이피가 변경될 수 있다는 점을 확인      
+  - (대부분 우리가 인터넷을 사용할 때 유동IP로 접속할때마다 IP가 변경이 된다. 전용 회선이나 고정 IP를 신청한 게 아니라면, IP가 할당될 때 일정 시간 동안만 그 IP를 사용할 수 있게 할당을 해주고, 유효시간이 지나면 IP를 나눠주는 서버인 DHCP서버가 우리의 컴퓨터가 꺼져있으면 해당 IP에 대한 사용이 끝났다고 인지하고 IP를 회수한다고 한다. 그래서 다시 컴퓨터를 켰을 때, 컴퓨터가 자동으로 DHCP에게 IP할당을 요청하고 사용하던 IP가 비어있으면 이전 IP를 할당해주지만, 누가 쓰고있다면 남아있는 IP 중 하나를 할당해준다.)      
+  - 그래서 인바운드 규칙에서 **3306포트(MySQL) / Anywhere-IPv4** 이렇게 모든 IP로 접속할 수 있게 수정했더니, 컴퓨터를 끄고 다시 접속해도 해당 오류가 발생하지 않고 연결이 되는 것을 확인할 수 있었음
+
 
 
 
