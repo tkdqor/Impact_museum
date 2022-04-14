@@ -30,6 +30,7 @@
 
 **클라우드 서버 활용**
 - AWS(Amazon Web Service)
+  - RDS
 
 **버전관리**
 - Git
