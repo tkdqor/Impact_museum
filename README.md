@@ -278,6 +278,13 @@
   - 그래서 인바운드 규칙에서 **3306포트(MySQL) / Anywhere-IPv4** 이렇게 모든 IP로 접속할 수 있게 수정했더니, 컴퓨터를 끄고 다시 접속해도 해당 오류가 발생하지 않고 연결이 되는 것을 확인할 수 있었음
 
 
+- 소셜 로그인을 위한 allauth 라이브러리 설치 및 settings.py 설정 후 migrate를 진행한 다음, 어드민 페이지가 뜨지 않고 DoesNotExist at /admin/ Site matching query does not exist 에러 발생      
+  - Django 프로젝트의 Site 객체가 없다고 생각해서 발생한 문제     
+  - 소셜 로그인을 위해 Site 객체를 처음 등록한 다음, settings.py에서 SITE_ID 변수를 새로 등록한 Site 객체 ID와 일치시켜야 된다. 그래서 settings.py에 # All auth 부분에 SITE_ID = 1 이렇게 추가해서 오류를 해결      
+  - 관련 내용 : https://stackoverflow.com/questions/11476210/getting-site-matching-query-does-not-exist-error-after-creating-django-admin
+
+ 
+
 
 
 <br>
