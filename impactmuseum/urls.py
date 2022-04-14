@@ -33,6 +33,9 @@ urlpatterns = [
 
     # posts App과 관련된 URL
     path('posts/', include('posts.urls')),
+
+    # 소셜 로그인을 위한 URL
+    path('oauth/', include('allauth.urls')),
 ]
 
 

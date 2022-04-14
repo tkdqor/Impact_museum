@@ -38,10 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',       # 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites을 등록
     'posts',
     'rest_framework',
     'accounts',
     'products',
+
+    # all auth
+    'allauth',                    # allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 오기
+    'allauth.account',
+    'allauth.socialaccount',      # allauth로 SNS 계정 연동이 가능하게끔 해주는 모듈
+    'allauth.socialaccount.providers.auth0',   # provider 디폴트 값
+    'allauth.socialaccount.providers.google',  # google 연동을 위한 provider
+    'allauth.socialaccount.providers.kakao',   # kakao 연동을 위한 provider
 ]
 
 MIDDLEWARE = [
@@ -140,7 +149,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
+# All auth
+SITE_ID = 1                        # INSTALLED_APPS에 django.contrib.sites를 추가해주면 SITE_ID를 1로 설정해줘야 어드민 페이지를 확인할 수 있음
+LOGIN_REDIRECT_URL = ''            # 로그인이 성공할 경우 redirect 해주는 페이지 설정
+ACCOUNT_LOGOUT_REDIRECT_URL = ''   # 로그아웃이 성공할 경우 redirect 해주는 페이지 설정
+ACCOUNT_LOGOUT_ON_GET = True       # 로그아웃 시, URL로 GET으로 접근해도 로그아웃 처리가 가능할 수 있도록 설정
 
 
 
