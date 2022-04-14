@@ -181,6 +181,24 @@
       - id 정보는 request.user.username으로 접근하고 나머지 정보들은 request.user.customer로 접근한 customer의 필드를 변경하는 방식으로 설정     
       - 추가로 관리자 계정의 경우, {% if request.user.is_staff %} 라는 if문을 사용해서 관리자 여부 : O 이렇게 표시되도록 수정
   
+  version 3.2 allauth 라이브러리 설치    
+      - 소셜 로그인을 위한 django allauth 라이브러리 설치      
+      - settings.py INSTALLED_APPS에 추가로 'django.contrib.sites' 등록 / 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites 모델 등록     
+      - settings.py INSTALLED_APPS에 추가로 'allauth'와 'allauth.account' 등록 / allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 올 수 있게 설정    
+        - 'allauth.socialaccount' 을 등록해서 allauth로 SNS 계정 연동이 가능하게 해주는 모듈 설정     
+        - 그 모듈안에 providers 다음에 auth0 / google / kakao 이렇게 우리가 연동하기를 원하는 provider를 각각 설정     
+      - settings.py에 allauth 관련 설정 추가    
+        - 로그인이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃 시, URL로 GET으로 접근해도 로그아웃 처리가 가능할 수 있도록 설정   
+      - 프로젝트 디렉터리 내부 urls.py에 소셜 로그인 리디렉션 URI를 위한 설정 추가    
+        - path('oauth/', include('allauth.urls')), 이렇게 추가      
+      - migrate 진행 이후, sites 앱의 Sites라는 모델 / socialaccount 앱의 socialaccount, socialapp, socialapp_sites, socialtoken 모델이 추가됨
+
+
+
+  
+
+
+
 
 
 </details>
