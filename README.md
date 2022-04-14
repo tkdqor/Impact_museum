@@ -176,8 +176,10 @@
       - 사회문제 페이지를 클릭했을 때, 우리나라에 존재하는 사회문제 리스트를 보여주고 해당 문제 클릭 시 문제에 대한 설명과 함께 그 문제를 해결하기 위해 노력하는 소셜벤처 보여주기      
       - Problem 모델에 short_content 필드 추가
   
-  
-
+  version 3.12 마이페이지에서 본인 정보 수정 기능 추가      
+      - 마이페이지에서 정보 수정하기 버튼 클릭 시, 본인이 회원가입 시 입력한 아이디와 닉네임, 이메일, 관심있는 사회문제를 변경할 수 있게 코드 추가      
+      - id 정보는 request.user.username으로 접근하고 나머지 정보들은 request.user.customer로 접근한 customer의 필드를 변경하는 방식으로 설정     
+      - 추가로 관리자 계정의 경우, {% if request.user.is_staff %} 라는 if문을 사용해서 관리자 여부 : O 이렇게 표시되도록 수정
   
 
 
@@ -250,6 +252,12 @@
   - Posts 앱 내부 models.py에 problem = models.ForeignKey(Problem, on_delete=models.PROTECT)와 같이 코드를 입력했을 때, 같은 위치에 있는 Problem이라는 모델을 VSCode가 인식하지 못함
   - 그래서 https://docs.djangoproject.com/en/4.0/ref/models/fields/ 해당 공식문서에 내용을 바탕으로, problem = models.ForeignKey('Problem', on_delete=models.PROTECT) 이렇게 모델 이름을 문자열로 설정했더니 인식이 되어 migration, migrate를 실행할 수 있었음
 
+
+- 지속적으로 AWS로 연결한 MySQL이 DBeaver에서 connect timed out 에러가 계속 발생      
+  - DBeaver의 Keep-Alive을 120으로 설정한 이후에도, 계속 connect timed out 에러가 발생됨     
+  - 기존에는 AWS에서 인바운드 규칙을 **22포트(SSH) / 내 IP, HTTPS / Anywhere-IPv4, HTTP / Anywhere-IPv4, 3306포트(MySQL) / 내 IP** 이렇게 설정했었는데, 접속 환경 상 매번 접속 아이피가 변경될 수 있다는 점을 확인      
+  - (대부분 우리가 인터넷을 사용할 때 유동IP로 접속할때마다 IP가 변경이 된다. 전용 회선이나 고정 IP를 신청한 게 아니라면, IP가 할당될 때 일정 시간 동안만 그 IP를 사용할 수 있게 할당을 해주고, 유효시간이 지나면 IP를 나눠주는 서버인 DHCP서버가 우리의 컴퓨터가 꺼져있으면 해당 IP에 대한 사용이 끝났다고 인지하고 IP를 회수한다고 한다. 그래서 다시 컴퓨터를 켰을 때, 컴퓨터가 자동으로 DHCP에게 IP할당을 요청하고 사용하던 IP가 비어있으면 이전 IP를 할당해주지만, 누가 쓰고있다면 남아있는 IP 중 하나를 할당해준다.)      
+  - 그래서 인바운드 규칙에서 **3306포트(MySQL) / Anywhere-IPv4** 이렇게 모든 IP로 접속할 수 있게 수정했더니, 컴퓨터를 끄고 다시 접속해도 해당 오류가 발생하지 않고 연결이 되는 것을 확인할 수 있었음
 
 
 
