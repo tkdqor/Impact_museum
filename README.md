@@ -32,6 +32,9 @@
 - AWS(Amazon Web Service)
   - RDS
 
+**API 활용(소셜 로그인)**
+- Google Cloud Platform
+
 **버전관리**
 - Git
 - Github
