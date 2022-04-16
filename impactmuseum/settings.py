@@ -63,6 +63,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# allauth에서 account 로그인을 지원하기 위한 인증 로직 및 백엔드 로직 설정
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',  # allauth에서 사용하는 기본 백엔드 로직
+    'django.contrib.auth.backends.ModelBackend', # 우리가 받은 클라이언트 ID와 비밀번호를 어드민에서 입력해 OAuth에 필요한 값들을 SNS서버에 전송할 수 있게 해주는 모듈            
+]
+
+
+
 ROOT_URLCONF = 'impactmuseum.urls'
 
 TEMPLATES = [
@@ -150,10 +159,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # All auth
-SITE_ID = 1                        # INSTALLED_APPS에 django.contrib.sites를 추가해주면 SITE_ID를 1로 설정해줘야 어드민 페이지를 확인할 수 있음
-LOGIN_REDIRECT_URL = ''            # 로그인이 성공할 경우 redirect 해주는 페이지 설정
-ACCOUNT_LOGOUT_REDIRECT_URL = ''   # 로그아웃이 성공할 경우 redirect 해주는 페이지 설정
-ACCOUNT_LOGOUT_ON_GET = True       # 로그아웃 시, URL로 GET으로 접근해도 로그아웃 처리가 가능할 수 있도록 설정
+SITE_ID = 2   # INSTALLED_APPS에 django.contrib.sites를 추가해주면 SITE_ID를 1로 설정해줘야 어드민 페이지를 확인할 수 있음 / Sites 모델에 새롭게 추가하여 2번으로 변경
+LOGIN_REDIRECT_URL = 'accounts:mypage'            # 로그인이 성공할 경우 redirect 해주는 페이지 설정
+ACCOUNT_LOGOUT_REDIRECT_URL = 'products:index'   # 로그아웃이 성공할 경우 redirect 해주는 페이지 설정
+ACCOUNT_LOGOUT_ON_GET = True            # 로그아웃 시, URL로 GET으로 접근해도 로그아웃 처리가 가능할 수 있도록 설정
+SOCIALACCOUNT_LOGIN_ON_GET = True       # 구글 소셜 로그인 버튼 클릭 후 뜨게되는 페이지를 스킵할 수 있도록 설정
 
-
+# 구글 소셜 로그인 시 받아오는 정보 설정
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile', 'email'
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }    
+    }
+}
 

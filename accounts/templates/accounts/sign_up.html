@@ -4,8 +4,14 @@
 {% block style %}
 {% endblock %}
 
+<!-- 소셜 로그인을 위한 모듈 load -->
+{% load socialaccount %}
 
 {% block content %}
+
+<!-- 소셜 로그인을 위해 socialaccount 안에 있는 providers_media_js 필터 호출 -->
+{% providers_media_js %}
+
 <div class="col-md-8">
 
     <!-- 회원가입 실패 시 에러 메세지 띄우기 -->
@@ -69,10 +75,12 @@
 
     </form>
 
+<!-- 소셜 로그인 코드 -->
+
+<!-- provider_login_url이라는 필터를 사용해서 google, kakao provider에 로그인 주소를 가지고 올 수 있게 해주는 코드 -->
+<a href="{% provider_login_url 'google' %}">구글 로그인</a>
+<a href="{% provider_login_url 'kakao' %}">카카오 로그인</a>
 </div>
-
-
-
 
 
 {% endblock %}
