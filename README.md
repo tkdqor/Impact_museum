@@ -231,14 +231,10 @@
 
 
 </details>
-<br>
-
-## 5. 핵심 트러블 슈팅
-### 5.1 ...
 
 <br>
 
-## 6. 그 외 트러블 슈팅    ==> 이러한 오류가 왜 발생했는지 & 그리고 어떤 문제를 해결해서 & 결국 내가 얻어낸 성과가 뭔지 
+## 5. 핵심 트러블 슈팅    ==> 이러한 오류가 왜 발생했는지 & 그리고 어떤 문제를 해결해서 & 결국 내가 얻어낸 성과가 뭔지 
 - models.py 설정 시 FloatField 및 IntegerField의 경우 default=0 처럼 default 값 설정 필요
 
 - DB에서 ImageField 설정 시 이미지를 업로드 하지 않으면 html template에서 ValueError 발생 -> models.py에서 관련 모델에 @property를 설정해서 오류 방지
