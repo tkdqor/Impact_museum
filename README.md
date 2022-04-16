@@ -1,6 +1,6 @@
 # :pushpin: Impact museum
 - 사회적 가치를 추구하는 소셜벤처 이커머스 플랫폼
-- url...
+- 다양한 사회적 문제를 해결하는 소셜벤처들을 소개하고 해당 브랜드의 상품들을 확인할 수 있는 웹 서비스 
 
 <br>
 
@@ -10,14 +10,13 @@
 <br>
 
 ## 2. 사용 기술
-**Back-end**       => 해당 기술을 왜 사용했는지 이유 & 그리고 그 기술 버전을 왜 사용했는지 이유 필요!
+**Back-end**       
 
 **언어**
 - Python 3.9.1 
 
 **프레임워크**
 - Django 3.2.9
-- DRF(Django Rest Framework) 3.13.1 (이 버전 맞는지 다시 확인 필요)
 
 **개발환경**
 - VSCode
@@ -30,7 +29,7 @@
 
 **클라우드 서버 활용**
 - AWS(Amazon Web Service)
-  - RDS
+  - RDS (MySQL 데이터베이스 서버)
 
 **API 활용(소셜 로그인)**
 - Google Cloud Platform
