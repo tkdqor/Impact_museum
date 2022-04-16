@@ -45,7 +45,7 @@
 ![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/162469471-75ac1835-d2c5-4a49-ad4f-9c521a140ca8.png)
 
 
-- Customer 모델은 User 모델과 1:1관계로 설정
+- Customer 모델은 User 모델과 1:1관계로 설정 - 사용자에 대한 정보를 더 자유롭게 받기 위해 Customer라는 모델을 1:1관계로 추가
 - Customer 모델과 Order 모델은 1:N관계로 설정 - 1명의 사용자가 쇼핑몰에서 여러 번 주문할 수 있기 때문
 - Customer 모델 & Order 모델과 Shipping Address 모델은 1:N관계로 설정 - 1명의 사용자가 다양한 배송 주소지를 생성할 수 있고, 1개의 주문 건이 배송 취소 및 실패 등으로 다양한 배송 주소지를 가질 수 있음
 - Product 모델 & Order 모델과 Order Item 모델(장바구니에 추가된 상품 데이터 모델)은 1:N관계로 설정 - 1개의 상품이 여러 번 장바구니에 포함될 수 있고, 1개의 주문 건에 많은 상품들이 장바구니에 추가될 수 있음
