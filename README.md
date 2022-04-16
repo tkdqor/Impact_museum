@@ -30,6 +30,10 @@
 
 **클라우드 서버 활용**
 - AWS(Amazon Web Service)
+  - RDS
+
+**API 활용(소셜 로그인)**
+- Google Cloud Platform
 
 **버전관리**
 - Git
@@ -181,6 +185,24 @@
       - id 정보는 request.user.username으로 접근하고 나머지 정보들은 request.user.customer로 접근한 customer의 필드를 변경하는 방식으로 설정     
       - 추가로 관리자 계정의 경우, {% if request.user.is_staff %} 라는 if문을 사용해서 관리자 여부 : O 이렇게 표시되도록 수정
   
+  version 3.2 allauth 라이브러리 설치    
+      - 소셜 로그인을 위한 django allauth 라이브러리 설치      
+      - settings.py INSTALLED_APPS에 추가로 'django.contrib.sites' 등록 / 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites 모델 등록     
+      - settings.py INSTALLED_APPS에 추가로 'allauth'와 'allauth.account' 등록 / allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 올 수 있게 설정    
+        - 'allauth.socialaccount' 을 등록해서 allauth로 SNS 계정 연동이 가능하게 해주는 모듈 설정     
+        - 그 모듈안에 providers 다음에 auth0 / google / kakao 이렇게 우리가 연동하기를 원하는 provider를 각각 설정     
+      - settings.py에 allauth 관련 설정 추가    
+        - 로그인이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃 시, URL로 GET으로 접근해도 로그아웃 처리가 가능할 수 있도록 설정   
+      - 프로젝트 디렉터리 내부 urls.py에 소셜 로그인 리디렉션 URI를 위한 설정 추가    
+        - path('oauth/', include('allauth.urls')), 이렇게 추가      
+      - migrate 진행 이후, sites 앱의 Sites라는 모델 / socialaccount 앱의 socialaccount, socialapp, socialapp_sites, socialtoken 모델이 추가됨
+
+
+
+  
+
+
+
 
 
 </details>
@@ -259,6 +281,13 @@
   - (대부분 우리가 인터넷을 사용할 때 유동IP로 접속할때마다 IP가 변경이 된다. 전용 회선이나 고정 IP를 신청한 게 아니라면, IP가 할당될 때 일정 시간 동안만 그 IP를 사용할 수 있게 할당을 해주고, 유효시간이 지나면 IP를 나눠주는 서버인 DHCP서버가 우리의 컴퓨터가 꺼져있으면 해당 IP에 대한 사용이 끝났다고 인지하고 IP를 회수한다고 한다. 그래서 다시 컴퓨터를 켰을 때, 컴퓨터가 자동으로 DHCP에게 IP할당을 요청하고 사용하던 IP가 비어있으면 이전 IP를 할당해주지만, 누가 쓰고있다면 남아있는 IP 중 하나를 할당해준다.)      
   - 그래서 인바운드 규칙에서 **3306포트(MySQL) / Anywhere-IPv4** 이렇게 모든 IP로 접속할 수 있게 수정했더니, 컴퓨터를 끄고 다시 접속해도 해당 오류가 발생하지 않고 연결이 되는 것을 확인할 수 있었음
 
+
+- 소셜 로그인을 위한 allauth 라이브러리 설치 및 settings.py 설정 후 migrate를 진행한 다음, 어드민 페이지가 뜨지 않고 DoesNotExist at /admin/ Site matching query does not exist 에러 발생      
+  - Django 프로젝트의 Site 객체가 없다고 생각해서 발생한 문제     
+  - 소셜 로그인을 위해 Site 객체를 처음 등록한 다음, settings.py에서 SITE_ID 변수를 새로 등록한 Site 객체 ID와 일치시켜야 된다. 그래서 settings.py에 # All auth 부분에 SITE_ID = 1 이렇게 추가해서 오류를 해결      
+  - 관련 내용 : https://stackoverflow.com/questions/11476210/getting-site-matching-query-does-not-exist-error-after-creating-django-admin
+
+ 
 
 
 
