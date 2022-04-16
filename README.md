@@ -55,10 +55,10 @@
 <br>
 
 ## 4. 핵심 기능     
-- 
+- 핵심 기능들 나열하기..
 
 <details>
-  <summary>**version 별 내용 히스토리 내역**</summary>
+  <summary>version 별 내용 히스토리 내역</summary>
   
   - **version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축**
   
@@ -73,9 +73,10 @@
       urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
   ```
   
-  4.6 상품 1개 조회 페이지에서 장바구니 버튼 클릭 시, 장바구니 페이지에 추가 및 DB 저장 
+  - **version 1.9 어드민 페이지 변경 코드 추가**
+    - 관련 내용 다시 확인해서 추가하기
   
-  4.7 모델 내 필드 추가 및 속성 변경      
+  - **version 2.0 모델 내 필드 추가 및 속성 변경**      
       - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안되기 때문)       
       - Post(Product) 모델 : price 필드를 floatField에서 PositiveIntegerField로 변경 (가격이니까 실수보다는 양의 정수로 수정하는 게 맞다고 판단) / created_at 필드는 DateTimeField에 auto_now_add=True 옵션을 추가. (상품 데이터가 언제 생성되었는지 필요하기 때문.) / updated_at 필드를 새로 생성하고 DateTimeField의 auto_now=True 옵션을 추가. (상품 데이터를 수정했을 때 기록을 남기기 위해서 날짜가 갱신되어야 한다.)       
       - OrderItem 모델 : quantity 필드가 원래 null=True, blank=True 였으나 null=False, blank=False로 수정. (수량은 비어있으면 안되고 최소 1개로 설정되어야 하기 때문)
