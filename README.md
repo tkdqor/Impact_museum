@@ -55,11 +55,12 @@
 <br>
 
 ## 4. 핵심 기능     
-- 이 서비스의 핵심 기능은 ...입니다.     => 해당 기능을 왜 구현하려고 했는지 이유 필요!
+- 
+
 <details>
   <summary>핵심 기능 설명 펼치기</summary>
   
-  4.1 상품 정보에 관련된 기본적인 CRUD 구축
+  - version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축
   
   4.2 DRF(Django Rest Framework)를 기반으로 CRUD API 서버 구축
   
