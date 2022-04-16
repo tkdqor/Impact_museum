@@ -34,6 +34,7 @@
 
 **API 활용(소셜 로그인)**
 - Google Cloud Platform
+- Kakao developers
 
 **버전관리**
 - Git
