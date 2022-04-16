@@ -250,53 +250,46 @@
 - **상품 1개 조회 후 결제버튼 클릭해서 상품 1개만 결제 페이지에 보여주는 기능 / 장바구니 페이지에서 결제버튼 클릭해서 장바구니 상품들 결제 페이지에 보여주는 기능 관련 추가 오류**
   - 장바구니 페이지에서 결제 버튼 눌렀을 때, **TypeError: checkout() missing 1 required positional argument: 'post_id'** 다음과 같은 에러가 있었다. views.py에서 설정한 함수의 필수 파라미터를 request, user_id로 설정했더니 장바구니 페이지에서 버튼을 눌렀을 때는 user_id가 없어서 생긴 오류였다. 이 문제를 해결하기 위해 장바구니 페이지에서 결제 버튼을 눌렀을 때 연결되는 views 함수(request만 파라미터 설정)를 따로 만들고 / 상품 1개 조회 페이지에서 결제 버튼을 눌렀을 때 연결되는 views 함수(request와 user_id를 파라미터로 설정)도 따로 만들어줘서 오류를 해결
 
-- **Customer 모델의 name과 User 필드의 null, blank를 False로 변경했으나 -> migrations에서 에러 발생**
-  - 필드를 non-nullable로 바꾸는데 default를 주지 않았던 게 문제였. 그래서 name과 user 필드에 default='미지정' 이라고 수정한 다음 migrations를 진행하고 migrate를 했으나 ValueError: Field 'id' expected a number but got '미지정' 라는 오류 발생. 해당 오류를 보고 default=0으로 수정하고 다시 migration/migrate 진행했으나 똑같은 오류발생.
+- **Customer 모델의 name과 user 필드의 null, blank를 False로 변경했으나 -> migrations에서 에러 발생**
+  - 필드를 non-nullable로 바꾸는데 default를 주지 않았던 게 문제였다. 그래서 name과 user 필드에 default='미지정' 이라고 수정한 다음 migrations를 진행하고 migrate를 했으나 ValueError: Field 'id' expected a number but got '미지정' 라는 오류 발생. 해당 오류를 보고 default=0으로 수정하고 다시 migration/migrate 진행했으나 똑같은 오류발생.
   - Customer 모델의 user필드는 User모델과의 OneToOneField로 설정되어 있기 때문에, default값이 문자나 0이 아닌 1이상의 숫자로 설정해야 User모델의 pk와 충돌하지 않게 된다. pk는 자동적으로 1부터 증가하기 때문이다. 그래서 Customer 모델의 user와 name 필드 모두 default=1로 수정하고 / python manage.py showmigrations 명령어를 통해 아직 적용되지 않은 2개의 migration 파일을 삭제한 다음, 다시 migration / migrate 진행하여 오류 해결.
 
+- **상품 상세 페이지에서 장바구니 버튼을 눌렀을 때 추가가 되지 않았음**     
+  - https://born-dev.tistory.com/28 처럼 Broken pipe 오류 였는데, HTTP Request가 최초에 진행되고 서버에서 작업을 완료해서 Response를 하기전에 네트워크가 끊겨서 생기는 문제였다.     - cart.js 파일에서 .then((data) =>{ console.log('data:', data) location.reload() 이러한 코드가 있었는데, 이렇게 location.reload() 로 응답을 받기전에 새로고침이 되어서 오류가 발생했던 것으로 확인         
+  - 해당 부분을 주석처리 해서 오류 해결
 
-- 상품 상세 페이지에서 장바구니 버튼을 눌렀을 때 추가가 되지 않았음     
-  - https://born-dev.tistory.com/28 처럼 Broken pipe 오류 였는데, HTTP Request가 최초에 진행되고 서버에서 작업을 완료해서 Response를 하기전에 네트워크가 끊겨서 생기는 문제였다.    
-  - cart.js 파일에서 .then((data) =>{ console.log('data:', data) location.reload() 이러한 코드가 있었는데, 이렇게 location.reload() 로 응답을 받기전에 새로고침이 되어서 오류가 발생.     - 이 부분을 주석처리 하니까 오류가 해결됨
-
-
-- 새로운 username으로 회원가입 시, IntegrityError at /accounts/sign_up/ 그리고 UNIQUE constraint failed: auth_user.username 라는 에러가 발생함
+- **새로운 username으로 회원가입 시, IntegrityError at /accounts/sign_up/ 그리고 UNIQUE constraint failed: auth_user.username 라는 에러가 발생함**
   - 알고보니, 이미 가입된 username으로 다시 회원가입을 시도해서 발생하는 에러
-  - 이걸 막기 위해 코드를 추가해야 한다. 중복된 username이 있는 경우, 회원가입을 막을 수 있도록 해보기.
+  - 이걸 막기 위해 코드를 추가해야 한다. 중복된 username이 있는 경우, 회원가입을 막을 수 있도록 해보기
+  - Customer 모델 user 필드에 unique=True라는 속성을 추가해 중복되는 ID가 없도록 설정
 
-
-- Django database is locked 라는 에러가 발생      
+- **Django database is locked 라는 에러가 발생**      
   - python manage.py migrate posts zero를 실행하는 과정에서 위에 에러가 발생      
   - 에러가 발생하는 이유는 DB Browser for SQLite 라는 프로그램을 통해 SQLite 데이터를 조회하고 있었기 때문 / 즉, migration 하려는 데이터베이스를 다른 프로그램을 통해 조회 또는 수정중이었기 때문     
-  - 해당 SQLite 를 조회하고 있던 프로그램(DB Browser for SQLite)을 종료한 뒤, migrate 명령을 다시 실행하면 에러없이 진행됨
+  - 해당 SQLite를 조회하고 있던 프로그램(DB Browser for SQLite)을 종료한 뒤, migrate 명령을 다시 실행하여 에러없이 진행 완료
 
-
-- Related Field got invalid lookup: icontains 라는 에러 발생
-  - Product 모델의 brand 필드를 Brand 모델과 1:N 관계로 설정한 이후, 검색 시 해당 에러가 발생 
+- **Related Field got invalid lookup: icontains 라는 에러 발생**
+  - Product 모델의 brand 필드를 Brand 모델과 1:N 관계로 설정한 이후, 검색 기능 수행 시 해당 에러가 발생 
   - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__icontains=query)) -> 다음과 같이 ForeignKey가 검색 필드에 포함되서 나타나는 문제
   - products = Product.objects.all().filter(Q(product_name__icontains=query) | Q(brand__name__icontains=query)) -> 이렇게 ForeingKey로 연결된 필드는 필드 이름만 입력하는 게 아니라 해당 모델의 필드를 자세히 입력해주기. 그래서 brand가 아니라 brand__name으로 필드를 설정하면 검색이 되고 에러가 발생하지 않는다. 
 
-
-- Bootstrap Carousel로 입력 시, for문의 첫번째 항목에는 div element의 class가 carousel-item active로 되어 있어야 하는 부분이 있었음      
+- **Bootstrap Carousel로 코드 입력 시, for문의 첫번째 항목에는 div element의 class가 carousel-item active로 되어 있어야 하는 부분이 있었음**      
   - {% for product in products %} 다음에 {% if forloop.first %} 이렇게 입력       
   - forloop은 https://docs.djangoproject.com/en/4.0/ref/templates/builtins/ django 공식 문서에 나와있듯이, for문에서 사용할 수 있는 변수로 forloop.first가 for문의 첫번째 항목이기에 해당 항목일 경우 div class="carousel-item active"를 출력하고 아닐 경우에는 class="carousel-item"로 출력해서 Carousel 기능 설정
 
-
-- version 3.0에서 .gitignore를 설정했으나 적용 안됨     
+- **version 3.0에서 .gitignore를 설정했으나 적용 안됨**     
   - https://stackoverflow.com/questions/11451535/gitignore-is-ignored-by-git
   - https://coding-groot.tistory.com/59
   - https://jojoldu.tistory.com/307
   - 해당 글들을 참고하여 git에 있는 인덱스 파일만 삭제하여 git 캐시를 전부 삭제하고 다시 git 커밋을 실행해서 적용 완료
   - **아직 settings.py는 적용 안됨 -> 알아보기**
 
-
-- AWS로 연결한 MySQL이 DBeaver에서 connect timed out 에러가 발생    
+- **AWS로 연결한 MySQL이 DBeaver에서 connect timed out 에러가 발생**    
   - https://stackoverflow.com/questions/9500803/cant-connect-to-mysql-remote 해당 답변에서 connect timed out은 server가 busy하거나 방화벽 문제 둘 중 한가지 원인이라는 것을 확인     
   - 그래서, AWS Console의 DB 인스턴스 인바운드 규칙에 설정된 내용을 전부 삭제한 뒤 다시 재설정하고 DBeaver에 연결했더니 성공
   - 추가로, https://www.codingfactory.net/12934 해당 내용을 참고해서 데이터베이스를 잠시 연결하지 않으면 끊어지는 상황을 방지하기 위해, 작업을 하지 않아도 연결이 되게끔 DBeaver의 Keep-Alive을 120으로 설정
 
-
-- Posts 앱 내부 models.py 코드 설정 시 오류     
+- **Posts 앱 내부 models.py 코드 설정 시 오류**     
   - Posts 앱 내부 models.py에 problem = models.ForeignKey(Problem, on_delete=models.PROTECT)와 같이 코드를 입력했을 때, 같은 위치에 있는 Problem이라는 모델을 VSCode가 인식하지 못함
   - 그래서 https://docs.djangoproject.com/en/4.0/ref/models/fields/ 해당 공식문서에 내용을 바탕으로, problem = models.ForeignKey('Problem', on_delete=models.PROTECT) 이렇게 모델 이름을 문자열로 설정했더니 인식이 되어 migration, migrate를 실행할 수 있었음
 
