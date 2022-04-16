@@ -58,17 +58,20 @@
 - 
 
 <details>
-  <summary>핵심 기능 설명 펼치기</summary>
+  <summary>**version 별 내용 히스토리 내역**</summary>
   
   - **version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축**
   
-  4.2 DRF(Django Rest Framework)를 기반으로 CRUD API 서버 구축
+  - **version 1.4 URL Configuration으로 app별 URL 관리 / Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료**
   
-  4.3 URL Configuration으로 app별 URL 관리
+  - **version 1.5 DB 구성 및 ERD 설계 시작**   
+    - ImageField를 위한 Pillow 라이브러리 설치
+    - 프로젝트 루트 디렉터리 내부 urls.py에 settings의 DEBUG 옵션이 TRUE일 경우에만 이미지 파일 serving 허용할 수 있도록 코드 추가
   
-  4.4 Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료
-  
-  4.5 DB 구성 및 ERD 설계 완료(이미지 저장 및 랜더링 가능)
+  ```python
+  if settings.DEBUG: 
+      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+  ```
   
   4.6 상품 1개 조회 페이지에서 장바구니 버튼 클릭 시, 장바구니 페이지에 추가 및 DB 저장 
   
