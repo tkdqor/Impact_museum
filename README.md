@@ -196,12 +196,31 @@
       - 프로젝트 디렉터리 내부 urls.py에 소셜 로그인 리디렉션 URI를 위한 설정 추가    
         - path('oauth/', include('allauth.urls')), 이렇게 추가      
       - migrate 진행 이후, sites 앱의 Sites라는 모델 / socialaccount 앱의 socialaccount, socialapp, socialapp_sites, socialtoken 모델이 추가됨
-
-
-
   
-
-
+  version 3.21 구글 및 카카오 소셜 로그인 기능 구현(내 구글 및 카카오 계정만 가능)    
+      - Google Cloud Platform 사이트에 가서 새로운 impact-museum 프로젝트 생성    
+        - 지금은 게시 상태가 테스트이기 때문에 테스트 사용자로 등록된 구글이메일만이 소셜 로그인이 가능 / OAuth 동의 화면 메뉴에서 내 구글 이메일만 등록
+        - 리디렉션 URI는 http://localhost:8000/oauth/google/login/callback/ 이렇게 설정     
+      - settings.py에 설정 추가 / allauth에서 account 로그인을 지원하기 위한 인증 로직 및 백엔드 로직을 설정하기 위해 AUTHENTICATION_BACKENDS 변수 설정     
+        - 해당 모듈을 설정해서 클라이언트 ID랑 비밀번호를 어드민에 입력해서 그 값을 가지고 OAuth에 필요한 값들을 해당 SNS 서버에 전송할 수 있게됨      
+        - SOCIALACCOUNT_PROVIDERS 변수를 딕셔너리로 추가로 설정해서 google로부터 profile이랑 email를 받아오도록 설정     
+      - 어드민 페이지에 들어가서 Sites 모델에 도메인 값 추가    
+        - 해당 모델은 우리 사이트의 도메인 값을 넣어주는 역할을 해준다. 그래서 나중에 socialaccount에서 연동을 할 때 SNS한테 전달 할 우리 서버의 도메인 정보를 불러오는 역할도 해주기 때문에 이 모델에 우리의 디폴트 URL를 입력해주기(127.0.0.1:8000) / 지금 테스트 서버이기 때문에 나중에는 배포된 도메인으로 수정해야 함     
+        - 이렇게 설정해주면 redirection URI 요청이 들어갈 때 127.0.0.1:8000 정보를 읽어서 보내기 때문에 구글에서 '아, 내가 승인한 도메인 리디렉션 URI가 맞구나' 라고 인식을 해서 승인을 해줄 수 있게됨      
+      - 어드민 페이지에 들어가서 Social applications 모델 데이터 추가    
+        - 해당 모델에 Google Provider 추가 / 여기에 클라이언트 ID와 Secret Key 저장하여 나중에 새로 발급 시 바로 바꿀 수 있게 하드코딩 하지 않고 DB에 저장     
+      - 로그인 및 회원가입 페이지 template에 socialaccount 모듈을 load 해주고 socialaccount 안에 있는 필요한 자바스크립트들을 불러올 수 있게 해주는 필터인 providers_media_js를 호출해주기     
+        - 추가로 a element를 이용해서 provider_login_url이라는 필터를 사용하고 google provider에 로그인 주소를 가지고 올 수 있게 설정       
+        - 여기까지 구글 소셜 로그인 기능 구현 완료
+      - **해당 과정에서 구글 로그인 버튼 클릭 시, 오류 발생**    
+        - **소셜 로그인 시, customer 모델에 데이터가 들어간게 아니기 때문에 메인페이지와 장바구니 페이지에 들어가면 오류가 발생하고 있음**    
+        - **그리고 마이페이지 클릭 시, 닉네임만 데이터가 뜨고 나머지는 customer 모델을 기준으로 코드를 작성했기 때문에 다른 정보가 없음**     
+      - 카카오 개발자 사이트에 가서 새로운 애플리케이션 추가 / Web 플랫폼을 등록하고 Redirect URI를 http://localhost:8000/oauth/kakao/login/callback/ 로 설정   
+        - 카카오에서는 REST API 키가 클라이언트 ID역할을 하게 됨 / 추가로 Client Secret를 생성
+        - 구글 소셜 로그인 기능과 마찬가지로 template에 소셜 로그인 관련 코드 추가 
+        - 구글 소셜 로그인 기능과 마찬가지로 Social applications 모델에 들어간 다음, 새롭게 카카오 로그인을 위한 Provider 1개를 추가     
+        - 추가로 카카오 로그인을 하게 되면 기본적으로 소셜 로그인을 할 때 마다 확인 이메일을 발송하도록 내부 디폴트 로직이 되어있어 이 부분을 꺼줘야 한다. / settings.py # All auth 부분에 ACCOUNT_EMAIL_REQUIRED = False, ACCOUNT_EMAIL_VERIFICATION = 'none' 다음과 같은 변수를 설정해서 카카오 로그인 시 해당 유저의 이메일을 가져오지 않게 설정. 그리고 none 설정은 확인 이메일이 반복해서 가지 않게 설정     
+      - **이러한 소셜 로그인 성공 시 --> django User 모델에 계정 데이터가 추가된다. 그리고 Social accounts 모델에도 계정 데이터가 추가된다.**
 
 
 
