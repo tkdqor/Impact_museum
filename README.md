@@ -55,175 +55,173 @@
 <br>
 
 ## 4. 핵심 기능     
-- 핵심 기능들 나열하기..
-
-  - **version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축**
+- **version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축**
   
-  - **version 1.4 URL Configuration으로 app별 URL 관리 / Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료**
+- **version 1.4 URL Configuration으로 app별 URL 관리 / Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료**
   
-  - **version 1.5 DB 구성 및 ERD 설계 시작**   
-    - ImageField를 위한 Pillow 라이브러리 설치
-    - 프로젝트 루트 디렉터리 내부 urls.py에 settings의 DEBUG 옵션이 TRUE일 경우에만 이미지 파일 serving 허용할 수 있도록 코드 추가
+- **version 1.5 DB 구성 및 ERD 설계 시작**   
+  - ImageField를 위한 Pillow 라이브러리 설치
+  - 프로젝트 루트 디렉터리 내부 urls.py에 settings의 DEBUG 옵션이 TRUE일 경우에만 이미지 파일 serving 허용할 수 있도록 코드 추가
   
-  ```python
-  if settings.DEBUG: 
-      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-  ```
+```python
+if settings.DEBUG: 
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
   
-  - **version 1.9 어드민 페이지 변경 코드 추가**
-    - 관련 내용 다시 확인해서 추가하기
+- **version 1.9 어드민 페이지 변경 코드 추가**
+  - 관련 내용 다시 확인해서 추가하기
   
-  - **version 2.0 모델 내 필드 추가 및 속성 변경**      
-    - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안되기 때문)       
-    - Post(Product) 모델 : price 필드를 floatField에서 PositiveIntegerField로 변경 (가격이니까 실수보다는 양의 정수로 수정하는 게 맞다고 판단) / created_at 필드는 DateTimeField에 auto_now_add=True 옵션을 추가. (상품 데이터가 언제 생성되었는지 필요하기 때문.) / updated_at 필드를 새로 생성하고 DateTimeField의 auto_now=True 옵션을 추가. (상품 데이터를 수정했을 때 기록을 남기기 위해서 날짜가 갱신되어야 한다.)       
-    - OrderItem 모델 : quantity 필드가 원래 null=True, blank=True 였으나 null=False, blank=False로 수정. (수량은 비어있으면 안되고 최소 1개로 설정되어야 하기 때문)
+- **version 2.0 모델 내 필드 추가 및 속성 변경**      
+  - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안되기 때문)       
+  - Post(Product) 모델 : price 필드를 floatField에서 PositiveIntegerField로 변경 (가격이니까 실수보다는 양의 정수로 수정하는 게 맞다고 판단) / created_at 필드는 DateTimeField에 auto_now_add=True 옵션을 추가. (상품 데이터가 언제 생성되었는지 필요하기 때문.) / updated_at 필드를 새로 생성하고 DateTimeField의 auto_now=True 옵션을 추가. (상품 데이터를 수정했을 때 기록을 남기기 위해서 날짜가 갱신되어야 한다.)       
+  - OrderItem 모델 : quantity 필드가 원래 null=True, blank=True 였으나 null=False, blank=False로 수정. (수량은 비어있으면 안되고 최소 1개로 설정되어야 하기 때문)
   
-  - **version 2.1 IPython 8.0.1 설치**
-    - 설치한 이유는, 문법에 따라서 색상으로 강조를 해줘서 기존의 장고 연동 shell보다 작성하기 편함. 그리고 여러 줄에 걸쳐서 코드 입력 후, 위쪽 화살표로 전체 코드를 다시 불러오기가 편리함.
+- **version 2.1 IPython 8.0.1 설치**
+  - 설치한 이유는, 문법에 따라서 색상으로 강조를 해줘서 기존의 장고 연동 shell보다 작성하기 편함. 그리고 여러 줄에 걸쳐서 코드 입력 후, 위쪽 화살표로 전체 코드를 다시 불러오기가 편리함.
   
-  - **version 2.1 Admin 페이지 개선**
-    - admin.py 에서 admin모듈의 ModelAdmin 클래스를 상속받아서 모델 클래스를 정의하고, register 장식자를 이용해 admin에 등록
-    - 그리고 나서 클래스의 list_display 속성을 추가하여 -> admin페이지에 모델 별 필드를 표시해서 모델 데이터를 한눈에 파악할 수 있도록 개선
+- **version 2.1 Admin 페이지 개선**
+  - admin.py 에서 admin모듈의 ModelAdmin 클래스를 상속받아서 모델 클래스를 정의하고, register 장식자를 이용해 admin에 등록
+  - 그리고 나서 클래스의 list_display 속성을 추가하여 -> admin페이지에 모델 별 필드를 표시해서 모델 데이터를 한눈에 파악할 수 있도록 개선
   
-  - **version 2.2  Admin 페이지 개선 및 메인 화면에서 검색 기능 구현**   
-    - Admin 페이지 개선    
-      - admin.py에서 mark_safe 함수를 사용해서 Post 모델 객체의 이미지 url를 admin 페이지에서 볼 수 있도록 이미지으로 표시     
-      - settings.py에서 MEDIA_URL과 MEDIA_ROOT를 수정하고 models.py에서 Post 모델 ImageField에 upload_to 속성을 설정 / posts앱의 post모델 디렉터리 밑에 년/월/일 디렉터리로 구분하여 더 깔끔하게 관리할 수 있도록 설정.
-    - 메인 화면에서 검색 기능 구현    
-      - index.html에서 form element를 사용 / action attribute를 비워두어서 현재 form이 있는 같은 주소로 URL를 request하게 되고 Input element에 name를 query로 설정해서 값을 전송하고 / value도 query로 설정해서 검색한 이후에도 값이 남아있게끔 설정   
-      - View index 함수에서 query라는 변수를 지정하고 GET 방식으로 들어온 query라는 이름으로 담긴 값을 담아준다. 그리고 query가 있을 때(검색했을 때) Post 모델 전체를 조회한 posts 변수를 다시 정의해서, filter를 통해 검색한 값이 포함되는 데이터로 설정. Q 함수를 import 해서 제품명 또는 브랜드명을 검색할 수 있도록 설정
+- **version 2.2  Admin 페이지 개선 및 메인 화면에서 검색 기능 구현**   
+  - Admin 페이지 개선    
+    - admin.py에서 mark_safe 함수를 사용해서 Post 모델 객체의 이미지 url를 admin 페이지에서 볼 수 있도록 이미지으로 표시     
+    - settings.py에서 MEDIA_URL과 MEDIA_ROOT를 수정하고 models.py에서 Post 모델 ImageField에 upload_to 속성을 설정 / posts앱의 post모델 디렉터리 밑에 년/월/일 디렉터리로 구분하여 더 깔끔하게 관리할 수 있도록 설정.
+  - 메인 화면에서 검색 기능 구현    
+    - index.html에서 form element를 사용 / action attribute를 비워두어서 현재 form이 있는 같은 주소로 URL를 request하게 되고 Input element에 name를 query로 설정해서 값을 전송하고 / value도 query로 설정해서 검색한 이후에도 값이 남아있게끔 설정   
+    - View index 함수에서 query라는 변수를 지정하고 GET 방식으로 들어온 query라는 이름으로 담긴 값을 담아준다. 그리고 query가 있을 때(검색했을 때) Post 모델 전체를 조회한 posts 변수를 다시 정의해서, filter를 통해 검색한 값이 포함되는 데이터로 설정. Q 함수를 import 해서 제품명 또는 브랜드명을 검색할 수 있도록 설정
   
-  - **version 2.4 상품 목록을 보여주는 메인 페이지 상품 개수 수정**
-    - index View 함수에서 posts = Post.objects.all().order_by('-id')[:8] -> 이렇게 전체 Post 데이터에서 id필드를 기준으로 역순처리하고, 8개의 데이터만 가져오기.
-    - 그래서 index 메인 페이지에는 DB에 그 이상의 데이터가 있을지라도, 8개의 상품 목록만 항상 보여줄 수 있도록 설정 완료.
+- **version 2.4 상품 목록을 보여주는 메인 페이지 상품 개수 수정**
+  - index View 함수에서 posts = Post.objects.all().order_by('-id')[:8] -> 이렇게 전체 Post 데이터에서 id필드를 기준으로 역순처리하고, 8개의 데이터만 가져오기.
+  - 그래서 index 메인 페이지에는 DB에 그 이상의 데이터가 있을지라도, 8개의 상품 목록만 항상 보여줄 수 있도록 설정 완료.
   
-  - **version 2.41 bootstrap의 navbar를 이용해서 반응형 웹사이트가 될 수 있게 설정**
-    - 아직 메인 상품 목록은 되지 않음 / navbar만 반응
-    - 상품 상세 페이지도 아직 미반영
+- **version 2.41 bootstrap의 navbar를 이용해서 반응형 웹사이트가 될 수 있게 설정**
+  - 아직 메인 상품 목록은 되지 않음 / navbar만 반응
+  - 상품 상세 페이지도 아직 미반영
   
-  - **version 2.42 상품 1개 조회 시, DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄울 수 있게 설정**
-    - 그래서 posts 앱의 views.py에 상품 1개 조회 시, 예외처리를 위해 Http404 import 진행
-    - 404에러는 서버에서 요청한 리소스를 찾을 수 없는 경우를 의미
+- **version 2.42 상품 1개 조회 시, DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄울 수 있게 설정**
+  - 그래서 posts 앱의 views.py에 상품 1개 조회 시, 예외처리를 위해 Http404 import 진행
+  - 404에러는 서버에서 요청한 리소스를 찾을 수 없는 경우를 의미
   
-  - **version 2.5 로그인/로그아웃 및 회원가입 기능 구현**   
-    - Accounts App을 생성하고, 앱 내부 urls.py에서는 회원가입 / 로그인 / 로그아웃 URL 설정
-    - base.html에서 로그인 및 회원가입 버튼을 누르면 -> GET방식으로 HTTP Request 진행 + {% if user.is_authenticated %} -> user라는 변수를 바로 사용할 수 있게 되므로, is_authenticated 함수를 사용 / 해당 함수는 로그인 되어있으면 True를 아니면 False를 반환하는 Boolean 함수이다. -> 따라서 로그인 되어있을 때, 로그아웃 버튼과 마이페이지 버튼을 생성하게 설정 -> 로그아웃 역시 정보 노출이 되지 않게 POST방식으로 진행  
-    - sign_up.html에서는 form element로 POST방식으로 HTTP Request진행 -> 아이디 / 비밀번호 / 비밀번호 확인 / 닉네임 / 이메일을 입력받고, 관심있는 사회문제를 선택할 수 있게끔 설정      
-    - login.html에서는 로그인 실패 시, 에러 메시지를 띄우고 POST방식으로 HTTP Request 진행 -> 아이디와 비밀번호만 받게끔 설정      
-    - 앱 내부 views.py의 sign_up View에서는, GET방식일 경우 회원가입 페이지를 랜더링하고 POST방식일 경우 회원가입 절차 진행 => POST방식으로 전달한 username / password 데이터가 있는지 확인하고, password와 password_check데이터가 같은지 확인 -> 만약 같다면 User모델의 create_user 함수를 사용해서 username / password데이터로 User 모델에 추가(회원가입) -> 그리고 회원가입 시 입력한 nickname / email 데이터를 변수에 저장하고 User 모델과 OnetoOne관계인 Customer 모델에 해당 유저 및 데이터 추가 -> 위 과정을 다 진행한 다음, 자동으로 auth모듈의 login함수를 통해 로그인을 시키고 메인 페이지로 redirect해주기 -> 만약, 회원가입 정보를 다 받지 못한다면 context 딕셔너리에 error라는 key를 저장해서 에러 메세지 띄우기        
-    - 앱 내부 views.py의 login View에서는, GET방식일 경우 로그인 페이지를 랜더링하고 POST방식일 경우 로그인 절차 진행 => POST방식으로 전달한 username / password 데이터가 있다면, auth 모듈의 authenticate 함수를 사용해서 username / password 데이터를 가진 유저가 있는지 확인 진행 -> 유저가 있다면 user 인스턴스를 return하므로, 그렇다면 auth 모듈의 login함수를 사용해서 로그인 시켜주고 바로 메인페이지로 redirect -> 만약, 그런 유저가 없다면 context에 error key 저장해서 에러 메세지 띄우기 -> 로그인 정보를 다 받지 못한다면 모두 입력하라는 에러 메세지 띄우기      
-    - 앱 내부 views.py의 logout View는 POST방식일 경우 auth모듈의 logout함수를 사용해서 로그아웃 진행 -> 서버 내 쿠키와 세션 정보를 초기화        
-    - +++ 추가해야 할 사항 : Customer 모델의 필드가 현재 user / name / email 이렇게 되어있는데, 여기에 사회문제와 관련된 필드를 추가해서 -> 회원가입 시 받은 정보를 DB에 저장하게끔 하기
+- **version 2.5 로그인/로그아웃 및 회원가입 기능 구현**   
+  - Accounts App을 생성하고, 앱 내부 urls.py에서는 회원가입 / 로그인 / 로그아웃 URL 설정
+  - base.html에서 로그인 및 회원가입 버튼을 누르면 -> GET방식으로 HTTP Request 진행 + {% if user.is_authenticated %} -> user라는 변수를 바로 사용할 수 있게 되므로, is_authenticated 함수를 사용 / 해당 함수는 로그인 되어있으면 True를 아니면 False를 반환하는 Boolean 함수이다. -> 따라서 로그인 되어있을 때, 로그아웃 버튼과 마이페이지 버튼을 생성하게 설정 -> 로그아웃 역시 정보 노출이 되지 않게 POST방식으로 진행  
+  - sign_up.html에서는 form element로 POST방식으로 HTTP Request진행 -> 아이디 / 비밀번호 / 비밀번호 확인 / 닉네임 / 이메일을 입력받고, 관심있는 사회문제를 선택할 수 있게끔 설정      
+  - login.html에서는 로그인 실패 시, 에러 메시지를 띄우고 POST방식으로 HTTP Request 진행 -> 아이디와 비밀번호만 받게끔 설정      
+  - 앱 내부 views.py의 sign_up View에서는, GET방식일 경우 회원가입 페이지를 랜더링하고 POST방식일 경우 회원가입 절차 진행 => POST방식으로 전달한 username / password 데이터가 있는지 확인하고, password와 password_check데이터가 같은지 확인 -> 만약 같다면 User모델의 create_user 함수를 사용해서 username / password데이터로 User 모델에 추가(회원가입) -> 그리고 회원가입 시 입력한 nickname / email 데이터를 변수에 저장하고 User 모델과 OnetoOne관계인 Customer 모델에 해당 유저 및 데이터 추가 -> 위 과정을 다 진행한 다음, 자동으로 auth모듈의 login함수를 통해 로그인을 시키고 메인 페이지로 redirect해주기 -> 만약, 회원가입 정보를 다 받지 못한다면 context 딕셔너리에 error라는 key를 저장해서 에러 메세지 띄우기        
+  - 앱 내부 views.py의 login View에서는, GET방식일 경우 로그인 페이지를 랜더링하고 POST방식일 경우 로그인 절차 진행 => POST방식으로 전달한 username / password 데이터가 있다면, auth 모듈의 authenticate 함수를 사용해서 username / password 데이터를 가진 유저가 있는지 확인 진행 -> 유저가 있다면 user 인스턴스를 return하므로, 그렇다면 auth 모듈의 login함수를 사용해서 로그인 시켜주고 바로 메인페이지로 redirect -> 만약, 그런 유저가 없다면 context에 error key 저장해서 에러 메세지 띄우기 -> 로그인 정보를 다 받지 못한다면 모두 입력하라는 에러 메세지 띄우기      
+  - 앱 내부 views.py의 logout View는 POST방식일 경우 auth모듈의 logout함수를 사용해서 로그아웃 진행 -> 서버 내 쿠키와 세션 정보를 초기화        
+  - +++ 추가해야 할 사항 : Customer 모델의 필드가 현재 user / name / email 이렇게 되어있는데, 여기에 사회문제와 관련된 필드를 추가해서 -> 회원가입 시 받은 정보를 DB에 저장하게끔 하기
   
-  - **version 2.6 모델 이름을 Post에서 -> Product로 수정**
-    - 상품과 관련된 필드들이 Post라는 이름의 모델에 정의되어 있는 것이 맞지 않다고 판단        
-    - 먼저 python manage.py migrate posts zero -> 이렇게 입력하고나서 앱이름/migrations/ 내의 마이그레이션 파일을 모두 삭제       
-    - 그리고 앱 내부 파일들을 하나씩 보면서 모델명 변경으로 인해 수정해야 할 사항들 수정         
-    - 그리고 나서 python manage.py make migrations posts 를 진행 -> migrations 파일 0001 생성        
-    - 마지막으로 python manage.py migrate posts 진행
+- **version 2.6 모델 이름을 Post에서 -> Product로 수정**
+  - 상품과 관련된 필드들이 Post라는 이름의 모델에 정의되어 있는 것이 맞지 않다고 판단        
+  - 먼저 python manage.py migrate posts zero -> 이렇게 입력하고나서 앱이름/migrations/ 내의 마이그레이션 파일을 모두 삭제       
+  - 그리고 앱 내부 파일들을 하나씩 보면서 모델명 변경으로 인해 수정해야 할 사항들 수정         
+  - 그리고 나서 python manage.py make migrations posts 를 진행 -> migrations 파일 0001 생성        
+  - 마지막으로 python manage.py migrate posts 진행
   
-  - **version 2.7 Customer 모델에 problem이라는 필드 추가**    
-    - 회원가입 시 유저의 관심있는 사회문제를 1개 받고 그 값을 Customer 모델에 추가하기 위함 / 관심있는 한가지의 문제가 없을수도 있으니 null=True 설정    
-    - Admin.py에 Customer 모델 관련해서 list_display 리스트에 problem 필드 추가.     
-    - accounts 앱의 views.py -> sign_up View에서 problem = request.POST.get('social') -> 이렇게 유저가 회원가입 시 선택한 사회문제를 받아서 변수로 저장하고 customer = Customer(user=new_user, name=name, email=email, problem=problem) -> 이렇게 Customer 모델에 값을 입력하도록 설정      
+- **version 2.7 Customer 모델에 problem이라는 필드 추가**    
+  - 회원가입 시 유저의 관심있는 사회문제를 1개 받고 그 값을 Customer 모델에 추가하기 위함 / 관심있는 한가지의 문제가 없을수도 있으니 null=True 설정    
+  - Admin.py에 Customer 모델 관련해서 list_display 리스트에 problem 필드 추가.     
+  - accounts 앱의 views.py -> sign_up View에서 problem = request.POST.get('social') -> 이렇게 유저가 회원가입 시 선택한 사회문제를 받아서 변수로 저장하고 customer = Customer(user=new_user, name=name, email=email, problem=problem) -> 이렇게 Customer 모델에 값을 입력하도록 설정      
   
-  - **version 2.7 마이페이지 메뉴 클릭 시, 유저의 정보를 출력해서 보여주기**      
-    - accounts App 내부에 urls.py에서 마이페이지 URL를 설정하고, mypage라는 View 함수 설정     
-    - 그리고 accounts 디렉터리 내부에 mypage.html을 생성해서 유저 정보 출력 / request.user.is_staff로 관리자 여부를 True/False로 확인 가능 
+- **version 2.7 마이페이지 메뉴 클릭 시, 유저의 정보를 출력해서 보여주기**      
+  - accounts App 내부에 urls.py에서 마이페이지 URL를 설정하고, mypage라는 View 함수 설정     
+  - 그리고 accounts 디렉터리 내부에 mypage.html을 생성해서 유저 정보 출력 / request.user.is_staff로 관리자 여부를 True/False로 확인 가능 
   
-  - **version 2.8 products App 생성 및 모델 위치 수정**      
-    - 원래 posts 앱에 있었던 Customer 모델을 accounts 앱에 models.py로 이동시킴 -> 이유는 posts 앱에 모든 모델을 구성하는 것이 비효율적이라고 생각했기 때문       
-    - products라는 App 생성 -> 이유는 posts App에 게시판이 아닌 상품들 관련 기능들이 있었기에 products라는 App에 해당 기능을 수행할 수 있도록 수정        
-    - 기존 posts App에는 게시판을 위한 Post 모델을 posts 앱 내부 models.py에 설정
+- **version 2.8 products App 생성 및 모델 위치 수정**      
+  - 원래 posts 앱에 있었던 Customer 모델을 accounts 앱에 models.py로 이동시킴 -> 이유는 posts 앱에 모든 모델을 구성하는 것이 비효율적이라고 생각했기 때문       
+  - products라는 App 생성 -> 이유는 posts App에 게시판이 아닌 상품들 관련 기능들이 있었기에 products라는 App에 해당 기능을 수행할 수 있도록 수정        
+  - 기존 posts App에는 게시판을 위한 Post 모델을 posts 앱 내부 models.py에 설정
   
-  - **version 2.9 posts App에 Brand 모델 생성**   
-    - posts App에 Brand 모델 생성 / 추가한 이유는, 입점 소셜벤처 페이지에서 브랜드를 소개 및 브랜드 상세 페이지를 보여주기 위해 추가   
-    - 또한, Brand모델과 Product 모델 관계를 1:N으로 설정해서 입점된 브랜드의 상품들을 관리하게끔 설정
-    - ERD에 해당 내용 반영    
-    - Product 모델에 이미지 필드 2개 추가 → 상품 상세 페이지에서 추가 이미지를 보여주기 위함
-    - 입점 소셜벤처 페이지는 ListView를 상속받아서 View로 설정     
-    - 상품 상세페이지 수정 + 입점 소셜벤처 페이지 생성
+- **version 2.9 posts App에 Brand 모델 생성**   
+  - posts App에 Brand 모델 생성 / 추가한 이유는, 입점 소셜벤처 페이지에서 브랜드를 소개 및 브랜드 상세 페이지를 보여주기 위해 추가   
+  - 또한, Brand모델과 Product 모델 관계를 1:N으로 설정해서 입점된 브랜드의 상품들을 관리하게끔 설정
+  - ERD에 해당 내용 반영    
+  - Product 모델에 이미지 필드 2개 추가 → 상품 상세 페이지에서 추가 이미지를 보여주기 위함
+  - 입점 소셜벤처 페이지는 ListView를 상속받아서 View로 설정     
+  - 상품 상세페이지 수정 + 입점 소셜벤처 페이지 생성
   
-  - **version 2.91 Brand 모델 및 Customer 모델 수정**      
-    - Brand 모델에 problem 필드 추가 / 해당 브랜드가 해결하고자 하는 사회문제를 구분해 카테고리 페이지에서 분류할 수 있도록 설정         
-    - Customer 모델 user/name/email 필드에 unique 속성 부여 / 사용자ID와 닉네임, 이메일이 중복되지 않게 설정
+- **version 2.91 Brand 모델 및 Customer 모델 수정**      
+  - Brand 모델에 problem 필드 추가 / 해당 브랜드가 해결하고자 하는 사회문제를 구분해 카테고리 페이지에서 분류할 수 있도록 설정         
+  - Customer 모델 user/name/email 필드에 unique 속성 부여 / 사용자ID와 닉네임, 이메일이 중복되지 않게 설정
   
-  - **version 2.92 Brand 모델 수정**      
-    - Brand 모델에 image 필드 추가 / 브랜드 상세 페이지에서 보여줄 대표 이미지를 위해 필드 추가
+- **version 2.92 Brand 모델 수정**      
+  - Brand 모델에 image 필드 추가 / 브랜드 상세 페이지에서 보여줄 대표 이미지를 위해 필드 추가
   
-  - **version 2.93 브랜드 상세페이지 업데이트**      
-    - 홈페이지 버튼 클릭 시 DB에 저장된 url로 해당 브랜드 홈페이지로 이동      
-    - Brand DB에 저장된 short_content / long_content 표시      
-    - 현재 판매되고 있는 해당 브랜드 제품을 Carousel을 이용해 자동으로 보여주기      
-    - 이 때, 해당 상품 이미지 클릭 시 제품 상세페이지가 나오게끔 설정     
-    - 제품 상세페이지에서 브랜드명 클릭 시, 브랜드 상세페이지가 나오게끔 설정
+- **version 2.93 브랜드 상세페이지 업데이트**      
+  - 홈페이지 버튼 클릭 시 DB에 저장된 url로 해당 브랜드 홈페이지로 이동      
+  - Brand DB에 저장된 short_content / long_content 표시      
+  - 현재 판매되고 있는 해당 브랜드 제품을 Carousel을 이용해 자동으로 보여주기      
+  - 이 때, 해당 상품 이미지 클릭 시 제품 상세페이지가 나오게끔 설정     
+  - 제품 상세페이지에서 브랜드명 클릭 시, 브랜드 상세페이지가 나오게끔 설정
   
-  - **version 3.0 DBMS를 MySQL로 설정**     
-    - MySQL로 설정한 이유는, 현재 시점에서 Oracle다음으로 가장 많이 사용하는 DBMS이기 때문에 안정적이라고 판단해서 MySQL로 설정하게 됨(https://db-engines.com/en/ranking 여기서 확인 가능)
-    - 먼저 AWS에 들어가서 RDS로 들어감 -> 그리고 데이터베이스 생성 클릭. MySQL 버전은 8.0.28      
-    - 해당 템플릿은 프리티어로 1년 무료 선택       
-    - 해당 DB인스턴스는 → db.t3.micro 사양으로 2 vCPUs, 1GiB RAM, 네트워크: 2,085Mbps / 스토리지는 범용 SSD(gp2), 할당된 스토리지는 20 GiB / 최대 스토리지 임계값은 1,000 GiB       - AWS RDS에서 VPC 보안 그룹 설정하기       
-    - DB 관리 툴인 DBeaver를 사용해서 우리가 생성한 데이터베이스 서버 연결 / DBeaver는 22.0.2버전 사용       
-    - 그리고나서 DBeaver를 이용해서 impactmuseum이라는 이름의 DB생성 → DBeaver의 좌측 Navigator에 DB 생성 확인      
-    - 이제 django의 settings.py로 가서 DB 엔진을 sqlite3에서 mysql로 바꾸고 값 추가해서 설정       
-    - DB에 붙는 것을 도와주는 어댑터 역할, 콘센트 역할을 하는 클라이언트인 mysqlclient 설치         
-    - 다시 python manage.py migrate를 진행        
-      - **이 과정에서 해당 경고 발생, 알아보기** --> WARNINGS:
+- **version 3.0 DBMS를 MySQL로 설정**     
+  - MySQL로 설정한 이유는, 현재 시점에서 Oracle다음으로 가장 많이 사용하는 DBMS이기 때문에 안정적이라고 판단해서 MySQL로 설정하게 됨(https://db-engines.com/en/ranking 여기서 확인 가능)
+  - 먼저 AWS에 들어가서 RDS로 들어감 -> 그리고 데이터베이스 생성 클릭. MySQL 버전은 8.0.28      
+  - 해당 템플릿은 프리티어로 1년 무료 선택       
+  - 해당 DB인스턴스는 → db.t3.micro 사양으로 2 vCPUs, 1GiB RAM, 네트워크: 2,085Mbps / 스토리지는 범용 SSD(gp2), 할당된 스토리지는 20 GiB / 최대 스토리지 임계값은 1,000 GiB       - AWS RDS에서 VPC 보안 그룹 설정하기       
+  - DB 관리 툴인 DBeaver를 사용해서 우리가 생성한 데이터베이스 서버 연결 / DBeaver는 22.0.2버전 사용       
+  - 그리고나서 DBeaver를 이용해서 impactmuseum이라는 이름의 DB생성 → DBeaver의 좌측 Navigator에 DB 생성 확인      
+  - 이제 django의 settings.py로 가서 DB 엔진을 sqlite3에서 mysql로 바꾸고 값 추가해서 설정       
+  - DB에 붙는 것을 도와주는 어댑터 역할, 콘센트 역할을 하는 클라이언트인 mysqlclient 설치         
+  - 다시 python manage.py migrate를 진행        
+    - **이 과정에서 해당 경고 발생, 알아보기** --> WARNINGS:
 ?: (mysql.W002) MySQL Strict Mode is not set for database connection 'default'
         HINT: MySQL's Strict Mode fixes many data integrity problems in MySQL, such as data truncation upon insertion, by escalating warnings into errors. It is strongly recommended you activate it. See: https://docs.djangoproject.com/en/3.2/ref/databases/#mysql-sql-mode       
-    - DBeaver에서 새로고침하면 테이블이 생성되어 데이터 추가 완료
+  - DBeaver에서 새로고침하면 테이블이 생성되어 데이터 추가 완료
   
-  - **version 3.1 Posts 앱 내부 models.py에 Problem이라는 모델 클래스 추가**    
-    - 사회문제 모델 테이블을 만들어서 “사회문제” 페이지에서 각 문제들을 소개하고 그 문제에 속해있는 입점 브랜드들을 보여주기 위해 추가     
-    - 일단은 name / image / content 필드로 구성     
-    - 그리고 Brand 모델에 있는 problem 필드를 ForeignKey로 바꿔서 Problem 모델과 Brand 모델이 1:N관계가 되게끔 설정      
-    - ForeignKey 설정 시, on_delete=models.PROTECT로 설정한 이유는 규정한 사회문제가 없어져도 일단 입점된 브랜드의 정보들은 그대로 유지하기 위함
+- **version 3.1 Posts 앱 내부 models.py에 Problem이라는 모델 클래스 추가**    
+  - 사회문제 모델 테이블을 만들어서 “사회문제” 페이지에서 각 문제들을 소개하고 그 문제에 속해있는 입점 브랜드들을 보여주기 위해 추가     
+  - 일단은 name / image / content 필드로 구성     
+  - 그리고 Brand 모델에 있는 problem 필드를 ForeignKey로 바꿔서 Problem 모델과 Brand 모델이 1:N관계가 되게끔 설정      
+  - ForeignKey 설정 시, on_delete=models.PROTECT로 설정한 이유는 규정한 사회문제가 없어져도 일단 입점된 브랜드의 정보들은 그대로 유지하기 위함
   
-  - **version 3.11 사회문제 페이지 구성 진행**     
-    - 사회문제 페이지를 클릭했을 때, 우리나라에 존재하는 사회문제 리스트를 보여주고 해당 문제 클릭 시 문제에 대한 설명과 함께 그 문제를 해결하기 위해 노력하는 소셜벤처 보여주기      
-    - Problem 모델에 short_content 필드 추가
+- **version 3.11 사회문제 페이지 구성 진행**     
+  - 사회문제 페이지를 클릭했을 때, 우리나라에 존재하는 사회문제 리스트를 보여주고 해당 문제 클릭 시 문제에 대한 설명과 함께 그 문제를 해결하기 위해 노력하는 소셜벤처 보여주기      
+  - Problem 모델에 short_content 필드 추가
   
-  - **version 3.12 마이페이지에서 본인 정보 수정 기능 추가**      
-    - 마이페이지에서 정보 수정하기 버튼 클릭 시, 본인이 회원가입 시 입력한 아이디와 닉네임, 이메일, 관심있는 사회문제를 변경할 수 있게 코드 추가      
-    - id 정보는 request.user.username으로 접근하고 나머지 정보들은 request.user.customer로 접근한 customer의 필드를 변경하는 방식으로 설정     
-    - 추가로 관리자 계정의 경우, {% if request.user.is_staff %} 라는 if문을 사용해서 관리자 여부 : O 이렇게 표시되도록 수정
+- **version 3.12 마이페이지에서 본인 정보 수정 기능 추가**      
+  - 마이페이지에서 정보 수정하기 버튼 클릭 시, 본인이 회원가입 시 입력한 아이디와 닉네임, 이메일, 관심있는 사회문제를 변경할 수 있게 코드 추가      
+  - id 정보는 request.user.username으로 접근하고 나머지 정보들은 request.user.customer로 접근한 customer의 필드를 변경하는 방식으로 설정     
+  - 추가로 관리자 계정의 경우, {% if request.user.is_staff %} 라는 if문을 사용해서 관리자 여부 : O 이렇게 표시되도록 수정
   
-  - **version 3.2 allauth 라이브러리 설치**    
-    - 소셜 로그인을 위한 django allauth 라이브러리 설치      
-    - settings.py INSTALLED_APPS에 추가로 'django.contrib.sites' 등록 / 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites 모델 등록     
-    - settings.py INSTALLED_APPS에 추가로 'allauth'와 'allauth.account' 등록 / allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 올 수 있게 설정    
-      - 'allauth.socialaccount' 을 등록해서 allauth로 SNS 계정 연동이 가능하게 해주는 모듈 설정     
-      - 그 모듈안에 providers 다음에 auth0 / google / kakao 이렇게 우리가 연동하기를 원하는 provider를 각각 설정     
-    - settings.py에 allauth 관련 설정 추가    
-      - 로그인이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃 시, URL로 GET으로 접근해도 로그아웃 처리가 가능할 수 있도록 설정   
-    - 프로젝트 디렉터리 내부 urls.py에 소셜 로그인 리디렉션 URI를 위한 설정 추가    
-      - path('oauth/', include('allauth.urls')), 이렇게 추가      
-    - migrate 진행 이후, sites 앱의 Sites라는 모델 / socialaccount 앱의 socialaccount, socialapp, socialapp_sites, socialtoken 모델이 추가됨
+- **version 3.2 allauth 라이브러리 설치**    
+  - 소셜 로그인을 위한 django allauth 라이브러리 설치      
+  - settings.py INSTALLED_APPS에 추가로 'django.contrib.sites' 등록 / 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites 모델 등록     
+  - settings.py INSTALLED_APPS에 추가로 'allauth'와 'allauth.account' 등록 / allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 올 수 있게 설정    
+    - 'allauth.socialaccount' 을 등록해서 allauth로 SNS 계정 연동이 가능하게 해주는 모듈 설정     
+    - 그 모듈안에 providers 다음에 auth0 / google / kakao 이렇게 우리가 연동하기를 원하는 provider를 각각 설정     
+  - settings.py에 allauth 관련 설정 추가    
+    - 로그인이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃이 성공할 경우 redirect 해주는 페이지 설정, 로그아웃 시, URL로 GET으로 접근해도 로그아웃 처리가 가능할 수 있도록 설정   
+  - 프로젝트 디렉터리 내부 urls.py에 소셜 로그인 리디렉션 URI를 위한 설정 추가    
+    - path('oauth/', include('allauth.urls')), 이렇게 추가      
+  - migrate 진행 이후, sites 앱의 Sites라는 모델 / socialaccount 앱의 socialaccount, socialapp, socialapp_sites, socialtoken 모델이 추가됨
   
-  - **version 3.21 구글 및 카카오 소셜 로그인 기능 구현(내 구글 및 카카오 계정만 가능)**    
-    - Google Cloud Platform 사이트에 가서 새로운 impact-museum 프로젝트 생성    
-      - 지금은 게시 상태가 테스트이기 때문에 테스트 사용자로 등록된 구글이메일만이 소셜 로그인이 가능 / OAuth 동의 화면 메뉴에서 내 구글 이메일만 등록
-      - 리디렉션 URI는 http://localhost:8000/oauth/google/login/callback/ 이렇게 설정     
-    - settings.py에 설정 추가 / allauth에서 account 로그인을 지원하기 위한 인증 로직 및 백엔드 로직을 설정하기 위해 AUTHENTICATION_BACKENDS 변수 설정     
-      - 해당 모듈을 설정해서 클라이언트 ID랑 비밀번호를 어드민에 입력해서 그 값을 가지고 OAuth에 필요한 값들을 해당 SNS 서버에 전송할 수 있게됨      
-      - SOCIALACCOUNT_PROVIDERS 변수를 딕셔너리로 추가로 설정해서 google로부터 profile이랑 email를 받아오도록 설정     
-    - 어드민 페이지에 들어가서 Sites 모델에 도메인 값 추가    
-      - 해당 모델은 우리 사이트의 도메인 값을 넣어주는 역할을 해준다. 그래서 나중에 socialaccount에서 연동을 할 때 SNS한테 전달 할 우리 서버의 도메인 정보를 불러오는 역할도 해주기 때문에 이 모델에 우리의 디폴트 URL를 입력해주기(127.0.0.1:8000) / 지금 테스트 서버이기 때문에 나중에는 배포된 도메인으로 수정해야 함     
-      - 이렇게 설정해주면 redirection URI 요청이 들어갈 때 127.0.0.1:8000 정보를 읽어서 보내기 때문에 구글에서 '아, 내가 승인한 도메인 리디렉션 URI가 맞구나' 라고 인식을 해서 승인을 해줄 수 있게됨      
-    - 어드민 페이지에 들어가서 Social applications 모델 데이터 추가    
-      - 해당 모델에 Google Provider 추가 / 여기에 클라이언트 ID와 Secret Key 저장하여 나중에 새로 발급 시 바로 바꿀 수 있게 하드코딩 하지 않고 DB에 저장     
-    - 로그인 및 회원가입 페이지 template에 socialaccount 모듈을 load 해주고 socialaccount 안에 있는 필요한 자바스크립트들을 불러올 수 있게 해주는 필터인 providers_media_js를 호출해주기     
-      - 추가로 a element를 이용해서 provider_login_url이라는 필터를 사용하고 google provider에 로그인 주소를 가지고 올 수 있게 설정       
-      - 여기까지 구글 소셜 로그인 기능 구현 완료
-    - **해당 과정에서 구글 로그인 버튼 클릭 시, 오류 발생**    
-      - **소셜 로그인 시, customer 모델에 데이터가 들어간게 아니기 때문에 메인페이지와 장바구니 페이지에 들어가면 오류가 발생하고 있음**    
-      - **그리고 마이페이지 클릭 시, 닉네임만 데이터가 뜨고 나머지는 customer 모델을 기준으로 코드를 작성했기 때문에 다른 정보가 없음**     
-    - 카카오 개발자 사이트에 가서 새로운 애플리케이션 추가 / Web 플랫폼을 등록하고 Redirect URI를 http://localhost:8000/oauth/kakao/login/callback/ 로 설정   
-      - 카카오에서는 REST API 키가 클라이언트 ID역할을 하게 됨 / 추가로 Client Secret를 생성
-      - 구글 소셜 로그인 기능과 마찬가지로 template에 소셜 로그인 관련 코드 추가 
-      - 구글 소셜 로그인 기능과 마찬가지로 Social applications 모델에 들어간 다음, 새롭게 카카오 로그인을 위한 Provider 1개를 추가     
-      - 추가로 카카오 로그인을 하게 되면 기본적으로 소셜 로그인을 할 때 마다 확인 이메일을 발송하도록 내부 디폴트 로직이 되어있어 이 부분을 꺼줘야 한다. / settings.py # All auth 부분에 ACCOUNT_EMAIL_REQUIRED = False, ACCOUNT_EMAIL_VERIFICATION = 'none' 다음과 같은 변수를 설정해서 카카오 로그인 시 해당 유저의 이메일을 가져오지 않게 설정. 그리고 none 설정은 확인 이메일이 반복해서 가지 않게 설정     
-    - **이러한 소셜 로그인 성공 시 --> django User 모델에 계정 데이터가 추가된다. 그리고 Social accounts 모델에도 계정 데이터가 추가된다.**
+- **version 3.21 구글 및 카카오 소셜 로그인 기능 구현(내 구글 및 카카오 계정만 가능)**    
+  - Google Cloud Platform 사이트에 가서 새로운 impact-museum 프로젝트 생성    
+    - 지금은 게시 상태가 테스트이기 때문에 테스트 사용자로 등록된 구글이메일만이 소셜 로그인이 가능 / OAuth 동의 화면 메뉴에서 내 구글 이메일만 등록
+    - 리디렉션 URI는 http://localhost:8000/oauth/google/login/callback/ 이렇게 설정     
+  - settings.py에 설정 추가 / allauth에서 account 로그인을 지원하기 위한 인증 로직 및 백엔드 로직을 설정하기 위해 AUTHENTICATION_BACKENDS 변수 설정     
+    - 해당 모듈을 설정해서 클라이언트 ID랑 비밀번호를 어드민에 입력해서 그 값을 가지고 OAuth에 필요한 값들을 해당 SNS 서버에 전송할 수 있게됨      
+    - SOCIALACCOUNT_PROVIDERS 변수를 딕셔너리로 추가로 설정해서 google로부터 profile이랑 email를 받아오도록 설정     
+  - 어드민 페이지에 들어가서 Sites 모델에 도메인 값 추가    
+    - 해당 모델은 우리 사이트의 도메인 값을 넣어주는 역할을 해준다. 그래서 나중에 socialaccount에서 연동을 할 때 SNS한테 전달 할 우리 서버의 도메인 정보를 불러오는 역할도 해주기 때문에 이 모델에 우리의 디폴트 URL를 입력해주기(127.0.0.1:8000) / 지금 테스트 서버이기 때문에 나중에는 배포된 도메인으로 수정해야 함     
+    - 이렇게 설정해주면 redirection URI 요청이 들어갈 때 127.0.0.1:8000 정보를 읽어서 보내기 때문에 구글에서 '아, 내가 승인한 도메인 리디렉션 URI가 맞구나' 라고 인식을 해서 승인을 해줄 수 있게됨      
+  - 어드민 페이지에 들어가서 Social applications 모델 데이터 추가    
+    - 해당 모델에 Google Provider 추가 / 여기에 클라이언트 ID와 Secret Key 저장하여 나중에 새로 발급 시 바로 바꿀 수 있게 하드코딩 하지 않고 DB에 저장     
+  - 로그인 및 회원가입 페이지 template에 socialaccount 모듈을 load 해주고 socialaccount 안에 있는 필요한 자바스크립트들을 불러올 수 있게 해주는 필터인 providers_media_js를 호출해주기     
+    - 추가로 a element를 이용해서 provider_login_url이라는 필터를 사용하고 google provider에 로그인 주소를 가지고 올 수 있게 설정       
+    - 여기까지 구글 소셜 로그인 기능 구현 완료
+  - **해당 과정에서 구글 로그인 버튼 클릭 시, 오류 발생**    
+    - **소셜 로그인 시, customer 모델에 데이터가 들어간게 아니기 때문에 메인페이지와 장바구니 페이지에 들어가면 오류가 발생하고 있음**    
+    - **그리고 마이페이지 클릭 시, 닉네임만 데이터가 뜨고 나머지는 customer 모델을 기준으로 코드를 작성했기 때문에 다른 정보가 없음**     
+  - 카카오 개발자 사이트에 가서 새로운 애플리케이션 추가 / Web 플랫폼을 등록하고 Redirect URI를 http://localhost:8000/oauth/kakao/login/callback/ 로 설정   
+    - 카카오에서는 REST API 키가 클라이언트 ID역할을 하게 됨 / 추가로 Client Secret를 생성
+    - 구글 소셜 로그인 기능과 마찬가지로 template에 소셜 로그인 관련 코드 추가 
+    - 구글 소셜 로그인 기능과 마찬가지로 Social applications 모델에 들어간 다음, 새롭게 카카오 로그인을 위한 Provider 1개를 추가     
+    - 추가로 카카오 로그인을 하게 되면 기본적으로 소셜 로그인을 할 때 마다 확인 이메일을 발송하도록 내부 디폴트 로직이 되어있어 이 부분을 꺼줘야 한다. / settings.py # All auth 부분에 ACCOUNT_EMAIL_REQUIRED = False, ACCOUNT_EMAIL_VERIFICATION = 'none' 다음과 같은 변수를 설정해서 카카오 로그인 시 해당 유저의 이메일을 가져오지 않게 설정. 그리고 none 설정은 확인 이메일이 반복해서 가지 않게 설정     
+  - **이러한 소셜 로그인 성공 시 --> django User 모델에 계정 데이터가 추가된다. 그리고 Social accounts 모델에도 계정 데이터가 추가된다.**
 
 
 <br>
