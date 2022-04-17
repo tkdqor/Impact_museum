@@ -57,9 +57,6 @@
 ## 4. 핵심 기능     
 - 핵심 기능들 나열하기..
 
-<details>
-  <summary>version 별 내용 히스토리 내역</summary>
-  
   - **version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축**
   
   - **version 1.4 URL Configuration으로 app별 URL 관리 / Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료**
@@ -228,9 +225,6 @@
       - 추가로 카카오 로그인을 하게 되면 기본적으로 소셜 로그인을 할 때 마다 확인 이메일을 발송하도록 내부 디폴트 로직이 되어있어 이 부분을 꺼줘야 한다. / settings.py # All auth 부분에 ACCOUNT_EMAIL_REQUIRED = False, ACCOUNT_EMAIL_VERIFICATION = 'none' 다음과 같은 변수를 설정해서 카카오 로그인 시 해당 유저의 이메일을 가져오지 않게 설정. 그리고 none 설정은 확인 이메일이 반복해서 가지 않게 설정     
     - **이러한 소셜 로그인 성공 시 --> django User 모델에 계정 데이터가 추가된다. 그리고 Social accounts 모델에도 계정 데이터가 추가된다.**
 
-
-
-</details>
 
 <br>
 
