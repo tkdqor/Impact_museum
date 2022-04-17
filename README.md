@@ -72,7 +72,7 @@ if settings.DEBUG:
   - 어드민 페이지 내 모델의 필드명 표시하기
   
 - **version 2.0 모델 내 필드 추가 및 속성 변경**      
-  - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안되기 때문)       
+  - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안 되기 때문)       
   - Post(Product) 모델 : price 필드를 floatField에서 PositiveIntegerField로 변경 (가격이니까 실수보다는 양의 정수로 수정하는 게 맞다고 판단) / created_at 필드는 DateTimeField에 auto_now_add=True 옵션을 추가. (상품 데이터가 언제 생성되었는지 필요하기 때문.) / updated_at 필드를 새로 생성하고 DateTimeField의 auto_now=True 옵션을 추가. (상품 데이터를 수정했을 때 기록을 남기기 위해서 날짜가 갱신되어야 한다.)       
   - OrderItem 모델 : quantity 필드가 원래 null=True, blank=True 였으나 null=False, blank=False로 수정. (수량은 비어있으면 안되고 최소 1개로 설정되어야 하기 때문)
   
@@ -160,7 +160,8 @@ if settings.DEBUG:
   - MySQL로 설정한 이유는, 현재 시점에서 Oracle다음으로 가장 많이 사용하는 DBMS이기 때문에 안정적이라고 판단해서 MySQL로 설정하게 됨(https://db-engines.com/en/ranking 여기서 확인 가능)
   - 먼저 AWS에 들어가서 RDS로 들어감 -> 그리고 데이터베이스 생성 클릭. MySQL 버전은 8.0.28      
   - 해당 템플릿은 프리티어로 1년 무료 선택       
-  - 해당 DB인스턴스는 → db.t3.micro 사양으로 2 vCPUs, 1GiB RAM, 네트워크: 2,085Mbps / 스토리지는 범용 SSD(gp2), 할당된 스토리지는 20 GiB / 최대 스토리지 임계값은 1,000 GiB       - AWS RDS에서 VPC 보안 그룹 설정하기       
+  - 해당 DB인스턴스는 → db.t3.micro 사양으로 2 vCPUs, 1GiB RAM, 네트워크: 2,085Mbps / 스토리지는 범용 SSD(gp2), 할당된 스토리지는 20 GiB / 최대 스토리지 임계값은 1,000 GiB   
+  - AWS RDS에서 VPC 보안 그룹 설정 완료       
   - DB 관리 툴인 DBeaver를 사용해서 우리가 생성한 데이터베이스 서버 연결 / DBeaver는 22.0.2버전 사용       
   - 그리고나서 DBeaver를 이용해서 impactmuseum이라는 이름의 DB생성 → DBeaver의 좌측 Navigator에 DB 생성 확인      
   - 이제 django의 settings.py로 가서 DB 엔진을 sqlite3에서 mysql로 바꾸고 값 추가해서 설정       
