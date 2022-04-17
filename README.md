@@ -69,7 +69,7 @@ if settings.DEBUG:
 ```
   
 - **version 1.9 어드민 페이지 변경 코드 추가**
-  - 관련 내용 다시 확인해서 추가하기
+  - 어드민 페이지 내 모델의 필드명 표시하기
   
 - **version 2.0 모델 내 필드 추가 및 속성 변경**      
   - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안되기 때문)       
