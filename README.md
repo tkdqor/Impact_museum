@@ -63,11 +63,6 @@
   - ImageField를 위한 Pillow 라이브러리 설치
   - 프로젝트 루트 디렉터리 내부 urls.py에 settings의 DEBUG 옵션이 TRUE일 경우에만 이미지 파일 serving 허용할 수 있도록 코드 추가
   
-```python
-if settings.DEBUG: 
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-```
-  
 - **version 1.9 어드민 페이지 변경 코드 추가**
   - 어드민 페이지 내 모델의 필드명 표시하기
   
