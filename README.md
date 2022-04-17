@@ -232,7 +232,9 @@ if settings.DEBUG:
   - models.py 설정 시 FloatField 및 IntegerField의 경우, default=0 처럼 default 값 설정 필요
 
 - **DB에서 ImageField 설정 시 이미지를 업로드 하지 않으면 html template에서 ValueError 발생**
-  - models.py에서 관련 모델에 @property를 설정해서 오류 방지
+  - models.py에서 관련 모델에 @property를 설정해서 imageURL 이라는 함수 정의
+  - 그래서 이미지가 있다면 보여주고 없다면 상품 목록 페이지로 redirect 시켜주기
+  - 참고 자료 : https://hwan-hobby.tistory.com/148
 
 - **Javascript 파일 - 새로 생성한 함수에서 url를 정의할 때, 상품 1개 조회 화면에서 장바구니 버튼을 클릭하기 때문에 url에 product_id 값이 들어가야 했는데 그러지 않아 uncaught (in promise) syntaxerror: unexpected token < in json at position 0 와 같은 오류 발생**
   - url 정의할 때 미리 정의한 post_id 변수를 + 연산자로 url에 포함시키서 오류 해결   
