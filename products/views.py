@@ -9,27 +9,14 @@ from rest_framework import viewsets
 import json
 from django.db.models import Q     # 검색기능구현 시, filter 조건을 or로 설정하기 위해 Q 함수 import
 from django.http import Http404    # 상품 1개 조회 시, 예외처리를 위한 Http404 import 
+from .cartitems_tag import *       # 중복되는 코드들을 가져오기 위해 products App 내부 cartitems_tag 모듈 가져오기
 
-# Create your views here.
 
 
 # 메인 화면
 def index(request):
-    if request.user.is_authenticated:      # 로그인이 되었을 경우, 로그인된 유저의 정보와 연동된 customer 인스턴스를 customer 변수에 저장
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False) # 그 customer 인스턴스가 pk로 있는 order 인스턴스를 저장
-
-        print(order)
-        print(created)
-
-        cartItems = order.get_cart_items                  # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기 - Order모델에 정의된 get_cart_items 함수 사용
-    else:
-        items = []                                        # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
-        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것 
-        cartItems = order['get_cart_items']    
-        # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
-        # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
-
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
     products = Product.objects.all().order_by('-id')[:8] # Product 모델 데이터 전체에서 id필드 기준 역순으로 8개만 가져오기
 
@@ -49,14 +36,16 @@ def index(request):
 
 
 
-
 # 상품 1개 조회
 def detail(request, product_id):
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
     try:
         product = Product.objects.get(id=product_id)
         context = {
             'product': product,
+            'cartItems': cartItems,
         }
     except Product.DoesNotExist:           # DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄우게 설정
         raise Http404
@@ -65,10 +54,10 @@ def detail(request, product_id):
 
 
 
-
 # 상품 1개 생성 페이지
 def new(request):
     return render(request, 'products/product_new.html')
+
 
 
 # 상품 1개 생성 기능
@@ -81,6 +70,7 @@ def create(request):
     return redirect('products:detail', product_id=product.id)
 
 
+
 # 상품 1개 수정 페이지
 def edit(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -91,6 +81,7 @@ def edit(request, product_id):
     return render(request, 'products/product_edit.html', context)
 
 
+
 # 상품 1개 수정 기능
 def update(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -99,6 +90,7 @@ def update(request, product_id):
     product.save()
 
     return redirect('products:detail', product_id=product.id)
+
 
 
 # 상품 1개 삭제
@@ -112,26 +104,14 @@ def delete(request, product_id):
 
 # 장바구니 화면
 def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)  
-        # 로그인한 customer에 해당하는 사람을 Order 모델에서도 찾아서, 즉 같은 customer를 찾아서 그 사람이 주문한 order를 가져오는데,
-        # complete 필드가 False인 DB 정보를 가져와주는 것(만약 없다면 생성)
-        # 그리고 이 코드를 쓰는 이유는, 그냥 DB상 데이터 생성의 중복을 막을 수 있기 때문이다!!
-        items = order.orderitem_set.all()  # order 모델에서 orderitem 모델에 접근하여 -> 해당 order의 orderitem DB 전부를 가져오기 
-
-        cartItems = order.get_cart_items   # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
-    else:
-        items = []  # cart.html에 아무것도 보내주지 않는다는 것을 의미 
-        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것 
-        cartItems = order['get_cart_items']              
-        # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
-        # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정 
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
+    items = cartItems_data['items']            # cartitems_count 함수의 items 값 가져오기
+    order = cartItems_data['order']            # cartitems_count 함수의 order 값 가져오기
 
     context = {'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
 
     return render(request, 'products/cart.html', context)
-
 
 
 
@@ -163,28 +143,14 @@ def checkout2(request, product_id):
 
 # 장바구니 페이지 -> 결제 화면
 def checkout1(request):
-    if request.user.is_authenticated:
-        
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False) 
-        items = order.orderitem_set.all()   
-
-        cartItems = order.get_cart_items    # 특정 order에 해당되는 orderitem의 수량을 전부 합한 값을 가져오기
-
-        
-    else:
-        items = []  # checkout.html에 아무것도 보내주지 않는다는 것을 의미 
-        order = {'get_cart_total':0, 'get_cart_items':0}  # 로그인하지 않아도 화면을 볼 수 있게 order 변수를 정의해주는 것   
-        cartItems = order['get_cart_items']               
-        # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
-        # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
+    items = cartItems_data['items']            # cartitems_count 함수의 items 값 가져오기
+    order = cartItems_data['order']            # cartitems_count 함수의 order 값 가져오기
 
     context = {'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.     
     
     return render(request, 'products/checkout.html', context)
-
-
-
 
 
 
@@ -201,11 +167,10 @@ def updatedItem(request, product_id):
     product = Product.objects.get(id=productID)  # 장바구니를 누른 해당 상품의 id로 Post DB에 저장되어있는 정보 가져오기.
     order, created = Order.objects.get_or_create(customer=customer, complete=False)     
     # Order 모델에서 로그인 된 해당 customer의 order가 이미 있다면 -> 생성하지 말고 그냥 가져오기  /  없다면 order DB 생성하기
-    # .get_or_create(~~~, ~~~) -> 이렇게 괄호안에 있는 내용들이 모두 조건인가? 그래서 해당 조건을 만족하는 DB가 있으면 가져오고 없으면 생성?
-    # 또한, complete=False로 설정했기 때문에 가져올 때 주문이 완료 되지 않은 정보만 가져오라는 의미인 것 같다! 
+    # 또한, complete=False로 설정했기 때문에 가져올 때 주문이 완료 되지 않은 정보만 가져오라는 의미
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)     
     # OrderItem 모델 - order 필드에 위에서 가져온 order와 동일한 order_id 그리고 product 필드에는 장바구니를 누른 해당 상품이 
-    # 새롭게 들어가야 하므로 DB에서 새로운 데이터가 생성된다!(기존에는 이러한 값을 가진 데이터가 없었기 때문 / order_id는 같을지라도 상품은 없었다.)
+    # 새롭게 들어가야 하므로 DB에서 새로운 데이터가 생성됨(기존에는 이러한 값을 가진 데이터가 없었기 때문 / order_id는 같을지라도 상품은 없었다.)
 
     if action == 'add':
         orderItem.quantity = (orderItem.quantity + 1)    # 만약 button을 누를 때 action이 add이면 orderItem 변수에 있는 db정보의 quantity를 1 증가 시키기.

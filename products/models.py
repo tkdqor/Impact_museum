@@ -27,7 +27,7 @@ class Product(models.Model):
 
 
     @property
-    def imageURL(self):
+    def imageURL(self):      # 이미지가 있다면 보여주고 없다면 상품 목록 페이지로 redirect 시켜주기
         try:
             url = self.image.url
         except:

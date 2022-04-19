@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
 from django.views.generic import ListView
+from products.cartitems_tag import *      # 중복되는 코드들을 가져오기 위해 products App 내부 cartitems_tag 모듈 가져오기
 
 # Create your views here.
 
@@ -15,10 +16,19 @@ class BrandListView(ListView):              # Brand 모델 데이터 ListVIew로
     template_name = 'posts/brands.html'
     queryset = Brand.objects.all().order_by('-id')  # 쿼리셋 설정으로 데이터 순서 내림차순 정렬
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cartItems_data = cartitems_count(self.request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+        cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
+        context['cartItems'] = cartItems
+        return context
+
 
 
 # 브랜드 상세페이지 보여주기
 def brand(request, brand_id):
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
     brand = Brand.objects.get(id=brand_id)   # brand_id로 brand 데이터 1개 조회
 
@@ -27,6 +37,7 @@ def brand(request, brand_id):
     context = {
         'brand': brand,
         'products': products,
+        'cartItems': cartItems,
     }
 
     return render(request, 'posts/brand.html', context)
@@ -34,6 +45,8 @@ def brand(request, brand_id):
 
 # 사회문제 페이지 보여주기
 def socialproblem(request):
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
     problems = Problem.objects.all()     # Problem 모델에 담겨있는 모든 사회문제들 가져오기
 
@@ -47,6 +60,7 @@ def socialproblem(request):
         'problems': problems,
         'selected_problem': selected_problem,
         'selected_brands': selected_brands,
+        'cartItems': cartItems,
     }
 
     return render(request, 'posts/socialproblem.html', context)

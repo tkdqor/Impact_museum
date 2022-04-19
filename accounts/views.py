@@ -2,13 +2,15 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User  # django에 내장된 User 모델 import
 from django.contrib import auth              # django에 내장된 auth 모델 import
 from .models import Customer            # posts앱의 Customer 모델 import
+from products.cartitems_tag import *    # 중복되는 코드들을 가져오기 위해 products App 내부 cartitems_tag 모듈 가져오기
 
 # Create your views here.
 
 
 # 회원가입 기능
 def sign_up(request):
-    context = {}
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
     if request.method == 'POST':              # HTTP Request가 POST방식일 때, 
         if (request.POST.get('username') and  # POST로 전달한 username 데이터가 있고, 
@@ -36,13 +38,17 @@ def sign_up(request):
             context['error'] = '아이디와 비밀번호를 다시 입력해주세요.'   
             # 만약, 조건을 만족하지 못할 때는 context 딕셔너리에 error라는 key를 저장해서 오류 메세지를 출력하게끔 하기     
 
+    context = { 'cartItems': cartItems, }
+
     return render(request, 'accounts/sign_up.html', context)   # POST방식이 아닌 GET방식의 HTTP Request라면 회원가입 페이지 보여주기
 
 
 
 # 로그인 기능
 def login(request):
-    context = {}
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
+
 
     if request.method == 'POST':                      # HTTP Request가 POST방식일 때, 
         if request.POST.get('username') and request.POST.get('password'): # POST로 전달한 username 데이터와 password 데이터가 있다면
@@ -63,7 +69,8 @@ def login(request):
         else:                                   # 아이디와 비밀번호 둘 중 하나라도 입력하지 않으면, 모두 입력하라는 에러 메시지 저장
             context['error'] = '아이디와 비밀번호를 모두 입력해주세요!'         
 
-    
+    context = { 'cartItems': cartItems, }
+
     return render(request, 'accounts/login.html', context)  # POST방식이 아니라면 로그인 페이지 보여주기
 
 
@@ -79,12 +86,19 @@ def logout(request):
 
 # 마이페이지 기능
 def mypage(request):
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
-    return render(request, 'accounts/mypage.html')
+    context = { 'cartItems': cartItems, }
+
+    return render(request, 'accounts/mypage.html', context)
 
 
 # 마이페이지 수정
 def mypage_update(request):
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
+
     if request.method == 'POST':                         # 마이페이지 정보 수정인 POST방식으로 요청이 올 때
         request.user.username = request.POST.get('id')   # 로그인한 유저의 id를 수정하기 위해 해당 코드 작성
         customer = request.user.customer                 # 로그인한 유저의 customer 정보에 접근
@@ -96,4 +110,6 @@ def mypage_update(request):
 
         return redirect('accounts:mypage')
 
-    return render(request, 'accounts/mypage_update.html')
+    context = { 'cartItems': cartItems, }
+
+    return render(request, 'accounts/mypage_update.html', context)
