@@ -219,6 +219,13 @@
     - 추가로 카카오 로그인을 하게 되면 기본적으로 소셜 로그인을 할 때 마다 확인 이메일을 발송하도록 내부 디폴트 로직이 되어있어 이 부분을 꺼줘야 한다. / settings.py # All auth 부분에 ACCOUNT_EMAIL_REQUIRED = False, ACCOUNT_EMAIL_VERIFICATION = 'none' 다음과 같은 변수를 설정해서 카카오 로그인 시 해당 유저의 이메일을 가져오지 않게 설정. 그리고 none 설정은 확인 이메일이 반복해서 가지 않게 설정     
   - **이러한 소셜 로그인 성공 시 --> django User 모델에 계정 데이터가 추가된다. 그리고 Social accounts 모델에도 계정 데이터가 추가된다.**
 
+- **version 3.3 Navbar 장바구니 개수 모든 페이지에서 출력 가능하게 설정**   
+  - base.html에 cartItem이라는 변수로 장바구니 개수를 Navbar에서 출력하고 있었으나, 메인페이지에서만 표시가 되고, 모든 앱 View에 cartItem 변수를 설정하기에는 코드가 너무 길어지게 됨
+  - 그래서 products 앱 내부에 cartitems_tag.py라는 파일을 만들고 해당 파일에 공통적으로 들어가는 코드들을 cartitems_count 라는 이름의 함수로 설정   
+    - 해당 함수는 if문으로 로그인이 되었다면 해당 유저로 customer모델에 접근하고 Order 모델의 인스턴스를 생성하거나 가져오게 된다. 그리고 Order모델에 정의한 get_cart_items 함수를 사용해서 장바구니에 추가한 개수를 cartItems라는 변수로 설정한다. 로그인을 하지 않았다면, cartItems를 0으로 설정해서 보내준다.
+  - 해당 함수를 products / posts / accounts 앱 내부에 있는 views.py에서 모두 import를 진행하고, cartitems_count 함수를 cartItems_data라는 변수로 가져와서 모든 View에 cartItems 변수가 template으로 보내질 수 있도록 설정   
+  - 그래서 어떤 페이지에서든 본인의 장바구니 상품 개수를 Navbar에서 확인할 수 있게 됨
+
 
 <br>
 
