@@ -16,6 +16,9 @@ urlpatterns = [
 
     # 사회문제 URL
     path('socialproblem/', views.socialproblem, name='socialproblem'),
+
+    # 공지사항 URL
+    path('board/', views.board, name='board'),
 ]
 
 

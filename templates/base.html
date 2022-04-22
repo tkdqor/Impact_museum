@@ -43,11 +43,12 @@
       <div class="collapse" id="navbarToggleExternalContent">
         <div class="bg-white p-4">
           <a class="nav-link active" aria-current="page" href="#">Impact museum이란</a>
-          <a class="nav-link active" aria-current="page" href="#">입점 소셜벤처</a>
-          <a class="nav-link active" aria-current="page" href="#">카테고리</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'posts:socialproblem' %}">사회문제</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'posts:brands' %}">입점 소셜벤처</a>
           <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">로그인</a>
           <a class="nav-link active" aria-current="page" href="{% url 'accounts:sign_up' %}">회원가입</a>
           <a class="nav-link active" href="{% url 'products:cart' %}">장바구니({{ cartItems }})</a>
+          <a class="nav-link active" aria-current="page" href="#">공지사항</a>
         </div>
       </div>
 
@@ -77,7 +78,7 @@
                 <a class="nav-link active" href="{% url 'products:cart' %}">장바구니({{ cartItems }})</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'products:new' %}">공지사항</a>
+                <a class="nav-link active" href="{% url 'posts:board' %}">공지사항</a>
               </li>
 
               <!-- 로그인 되었을 때 로그아웃 버튼과 멘트 표시 -->

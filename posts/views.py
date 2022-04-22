@@ -66,3 +66,17 @@ def socialproblem(request):
     return render(request, 'posts/socialproblem.html', context)
 
 
+# 공지사항 게시판 보여주기
+def board(request):
+    cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
+    cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
+
+    
+
+    context = {
+        'cartItems': cartItems,
+    }
+
+    return render(request, 'posts/board.html', context)
+
+

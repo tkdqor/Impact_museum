@@ -30,7 +30,7 @@ def index(request):
     context = {
         'products': products,
         'cartItems': cartItems,    # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
-        'query': query,
+        'query': query if query else '상품 이름이나 브랜드를 검색해 보세요!',
         }
     return render(request, 'products/products.html', context)
 
