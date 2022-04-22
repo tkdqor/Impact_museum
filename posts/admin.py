@@ -23,3 +23,6 @@ class ProblemAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['id', 'author', 'title', 'category', 'body', 'created_at', 'updated_at']
+
+
+
