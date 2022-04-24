@@ -42,7 +42,7 @@
 <br>
 
 ## 3. ERD 설계
-![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/162469471-75ac1835-d2c5-4a49-ad4f-9c521a140ca8.png)
+![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/164652569-aac5f937-414b-4796-a933-f9622375b4a7.png)
 
 
 - Customer 모델은 User 모델과 1:1관계로 설정 - 사용자에 대한 정보를 더 자유롭게 받기 위해 Customer라는 모델을 1:1관계로 추가
@@ -225,6 +225,21 @@
     - 해당 함수는 if문으로 로그인이 되었다면 해당 유저로 customer모델에 접근하고 Order 모델의 인스턴스를 생성하거나 가져오게 된다. 그리고 Order모델에 정의한 get_cart_items 함수를 사용해서 장바구니에 추가한 개수를 cartItems라는 변수로 설정한다. 로그인을 하지 않았다면, cartItems를 0으로 설정해서 보내준다.
   - 해당 함수를 products / posts / accounts 앱 내부에 있는 views.py에서 모두 import를 진행하고, cartitems_count 함수를 cartItems_data라는 변수로 가져와서 모든 View에 cartItems 변수가 template으로 보내질 수 있도록 설정   
   - 그래서 어떤 페이지에서든 본인의 장바구니 상품 개수를 Navbar에서 확인할 수 있게 됨
+
+- **version 3.31 Post 모델 및 admin.py 수정 / 메인페이지 검색창 수정**   
+  - Post 모델에 추가로 Category 클래스를 정의하고 category 필드를 생성해서 공지사항 글의 종류를 선택할 수 있도록 설정
+    - [해당 모델 필드 공식 문서에서](https://docs.djangoproject.com/en/4.0/ref/models/fields/) choices 속성 내용 참고 / 글의 카테고리는 일반/장애인/환경/고용/교육/노인 이렇게 설정
+    - gettext_lazy 함수를 사용해서 다국어 처리가 가능하도록 코드 설정
+    - author 필드에는 related_name을 author_post로 설정하고 / title 필드를 추가해서 게시판 글의 제목을 작성하게끔 설정 / body 필드는 CharField에서 TextField로 변경 (많은 양의 글자를 담을 수 있도록 하기 위함) / updated_at 필드를 추가해서 해당 글이 수정될 때마다 날짜와 시간이 기록될 수 있도록 설정
+  - posts 앱 내부 admin.py 코드 수정   
+    - admin.py에서 Brand 모델 관련, 다른 필드를 어드민 페이지에서 확인할 수 있게 추가
+    - logo_tag라는 함수를 정의하고 mark_safe 함수를 사용해서 어드민 페이지에서 로고 이미지를 확인할 수 있도록 코드 추가
+    - Post 모델 관련해서도 어드민 페이지에서 id와 작성자, 제목, 카테고리, 내용, 생성일자, 수정일자 필드가 보이도록 코드 설정
+  - 메인페이지에서 검색창에 아무것도 검색하지 않은 상태일 경우, 메세지 보이게 설정   
+    - 메인페이지에서 검색창에 아무것도 검색하지 않을 경우, “상품 이름이나 브랜드를 검색해 보세요!” 라는 메세지 출력하게끔 코드 추가
+    - products 앱 내부 views.py - index 함수에서 → context 딕셔너리로 query 변수를 보낼 때, 'query': query if query else '상품 이름이나 브랜드를 검색해 보세요!' 이렇게 아무것도 검색하지 않을 경우, query 변수에 저장된 데이터가 없기 때문에 '상품 이름이나 브랜드를 검색해 보세요!' 라는 메세지를 띄울 수 있도록 if문 추가
+
+
 
 
 <br>
