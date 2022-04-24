@@ -12,4 +12,4 @@ class Customer(models.Model):
     # user/name/email 필드의 경우, 회원가입 시 중복을 막기 위해 unique=True 속성을 추가
 
     def __str__(self):
-        return f'user: {self.user} | name: {self.name} | email: {self.email} | problem: {self.problem}'
+        return f'{self.user}'

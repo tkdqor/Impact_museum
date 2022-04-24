@@ -1,0 +1,56 @@
+/* 글 작성페이지 소개 */
+#board_create_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#board_create_info_title {
+    font-size: 28px;
+    font-weight: 400;
+}
+
+
+/* 글 작성하기 */
+#board_create_frame {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.write_container {
+    width: 90%;
+    height: 90%;
+}
+
+
+/* 버튼 container */
+.button_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* 글 작성 버튼 */
+#create_button {
+    margin-bottom: 20px;
+    background-color: #DAC4EC;
+    border-radius: 5px;
+    padding: 3px 10px 4px 10px;
+    border: 1.5px solid black;
+}
+
+
+/* 카테고리 선택 버튼 */
+#board_category {
+    margin-bottom: 20px;
+    background-color: #DAC4EC;
+    border-radius: 5px;
+    padding: 3px 10px 4px 10px;
+    border: 1.5px solid black;
+    margin-right: 10px;
+}

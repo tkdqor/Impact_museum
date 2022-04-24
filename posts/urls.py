@@ -17,8 +17,20 @@ urlpatterns = [
     # 사회문제 URL
     path('socialproblem/', views.socialproblem, name='socialproblem'),
 
-    # 공지사항 URL
+    # 공지사항 게시판 URL
     path('board/', views.board, name='board'),
+
+    # 공지사항 게시판 생성 URL
+    path('board/create/', views.board_create, name='board_create'),
+
+    # 공지사항 게시판 조회 URL
+    path('board/<int:post_id>/', views.board_detail, name='board_detail'),
+
+    # 공지사항 게시판 수정 URL
+    path('board/<int:post_id>/edit/', views.board_edit, name='board_edit'),
+
+    # 공지사항 게시판 삭제 URL
+    path('board/<int:post_id>/delete/', views.board_delete, name='board_delete'),
 ]
 
 

@@ -6,5 +6,62 @@
 {% endblock %}
 
 {% block content %}
-<h1>공지사항</h1>
+<!-- 공지사항 소개 -->
+<div class="row">
+    <div class="col-lg-12 col-md-12" id="board_info">
+        <p id="board_info_title">공지사항</p>
+        <p>Impact museum과 관련된 소식을 확인해보세요!</p>
+    </div>
+</div>
+
+<!-- 공지사항 리스트 -->
+<div class="row">
+    <div class="col-lg-10 col-md-10" id="board_frame">
+        <table class="table" id="board_table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">카테고리</th>
+                    <th scope="col">작성일</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for post in posts %}
+                <tr> 
+                    <td scope="row">1</td>
+                    <td><a id="post_button" href="{% url 'posts:board_detail' post.id %}">{{ post.title }}</a></td>
+                    <td>{{ post.author }}</td>
+                    {% if post.category == 'NORMAL' %}           <!-- 카테고리 별로 색깔 다르게 주기 -->
+                        <td>{{ post.get_category_display }}</td> <!-- db값이 아닌 display값을 출력하기 위해 get_필드명_display 함수 사용 -->
+                    {% elif post.category == 'DISABLED' %}
+                        <td style="color: #DAD364;">{{ post.get_category_display }}</td>
+                    {% elif post.category == 'ENVIRONMENT' %}
+                        <td style="color: #BEE294;">{{ post.get_category_display }}</td>
+                    {% elif post.category == 'EMPLOYMENT' %}
+                        <td style="color: #94D8E2;">{{ post.get_category_display }}</td>
+                    {% elif post.category == 'EDUCATION' %}
+                        <td style="color: #AE94E2;">{{ post.get_category_display }}</td>
+                    {% elif post.category == 'ELDERS' %}
+                        <td style="color: #E2AC94;">{{ post.get_category_display }}</td>
+                    {% endif %}
+                    <td>{{ post.created_at|date:"y-m-d" }}</td> <!-- date라는 template filter로 년-월-일 보여주기 -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>   
+    </div>    
+    
+    <!-- 관리자 계정으로 로그인 했을 경우에만 글쓰기 버튼 띄우기 -->
+    {% if request.user.is_staff %}
+    <div class= "col-lg-10 col-md-10" id="create_button_frame">
+        <button type="button" id="create_button" onclick=location.href="{% url 'posts:board_create' %}">글쓰기</button>
+    </div>
+    {% endif %}
+</div>
+
+
+
 {% endblock %}

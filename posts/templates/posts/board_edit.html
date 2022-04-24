@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'posts/css/board_edit.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- 글 수정 페이지 소개 -->
+<div class="row">
+    <div class="col-lg-12 col-md-12" id="board_edit_info">
+        <p id="board_edit_info_title">게시글 수정하기</p>
+        <p>게시글을 수정해주세요!</p>
+    </div>
+</div>
+
+
+<!-- 글 작성하기 -->
+<div class="row">
+    <div class="col-lg-10 col-md-10" id="board_edit_frame">
+        <div class="edit_container">
+            <!-- 글 정보 form -->
+            <form method="POST" action="">
+                {% csrf_token %}
+
+                <!-- 글 수정 및 카테고리 선택 버튼 -->
+                <div class="button_container">
+                    <select name="category" id="board_category">
+                        <option selected value="{{ post.category }}">{{ post.get_category_display }}</option>
+                        {% for category in posts_category %}
+                        <option value="{{ category.0 }}">{{ category.1 }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button id="edit_button" type="submit">수정하기</button>
+                </div>
+
+                <!-- 글 작성 정보 받기 -->
+                <div class="mb-4">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요." value="{{ post.title }}">
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" id="body" name="body" cols="30" rows="5" placeholder="내용을 입력해주세요.">{{ post.body }}</textarea>
+                </div>
+            </form>
+        </div>
+    </div>    
+</div>
+{% endblock %}

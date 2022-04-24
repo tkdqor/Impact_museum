@@ -50,7 +50,7 @@
             <p class="selected_brand_title">이 문제를 해결하기 위해 노력하는 소셜벤처들</p>
             <hr style="border: solid 2px black; width: 60%;">
             {% for brand in selected_brands %}
-                <a href="{% url 'posts:brand' brand.id %}"><i><p class="selected_brand_info">{{ brand.name }}</p></i></a>
+                <a id="selected_brand_button" href="{% url 'posts:brand' brand.id %}"><i><p class="selected_brand_info">{{ brand.name }}</p></i></a>
             {% endfor %}
         </div>
     </div>    

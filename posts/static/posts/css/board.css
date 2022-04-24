@@ -1,3 +1,48 @@
-h1 {
-    color: aqua;
+/* 공지사항 소개 */
+#board_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#board_info_title {
+    font-size: 28px;
+    font-weight: 400;
+}
+
+
+/* 공지사항 게시판 */
+#board_frame {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+#board_table:hover tbody tr:hover td {
+    background: #FBF8F8;
+}
+
+
+/* 글쓰기 버튼 */
+#create_button_frame {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#create_button {
+    background-color: #DAC4EC;
+    border-radius: 5px;
+    padding: 3px 10px 3px 10px;
+}
+
+
+/* 게시글 조회 버튼 */
+#post_button {
+    text-decoration: none;
+    color: black;
 }

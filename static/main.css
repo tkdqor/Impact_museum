@@ -20,6 +20,15 @@
 }
 
 
+#search_button {
+    background-color: #DAC4EC;
+    color: black;
+    border-radius: 5px;
+    padding: 3px 10px 4px 10px;
+    border: 1.5px solid black;
+}
+
+
 
 
 /* index.html */

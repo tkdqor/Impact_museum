@@ -71,12 +71,77 @@ def board(request):
     cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
     cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
-    
+    posts = Post.objects.all().order_by('-created_at')  # Post 모델 데이터 최신순으로 가져오기
 
     context = {
         'cartItems': cartItems,
+        'posts': posts,
     }
 
     return render(request, 'posts/board.html', context)
+
+
+# 공지사항 게시판 생성하기
+def board_create(request):
+    posts_category = Post.Category.choices  # GET 방식으로 request 시, 카테고리 선택할 수 있도록 Post 모델의 Category 클래스에 접근해서 항목들을 보내주기
+    context = {
+        'posts_category': posts_category,
+    }
+
+    if request.method == 'POST':            # POST 방식으로 request 시 글 생성할 수 있도록 하기
+        title = request.POST.get('title')
+        category = request.POST.get('category')
+        print(category)
+        body = request.POST.get('body')
+        Post.objects.create(author=request.user.customer, title=title, category=category, body=body)  
+        # Post 모델 데이터 생성 시, author 필드는 로그인 된 유저로 설정 
+        # 단, request.user의 customer로 접근해야 한다. author 필드는 Customer 모델이랑 1:N관계이기 때문
+        return redirect('posts:board')
+
+    return render(request, 'posts/board_create.html', context)
+
+
+# 공지사항 게시판 글 조회하기
+def board_detail(request, post_id):
+    post = Post.objects.get(id=post_id)
+    # login_user = request.user.customer       # 로그인된 유저의 customer 정보 가져오기
+    # post_author = post.author                # 게시글 작성자 정보 가져오기
+    # print(login_user == post_author)         # True로 출력이 되므로 위의 2개의 변수가 서로 같다는 것을 확인
+
+    context = {
+        'post': post,
+        # 'user': login_user,
+        # 'author': post_author,
+    }
+
+    return render(request, 'posts/board_detail.html', context)
+
+
+# 공지사항 게시판 글 수정하기
+def board_edit(request, post_id):
+    posts_category = Post.Category.choices  # GET 방식으로 request 시, 카테고리 수정할 수 있도록 Post 모델의 Category 클래스에 접근해서 항목들을 보내주기
+    post = Post.objects.get(id=post_id)
+
+    context = {
+        'posts_category': posts_category,
+        'post': post,
+    }
+
+    if request.method == 'POST':               # POST 방식으로 request 되었을 때 수정 페이지에서 받은 데이터로 Post 데이터 수정하기
+        post.title = request.POST.get('title')
+        post.category = request.POST.get('category')
+        post.body = request.POST.get('body')
+        post.save()
+        return redirect('posts:board')
+
+    return render(request, 'posts/board_edit.html', context)
+
+
+# 공지사항 게시판 글 삭제하기
+def board_delete(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.delete()
+
+    return redirect('posts:board')
 
 

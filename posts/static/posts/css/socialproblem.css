@@ -108,3 +108,10 @@
     font-weight: 700;
     font-size: 20px;
 }
+
+
+/* 브랜드 버튼 */
+#selected_brand_button {
+    text-decoration: none;
+    color: black;
+}
