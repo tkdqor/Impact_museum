@@ -247,8 +247,13 @@
   - posts 앱 내부에 board_create.html을 생성해서 공지사항 게시판 글 작성페이지 추가   
     - POST방식일 때 글 생성될 수 있도록 views.py 코드 설정하고, Post 모델에 데이터 생성할 때는 create 함수로 진행 / author 필드는 request.user.customer로 설정
     - 카테고리 데이터를 드롭다운으로 받아서 Post 데이터 생성 시 들어갈 수 있도록 설정 완료
-
-
+  - posts 앱 내부에 board_detail.html을 생성해서 공지사항 게시판 글 조회 페이지 추가   
+    - 게시글 하나 조회 시, 카테고리가 상단에 표시되도록 설정
+    - 상세 페이지에서 로그인된 계정과 게시글 작성자가 같은 경우에만 수정 및 삭제 버튼이 뜨도록 설정 완료
+  - posts 앱 내부에 board_edit.html을 생성해서 공지사항 게시판 글 수정 페이지 추가
+    - 로그인된 계정과 게시글 작성자가 같은 경우, 상세 페이지에서 수정 버튼을 누르면 수정할 수 있는 페이지를 띄우게 설정
+    - 이미 선택 및 작성된 카테고리와 글 제목, 내용을 가져와서 수정할 수 있게 기능 구현 완료
+  - 로그인된 계정과 게시글 작성자가 같은 경우, 상세 페이지에서 삭제 버튼을 누르면 해당 게시글을 삭제할 수 있도록 기능 구현 완료
 
 
 
@@ -329,6 +334,10 @@
 - **template에서 Post 모델 내부에 정의한 Category 클래스 항목들을 드롭다운으로 보여주는 과정에서 에러**  
   - view에서 단순히 Post 모델 데이터들만 다 보내주고 template에서 post.category로 하면 Post 인스턴스의 모든 데이터를 출력하게 되서 카테고리를 중복으로 선택하게 되는 문제가 발생
   - view에서 posts_category = Post.Category.choices 이렇게 Post 모델의 Category 클래스에 접근해서 항목들을 보내주고 template에서는 {% for category in posts_category %} 이렇게 하나씩 뽑으면 category가 튜플로 출력이 되는 것을 확인. 그래서 {{ category.1 }} 이렇게 튜플의 두번째 항목을 뽑아서 내가 원하는 한글 목록이 출력되게끔 설정, 오류 해결
+
+- **로그인 이후에도 디테일 페이지로 들어가면 Navbar에서 로그인/회원가입 버튼이 출력되는 문제 발생**
+  - 로그인이 되었을 경우, {% if user.is_authenticated %} 와 같은 if문으로 마이페이지와 로그아웃 버튼이 출력되어야 하나 게시판 디테일 페이지로 들어갔을 경우에는 로그인/회원가입 버튼이 출력됨
+  - board_detail View에서 login_user = request.user.customer와 같이 request.user를 사용한 변수를 주석처리 하고 나서 브라우저를 새로고침 하니까 다시 정상적으로 {% if user.is_authenticated %} 코드가 작동되서 오류를 해결 
 
 
  
