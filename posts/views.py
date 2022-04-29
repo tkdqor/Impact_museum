@@ -5,6 +5,7 @@ from .models import *
 from django.utils import timezone
 from django.views.generic import ListView
 from products.cartitems_tag import *      # 중복되는 코드들을 가져오기 위해 products App 내부 cartitems_tag 모듈 가져오기
+from django.core.paginator import Paginator # 페이지네이션을 위한 import
 
 # Create your views here.
 
@@ -73,9 +74,16 @@ def board(request):
 
     posts = Post.objects.all().order_by('-created_at')  # Post 모델 데이터 최신순으로 가져오기
 
+    # 페이지네이터 코드
+    paginator = Paginator(posts, 10) # Paginator를 적용할 데이터를 설정하고, 한 페이지에 10개 데이터를 보여주기
+    page = request.GET.get('page')   # template에서 페이지 버튼을 클릭할 때 page라는 이름의 GET 변수 데이터 받기
+    posts = paginator.get_page(page) # page 변수안에 페이지 번호를 받아(ex.1, 2, 3...) 전체 데이터 중 해당 페이지 보여주기
+    page_range = paginator.page_range # page_range라는 메소드를 사용해서 -> 1부터 시작하는 페이지 리스트를 반환하기
+
     context = {
         'cartItems': cartItems,
         'posts': posts,
+        'page_range': page_range,
     }
 
     return render(request, 'posts/board.html', context)

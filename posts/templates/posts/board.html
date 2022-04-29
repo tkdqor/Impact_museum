@@ -53,6 +53,38 @@
             </tbody>
         </table>   
     </div>    
+
+    <!-- 페이지네이터 코드 -->
+    <div class="col-lg-10 col-md-10" id="pagination_frame">
+        <nav aria-label="Page navigation example" id="paginator_container">
+            <ul class="pagination">
+
+            <!-- 이전 페이지 버튼 -->
+            {% if posts.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="?page=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>  
+            {% endif %}
+
+            <!-- 페이지 숫자 나타내기 -->
+            {% for i in page_range %}
+            {% if i == posts.number %}
+                <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            <!-- 다음 페이지 버튼 -->
+            {% if posts.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="?page={{ posts.paginator.num_pages }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>    
+            {% endif %}
+    
+            </ul>
+        </nav>
+    </div>
     
     <!-- 관리자 계정으로 로그인 했을 경우에만 글쓰기 버튼 띄우기 -->
     {% if request.user.is_staff %}

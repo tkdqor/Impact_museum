@@ -32,12 +32,34 @@
     justify-content: flex-end;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 40px;
 }
 
 #create_button {
     background-color: #DAC4EC;
     border-radius: 5px;
     padding: 3px 10px 3px 10px;
+}
+
+
+/* 페이지네이션 관련 */
+#pagination_frame {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 페이지 버튼 */
+.pagination > li > a {
+    background-color: white;
+    color: #141414;
+}
+
+/* 페이지 액티브 버튼 */
+.pagination > .page-item.active > .page-link {
+    background-color: #DAC4EC;
+    border: solid 1px #DAC4EC;
 }
 
 
