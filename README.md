@@ -265,6 +265,12 @@
     - posts라는 변수에 has_previous / has_next로 이전 페이지 및 다음 페이지 버튼 생성
     - {% for i in page_range %} / {% if i == posts.number %} 해당 코드로 페이지 리스트에서 번호 1개씩 뽑고 그 번호가 현재 페이지와 일치할 경우, 다른 색깔의 버튼 보여주기
 
+- **version 3.42 settings.py 데이터베이스 정보 환경변수로 관리**    
+  - django-environ 라이브러리를 설치해서 settings.py에 있는 중요한 정보들을(SECRET_KEY, MySQL의 HOST, NAME, USER, PASSWORD 등) 환경변수로 관리할 수 있게 설정 완료
+    - 루트 디렉터리 위치에 .env 파일을 만들어서 중요한 정보들을 변수로 지정
+    - settings.py에서 environ를 import하고 환경변수를 불러올 수 있게 env를 정의하고 .env파일을 불러올 수 있게 설정 
+    - [참고 블로그](https://velog.io/@kyleee/TIL56-django-environ%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EA%B4%80%EB%A6%AC)
+    - [참고 블로그2](https://ffoorreeuunn.tistory.com/358)
 
 <br>
 
