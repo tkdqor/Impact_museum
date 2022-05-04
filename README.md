@@ -269,8 +269,15 @@
   - django-environ 라이브러리를 설치해서 settings.py에 있는 중요한 정보들을(SECRET_KEY, MySQL의 HOST, NAME, USER, PASSWORD 등) 환경변수로 관리할 수 있게 설정 완료
     - 루트 디렉터리 위치에 .env 파일을 만들어서 중요한 정보들을 변수로 지정
     - settings.py에서 environ를 import하고 환경변수를 불러올 수 있게 env를 정의하고 .env파일을 불러올 수 있게 설정 
+    - 중요한 정보들을 env 변수로 불러오게끔 변경
     - [참고 블로그](https://velog.io/@kyleee/TIL56-django-environ%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EA%B4%80%EB%A6%AC)
     - [참고 블로그2](https://ffoorreeuunn.tistory.com/358)
+    - 그리고 .gitignore 파일에 .env를 포함시켜서 push 할 때 해당 파일을 포함시키지 않도록 하고 데이터가 github에 공개되지 않도록 설정 완료   
+  - AWS 루트 계정에 MFA 설정 활성화 완료
+    - AWS 루트 계정에 MFA 2단계 인증 과정을 설정 및 활성화 완료
+    - 아이폰에 Google OTP 앱을 설치하여 QR코드 스캔 및 코드 입력으로 로그인 시 보안 강화
+
+
 
 <br>
 
