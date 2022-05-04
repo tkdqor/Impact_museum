@@ -12,19 +12,27 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# 환경변수를 불러올 수 있는 상태로 세팅
+env = environ.Env(DEBUG=(bool, True))
+
+# .env파일에서 환경변수를 불러올 것이라고 설정
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xz5+ho4pgc%fet)74!_oci$(tu^dckt&f^%h8f#$*oqz&t*jdm'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -99,11 +107,11 @@ WSGI_APPLICATION = 'impactmuseum.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'impactmuseum.c1uzjwt0ilcb.ap-northeast-2.rds.amazonaws.com',
-        'PORT': 3306,
-        'NAME': 'impactmuseum',
-        'USER': 'impactmuseum',
-        'PASSWORD': 'qwaszxqwer1!',
+        'HOST': env('DATABASES_HOST'),
+        'PORT': env('DATABASES_PORT'),
+        'NAME': env('DATABASES_NAME'),
+        'USER': env('DATABASES_USER'),
+        'PASSWORD': env('DATABASES_PASSWORD'),
     }
 }
 
