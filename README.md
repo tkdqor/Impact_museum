@@ -341,6 +341,7 @@
 - **Posts 앱 내부 models.py 코드 설정 시 오류**     
   - Posts 앱 내부 models.py에 problem = models.ForeignKey(Problem, on_delete=models.PROTECT)와 같이 코드를 입력했을 때, 같은 위치에 있는 Problem이라는 모델을 VSCode가 인식하지 못함
   - 그래서 https://docs.djangoproject.com/en/4.0/ref/models/fields/ 해당 공식문서에 내용을 바탕으로, problem = models.ForeignKey('Problem', on_delete=models.PROTECT) 이렇게 모델 이름을 문자열로 설정했더니 인식이 되어 migration, migrate를 실행할 수 있었음
+  - 해당 오류가 발생한 이유는, 아직 models.py에서 Problem이라는 모델 클래스가 생성되지 않았기 때문에 읽을수가 없었기 때문이다. 그래서 나중에 lazy하게 읽게 하기 위해서 문자열로 넣어두면 정상적으로 migration과 migrate가 진행될 수 있었던 것이다.
 
 - **지속적으로 AWS로 연결한 MySQL이 DBeaver에서 connect timed out 에러가 계속 발생**      
   - DBeaver의 Keep-Alive을 120으로 설정한 이후에도, 계속 connect timed out 에러가 발생됨     
