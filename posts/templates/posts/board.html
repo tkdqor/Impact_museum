@@ -30,6 +30,32 @@
             </thead>
 
             <tbody>
+                <!-- 상단 고정 게시글 보여주기 -->
+                {% if top_fixed %}
+                {% for notice in top_fixed %}
+                <tr style="background-color: #F4EBF8;">
+                    <td scope="row"></td>
+                    <td><a id="post_button" href="{% url 'posts:board_detail' notice.id %}">{{ notice.title }}</a></td>
+                    <td>{{ notice.author }}</td>
+                    {% if notice.category == 'NORMAL' %}           <!-- 카테고리 별로 색깔 다르게 주기 -->
+                        <td>{{ notice.get_category_display }}</td> <!-- db값이 아닌 display값을 출력하기 위해 get_필드명_display 함수 사용 -->
+                    {% elif notice.category == 'DISABLED' %}
+                        <td style="color: #DAD364;">{{ notice.get_category_display }}</td>
+                    {% elif notice.category == 'ENVIRONMENT' %}
+                        <td style="color: #BEE294;">{{ notice.get_category_display }}</td>
+                    {% elif notice.category == 'EMPLOYMENT' %}
+                        <td style="color: #94D8E2;">{{ notice.get_category_display }}</td>
+                    {% elif notice.category == 'EDUCATION' %}
+                        <td style="color: #AE94E2;">{{ notice.get_category_display }}</td>
+                    {% elif notice.category == 'ELDERS' %}
+                        <td style="color: #E2AC94;">{{ notice.get_category_display }}</td>
+                    {% endif %}
+                    <td>{{ notice.created_at|date:"y-m-d" }}</td> <!-- date라는 template filter로 년-월-일 보여주기 --> 
+                </tr>    
+                {% endfor %}
+                {% endif %}
+                
+
                 {% for post in posts %}
                 <tr> 
                     <!-- 필터 사용해서 게시글 전체 번호 출력하기 -->

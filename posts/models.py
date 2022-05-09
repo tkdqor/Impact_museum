@@ -24,6 +24,7 @@ class Post(models.Model):
     body = models.TextField()  # 많은 양의 글자를 담기 위해 TextField 설정
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   # 글 수정일자 자동으로 DB에 저장하기
+    top_fixed = models.BooleanField(default=False)     # 게시판 상단 고정 여부 필드
 
     def __str__(self):
         return f'{self.title}'

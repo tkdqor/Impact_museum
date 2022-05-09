@@ -23,14 +23,20 @@
             <form method="POST" action="">
                 {% csrf_token %}
 
-                <!-- 글 작성 및 카테고리 선택 버튼 -->
+                <!-- 글 작성 및 카테고리, 상단 고정 여부 선택 버튼 -->
                 <div class="button_container">
+                    <!-- 카테고리 선택 -->
                     <select name="category" id="board_category">
                         <option disabled selected>카테고리 선택</option>
                         {% for category in posts_category %}
                         <option value="{{ category.0 }}">{{ category.1 }}</option>
                         {% endfor %}
                     </select>
+
+                    <!-- 상단 고정 여부 선택 -->
+                    <div class="top_fixed_container">
+                        <input type='checkbox' name='top-fixed' value='True'/> 상단에 고정하기
+                    </div>
 
                     <button id="create_button" type="submit">작성하기</button>
                 </div>

@@ -73,6 +73,7 @@ def board(request):
     cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
     posts = Post.objects.all().order_by('-created_at')  # Post 모델 데이터 최신순으로 가져오기
+    top_fixed = Post.objects.all().filter(top_fixed=True) # 상단 고정 여부가 True인 게시글만 가져오기
 
     # 페이지네이터 코드
     paginator = Paginator(posts, 10) # Paginator를 적용할 데이터를 설정하고, 한 페이지에 10개 데이터를 보여주기
@@ -84,6 +85,7 @@ def board(request):
         'cartItems': cartItems,
         'posts': posts,
         'page_range': page_range,
+        'top_fixed': top_fixed,
     }
 
     return render(request, 'posts/board.html', context)
@@ -101,7 +103,8 @@ def board_create(request):
         category = request.POST.get('category')
         print(category)
         body = request.POST.get('body')
-        Post.objects.create(author=request.user.customer, title=title, category=category, body=body)  
+        top_fixed = request.POST.get('top-fixed')  # 상단 고정 체크 시, top_fixed 필드값을 True로 변경
+        Post.objects.create(author=request.user.customer, title=title, category=category, body=body, top_fixed=top_fixed)  
         # Post 모델 데이터 생성 시, author 필드는 로그인 된 유저로 설정 
         # 단, request.user의 customer로 접근해야 한다. author 필드는 Customer 모델이랑 1:N관계이기 때문
         return redirect('posts:board')

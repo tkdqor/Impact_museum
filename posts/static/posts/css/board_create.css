@@ -35,6 +35,14 @@
 }
 
 
+/* 상단 고정 여부 container */
+.top_fixed_container {
+    margin-right: 800px;
+    margin-top: 3px;    
+    font-size: 18px;
+}
+
+
 /* 글 작성 버튼 */
 #create_button {
     margin-bottom: 20px;
