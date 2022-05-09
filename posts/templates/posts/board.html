@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load post_filter %}
 {% load static %}
 
 {% block style %}
@@ -31,7 +32,8 @@
             <tbody>
                 {% for post in posts %}
                 <tr> 
-                    <td scope="row">1</td>
+                    <!-- 필터 사용해서 게시글 전체 번호 출력하기 -->
+                    <td scope="row">{{ posts.paginator.count|sub:posts.start_index|sub:forloop.counter0|add:1 }}</td>
                     <td><a id="post_button" href="{% url 'posts:board_detail' post.id %}">{{ post.title }}</a></td>
                     <td>{{ post.author }}</td>
                     {% if post.category == 'NORMAL' %}           <!-- 카테고리 별로 색깔 다르게 주기 -->
