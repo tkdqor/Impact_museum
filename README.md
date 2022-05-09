@@ -265,6 +265,19 @@
     - posts라는 변수에 has_previous / has_next로 이전 페이지 및 다음 페이지 버튼 생성
     - {% for i in page_range %} / {% if i == posts.number %} 해당 코드로 페이지 리스트에서 번호 1개씩 뽑고 그 번호가 현재 페이지와 일치할 경우, 다른 색깔의 버튼 보여주기
 
+- **version 3.42 settings.py 데이터베이스 정보 환경변수로 관리**    
+  - django-environ 라이브러리를 설치해서 settings.py에 있는 중요한 정보들을(SECRET_KEY, MySQL의 HOST, NAME, USER, PASSWORD 등) 환경변수로 관리할 수 있게 설정 완료
+    - 루트 디렉터리 위치에 .env 파일을 만들어서 중요한 정보들을 변수로 지정
+    - settings.py에서 environ를 import하고 환경변수를 불러올 수 있게 env를 정의하고 .env파일을 불러올 수 있게 설정 
+    - 중요한 정보들을 env 변수로 불러오게끔 변경
+    - [참고 블로그](https://velog.io/@kyleee/TIL56-django-environ%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EA%B4%80%EB%A6%AC)
+    - [참고 블로그2](https://ffoorreeuunn.tistory.com/358)
+    - 그리고 .gitignore 파일에 .env를 포함시켜서 push 할 때 해당 파일을 포함시키지 않도록 하고 데이터가 github에 공개되지 않도록 설정 완료   
+  - AWS 루트 계정에 MFA 설정 활성화 완료
+    - AWS 루트 계정에 MFA 2단계 인증 과정을 설정 및 활성화 완료
+    - 아이폰에 Google OTP 앱을 설치하여 QR코드 스캔 및 코드 입력으로 로그인 시 보안 강화
+
+
 
 <br>
 
@@ -328,6 +341,7 @@
 - **Posts 앱 내부 models.py 코드 설정 시 오류**     
   - Posts 앱 내부 models.py에 problem = models.ForeignKey(Problem, on_delete=models.PROTECT)와 같이 코드를 입력했을 때, 같은 위치에 있는 Problem이라는 모델을 VSCode가 인식하지 못함
   - 그래서 https://docs.djangoproject.com/en/4.0/ref/models/fields/ 해당 공식문서에 내용을 바탕으로, problem = models.ForeignKey('Problem', on_delete=models.PROTECT) 이렇게 모델 이름을 문자열로 설정했더니 인식이 되어 migration, migrate를 실행할 수 있었음
+  - 해당 오류가 발생한 이유는, 아직 models.py에서 Problem이라는 모델 클래스가 생성되지 않았기 때문에 읽을수가 없었기 때문이다. 그래서 나중에 lazy하게 읽게 하기 위해서 문자열로 넣어두면 정상적으로 migration과 migrate가 진행될 수 있었던 것이다.
 
 - **지속적으로 AWS로 연결한 MySQL이 DBeaver에서 connect timed out 에러가 계속 발생**      
   - DBeaver의 Keep-Alive을 120으로 설정한 이후에도, 계속 connect timed out 에러가 발생됨     
