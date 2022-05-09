@@ -285,6 +285,12 @@
     - posts.start_index : 해당 paginator 페이지의 첫번째 데이터 index를 출력 / ex) 1페이지 당 10개로 설정했으니 1페이지는 1, 2페이지는 11
     - forloop.counter0 : for문을 순회하면서 0부터 출력 / 다른 paginator 페이지에서는 다시 0부터 출력
 
+- **version 3.51 공지사항 게시판 상단에 고정 기능 추가**
+  - [해당 블로그 참고](https://parkhyeonchae.github.io/2020/04/09/django-project-22/)
+  - Post 모델에 top_fixed라는 필드를 BooleanField로 추가(default=False)
+  - board_create.html에 “상단에 고정하기” 라는 체크박스를 추가하고 value를 True로 설정
+  - board_create View에서는 상단 고정 체크 시, top_fixed 필드값을 True로 변경에서 글 생성하게 설정 / board View에서는 상단 고정 여부가 True인 게시글만 가져오도록 filter 사용
+  - board.html에서 상단 고정 게시글을 보여주기 위해 top_fixed라는 값이 있으면 for문으로 상단 고정 여부가 True인 게시글을 상단에 출력하도록 설정
 
 
 <br>
