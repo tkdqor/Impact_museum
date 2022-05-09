@@ -112,6 +112,9 @@ DATABASES = {
         'NAME': env('DATABASES_NAME'),
         'USER': env('DATABASES_USER'),
         'PASSWORD': env('DATABASES_PASSWORD'),
+        'OPTIONS': {
+                    'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",  # MySQL Strict 모드 default로 설정
+        }
     }
 }
 
