@@ -299,6 +299,9 @@
     - ex) NOT NULL로 설정하면 무조건 값을 넣어줘야 에러가 안나게끔 설정
   - [참고 블로그](https://zetawiki.com/wiki/Django_mysql-sql-mode_warning )
 
+- **version 3.53 get_object_or_404로 상품 1개 조회 예외 처리 진행**
+  - products 앱 내부 views.py의 상품 1개 조회 detail 함수에서 기존에는 try-except로 예외처리를 진행했으나, get_object_or_404를 사용해서 더 간결하게 예외 처리 설정 완료
+
 
 <br>
 
