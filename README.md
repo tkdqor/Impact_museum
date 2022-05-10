@@ -292,6 +292,13 @@
   - board_create View에서는 상단 고정 체크 시, top_fixed 필드값을 True로 변경에서 글 생성하게 설정 / board View에서는 상단 고정 여부가 True인 게시글만 가져오도록 filter 사용
   - board.html에서 상단 고정 게시글을 보여주기 위해 top_fixed라는 값이 있으면 for문으로 상단 고정 여부가 True인 게시글을 상단에 출력하도록 설정
 
+- **version 3.52 MySQL Strict 모드 default로 설정**
+  - python manage.py migrate 실행 시, 관련 경고가 계속 발생
+  - settings.py - DATABASES 변수에 MySQL Strict 모드를 기본으로 설정하는 코드 추가
+  - Strict MODE란, 데이터의 무결성을 MySQL에서 체크해주는 기능
+    - ex) NOT NULL로 설정하면 무조건 값을 넣어줘야 에러가 안나게끔 설정
+  - [참고 블로그](https://zetawiki.com/wiki/Django_mysql-sql-mode_warning )
+
 
 <br>
 
