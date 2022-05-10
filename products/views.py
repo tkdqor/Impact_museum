@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
@@ -41,14 +41,21 @@ def detail(request, product_id):
     cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
     cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
 
-    try:
-        product = Product.objects.get(id=product_id)
-        context = {
+    # try:
+    #     product = Product.objects.get(id=product_id)
+    #     context = {
+    #         'product': product,
+    #         'cartItems': cartItems,
+    #     }
+    # except Product.DoesNotExist:           # DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄우게 설정
+    #     raise Http404
+
+    product = get_object_or_404(Product, pk=product_id)  # get_object_or_404를 사용해서 더 간결하게 에외처리 설정 완료
+
+    context = {
             'product': product,
             'cartItems': cartItems,
         }
-    except Product.DoesNotExist:           # DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄우게 설정
-        raise Http404
 
     return render(request, 'products/product.html', context)
 

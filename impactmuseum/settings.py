@@ -188,3 +188,5 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# 구글 소셜 로그인 시 오류 관련 - 전자 메일이 콘솔에 출력되어 SMTP 서버가 필요하지 않도록 설정
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
