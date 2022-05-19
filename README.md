@@ -304,6 +304,7 @@
 
 - **version 3.54 requirements.txt 파일 생성**
   - 현재 프로젝트의 패키지들을 requirements.txt 파일에 기록 완료
+  - pip freeze > requirements.txt 명령어로 기록
 
 <br>
 
