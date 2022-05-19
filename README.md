@@ -299,6 +299,9 @@
     - ex) NOT NULL로 설정하면 무조건 값을 넣어줘야 에러가 안나게끔 설정
   - [참고 블로그](https://zetawiki.com/wiki/Django_mysql-sql-mode_warning )
 
+- **version 3.53 get_object_or_404로 상품 1개 조회 예외 처리 진행**
+  - products 앱 내부 views.py의 상품 1개 조회 detail 함수에서 기존에는 try-except로 예외처리를 진행했으나, get_object_or_404를 사용해서 더 간결하게 예외 처리 설정 완료
+
 
 <br>
 
@@ -383,8 +386,18 @@
   - 로그인이 되었을 경우, {% if user.is_authenticated %} 와 같은 if문으로 마이페이지와 로그아웃 버튼이 출력되어야 하나 게시판 디테일 페이지로 들어갔을 경우에는 로그인/회원가입 버튼이 출력됨
   - board_detail View에서 login_user = request.user.customer와 같이 request.user를 사용한 변수를 주석처리 하고 나서 브라우저를 새로고침 하니까 다시 정상적으로 {% if user.is_authenticated %} 코드가 작동되서 오류를 해결 
 
+- **version 3.53 - 소셜 로그인 시, django signal를 이용하여 자동으로 Customer 모델에 데이터를 생성해서 오류 해결**
+  - 소셜 로그인 시, User 모델에만 데이터가 생성되고 Customer 모델에는 생기지 않아 오류가 발생했음
+  - 그래서, accounts 앱 내부 models.py에 특정 데이터 저장 직후 signal인 post_save와 reciever 데코레이터를 import 해서 소셜로그인 이후에 Customer 모델에 데이터를 저장할 수 있도록 Signal 함수 설정
+    - User 모델에서 post_save가 발생하면, 즉 소셜 로그인이 되서 데이터가 추가될 때 -> 해당 함수가 실행됨
+    - Customer 모델과 SocialAccount 모델을 확인해서 customer가 없고 social_account가 있다면 Customer 모델 name 필드, email 필드에 소셜로그인 계정 이메일 아이디와 이메일 자체를 저장하고 Customer 모델 데이터를 생성하게끔 설정
+  - **이렇게 django signal를 이용하여 소셜 로그인 시, Customer 모델에 자동으로 데이터가 생성되어 정상적으로 웹 서비스를 이용할 수 있게 수정 완료**
+  - 카카오 로그인 시, 아직 Customer 모델의 name과 email 필드는 공백으로 남아있게됨
+  - 구글 로그인 시, ConnectionRefusedError at /oauth/social/signup/ [Errno 61] Connection refused 다음과 같은 에러 발생
+    - [해당 내용](https://stackoverflow.com/questions/21563227/django-allauth-example-errno-61-connection-refused)을 참고해서 전자 메일(SMTP) 서버가 없어 allauth가 확인 메일을 보낼 수 없어 발생한 문제라고 파악 
+    - 그래서 settings.py에 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 이렇게 추가해서 전자 메일이 콘솔에 인쇄되서 SMTP 서버가 필요하지 않도록 설정
 
- 
+
 <br>
 
 ## 6. 회고 / 느낀점
