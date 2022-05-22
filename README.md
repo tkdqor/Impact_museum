@@ -306,6 +306,16 @@
   - 현재 프로젝트의 패키지들을 requirements.txt 파일에 기록 완료
   - pip freeze > requirements.txt 명령어로 기록
 
+- **version 3.6 장바구니 기능 개선**
+  - 상품 상세 페이지에서 "장바구니에 담기" 버튼 클릭 시, data-product와 data-action이라는 속성을 통해 자바스크립트로 장바구니 추가하는 기능인 updatedItem 함수 기반 View url로 request 진행
+  - products 앱의 updatedItem View에서 cart.js에서 보내준 데이터를 JSON 형태로 가져오고 productID로 추가하려는 상품을 Product 모델에서 가져오기 / action으로는 add
+와 remove에 따라 장바구니 개수 조절하게끔 설정
+  - 상품 상세 페이지에서 "장바구니에 담기" 버튼 클릭 시, onClick 속성을 통해 popup() 함수로 해당 상품이 장바구니에 추가되었다는 확인창 생성
+  - 장바구니 페이지에서 상품별 “삭제하기” 버튼 클릭 시, 수량과 상관없이 장바구니 목록에서 삭제하는 기능 생성
+    - 새로운 url를 생성하고 cart_delete라는 함수 기반 View를 통해 장바구니 데이터 삭제
+  
+
+
 <br>
 
 ## 5. 핵심 트러블 슈팅
