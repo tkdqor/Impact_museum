@@ -18,7 +18,7 @@ urlpatterns = [
     # 메인화면 URL
     path('', views.index, name='index'),
 
-    # product CRUD URL
+    # product 관련 URL
     path('<int:product_id>/', views.detail, name='detail'),
     path('new/', views.new, name='new'),
     path('create/', views.create, name='create'),
@@ -31,11 +31,12 @@ urlpatterns = [
     path('<int:product_id>/productinfo', Productinfo),
     path('', include(router.urls)),
 
-    # 장바구니 URL
-    path('cart/', views.cart, name='cart'),
-    path('checkout/', views.checkout1, name='checkout'),     # 장바구니 페이지에서 클릭한 결제 버튼
-    path('<int:product_id>/checkout/', views.checkout2, name='checkout_id'),     # 상품 1개 조회 페이지에서 클릭한 결제 버튼
-    path('<int:product_id>/update_item/', views.updatedItem, name='update_item'),
+    # 장바구니 관련 URL
+    path('cart/', views.cart, name='cart'),                                       # 장바구니 페이지 URL
+    path('checkout/', views.checkout1, name='checkout'),                          # 장바구니 페이지에서 클릭한 결제 버튼
+    path('<int:product_id>/checkout/', views.checkout2, name='checkout_id'),      # 상품 1개 조회 페이지에서 클릭한 결제 버튼
+    path('<int:product_id>/update_item/', views.updatedItem, name='update_item'), # 장바구니 추가 기능
+    path('<int:product_id>/cart_delete', views.cart_delete, name='cart_delete'),  # 장바구니 상품 삭제
 ]
 
 

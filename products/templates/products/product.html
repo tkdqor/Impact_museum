@@ -23,17 +23,20 @@
 
                 <!-- 장바구니 & 구매하기 버튼 -->
                 <div class="buttons">
-                    <button data-product="{{ product.id }}" data-action="add" class="cart-update"><a href="{% url 'products:cart' %}">장바구니에 담기</a></button>
+                    <button data-product="{{ product.id }}" data-action="add" class="cart-update" onClick="popup()"><a href="{% url 'products:cart' %}">장바구니에 담기</a></button>
                     <!-- 장바구니 클릭 버튼에 data attribute를 추가해서 클릭하는 순간, 데이터를 함께 보내주기 -->
                     <!-- cart-update라는 클래스 이름으로 cart.js라는 자바스크립트 파일과 연동되어있음 -->
                     <button class="checkout_button"><a href="{% url 'products:checkout_id' product.id %}">구매하기</a></button>
                 </div>
             </div>
+
             {% else %}
             {% endif %}
         </div> 
     </div>  
 </div>    
+
+
 
 
 <!-- 제품 다른 사진 보여주기 -->

@@ -1,7 +1,12 @@
 var updatedBtns = document.getElementsByClassName('cart-update')  // detail.html의 button의 클래스와 연동
 
+// 팝업창 띄우기
+function popup() {
+    alert("해당 상품이 장바구니에 추가되었습니다:)");
+}
+
 for(var i = 0 ; i < updatedBtns.length; i++){
-    updatedBtns[i].addEventListener('click', function(){    // 클릭했을 때 -> 밑에 입력한 코드가 정의된 함수를 실행시키자!
+    updatedBtns[i].addEventListener('click', function(){    // 클릭했을 때 -> 밑에 입력한 코드가 정의된 함수를 실행시키자
         var productID = this.dataset.product                      // button의 data attribute를 가져와서 변수 정의
         var action = this.dataset.action
         console.log('productID:',productID , 'action:',action)    // 개발자도구 console에 해당 데이터를 출력
@@ -15,7 +20,6 @@ for(var i = 0 ; i < updatedBtns.length; i++){
 } 
 
 
-
 function updateUserOrder(productID,action){
     console.log('로그인 되었으니 정보를 보냅니다.')                 // 로그인이 된 사용자라면 일단 개발자도구 console에 출력
 
@@ -25,8 +29,8 @@ function updateUserOrder(productID,action){
     fetch(url,{                               // fetch()를 이용해서 정보를 views.py로 전달  
         method: 'POST',                       // 정보를 POST 방식으로 보내기 (장바구니를 생성하는 것이기 때문)
         headers:{
-            'Content-Type':'application/json',  // json의 형태로 정보를 보내겠다는 것
-            'X-CSRFToken': csrftoken            // POST방식으로 보내기 위해 csrf_token 설정 + base.html에서도 설정
+            'Content-Type':'application/json',   // json의 형태로 정보를 보내겠다는 것
+            'X-CSRFToken': csrftoken,            // POST방식으로 보내기 위해 csrf_token 설정 + base.html에서도 설정
 
         },
         body:JSON.stringify({'productID': productID, 'action': action})    // productID와 action를 JSON 형태의 정보로 보내주겠다는 의미                        
@@ -37,7 +41,7 @@ function updateUserOrder(productID,action){
     })  
     .then((data) =>{              // 우리가 받은 response를 data라고 해주고, console에 출력 해주기   
         console.log('data:', data)
-        // location.reload()         // 장바구니 화면 자동으로 새로고침 설정할 수 있음 -> 장바구니 화면에서 수량 +- 버튼 클릭 시 바로 화면에 보여줄 수 있다.  ==> 근데 잘 안되서 일단 주석처리    
+        // location.reload()         // 장바구니 화면 자동으로 새로고침 설정할 수 있음 -> 장바구니 화면에서 수량 +- 버튼 클릭 시 바로 화면에 보여줄 수 있다.  ==> 오류로 주석처리    
     })                                             
 }
 

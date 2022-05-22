@@ -66,6 +66,11 @@ div#detail_container {
     font-size: 24px;
 }
 
+.detail_info > h2 > a {
+    text-decoration: none;
+    color: #708090;
+}
+
 .detail_info > h3 {
     font-size: 24px;
 }

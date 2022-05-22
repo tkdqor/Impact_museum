@@ -116,7 +116,11 @@ def cart(request):
     items = cartItems_data['items']            # cartitems_count 함수의 items 값 가져오기
     order = cartItems_data['order']            # cartitems_count 함수의 order 값 가져오기
 
-    context = {'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
+    context = {
+        'items': items, 
+        'order':order, 
+        'cartItems': cartItems
+    }  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
 
     return render(request, 'products/cart.html', context)
 
@@ -163,34 +167,45 @@ def checkout1(request):
 
 # 장바구니 추가 기능
 def updatedItem(request, product_id):
-    data = json.loads(request.body)     # cart.js에서 보내준 body의 정보를 json 형태로 불러오기 
-    productID = data['productID']             # cart.js의 fetch -> body에서 정의한 변수의 이름과 같게 설정.
+    data = json.loads(request.body)      # cart.js에서 보내준 body의 정보를 json 형태로 불러오기 
+    productID = data['productID']        # cart.js의 fetch -> body에서 정의한 변수의 이름과 같게 설정
     action = data['action']
-    print(data)                         # 장바구니 버튼을 클릭할 때 받은 데이터가 cart.js로부터 전달되었는지 터미널로 먼저 확인하기.
-    print('productID:' , productID)           # 해당 정보들을 id와 action으로 구분지어서 확인하기.
+    print(data)                          # 장바구니 버튼을 클릭할 때 받은 데이터가 cart.js로부터 전달되었는지 터미널로 먼저 확인하기
+    print('productID:' , productID)      # 해당 정보들을 id와 action으로 구분지어서 확인해보기
     print('action:' , action)
 
     customer = request.user.customer    # 로그인 된 해당 유저를 Customer 모델에서 가져온다는 의미(user모델에서 OneonOne관계로 customer모델로 접근)
-    product = Product.objects.get(id=productID)  # 장바구니를 누른 해당 상품의 id로 Post DB에 저장되어있는 정보 가져오기.
+    product = Product.objects.get(id=productID)  # 장바구니를 누른 해당 상품의 id로 Post DB에 저장되어있는 정보 가져오기
     order, created = Order.objects.get_or_create(customer=customer, complete=False)     
-    # Order 모델에서 로그인 된 해당 customer의 order가 이미 있다면 -> 생성하지 말고 그냥 가져오기  /  없다면 order DB 생성하기
+    # Order 모델에서 로그인 된 해당 customer의 order가 이미 있다면 -> 생성하지 말고 그냥 가져오기 / 없다면 order DB 생성하기
     # 또한, complete=False로 설정했기 때문에 가져올 때 주문이 완료 되지 않은 정보만 가져오라는 의미
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)     
     # OrderItem 모델 - order 필드에 위에서 가져온 order와 동일한 order_id 그리고 product 필드에는 장바구니를 누른 해당 상품이 
     # 새롭게 들어가야 하므로 DB에서 새로운 데이터가 생성됨(기존에는 이러한 값을 가진 데이터가 없었기 때문 / order_id는 같을지라도 상품은 없었다.)
 
     if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)    # 만약 button을 누를 때 action이 add이면 orderItem 변수에 있는 db정보의 quantity를 1 증가 시키기.
+        orderItem.quantity += 1    # 만약 button을 누를 때 action이 add이면 orderItem 변수에 있는 db정보의 quantity를 1 증가 시키기
     elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)    # 만약 button를 누를 때 action이 remove이면 orderItem 변수에 있는 db정보의 quantity를 1 감소 시키기.
+        orderItem.quantity -= 1    # 만약 button를 누를 때 action이 remove이면 orderItem 변수에 있는 db정보의 quantity를 1 감소 시키기
 
-    orderItem.save()      # 위에서 변경된 내용 저장.
+    orderItem.save()      # 위에서 변경된 내용 저장
 
-    if orderItem.quantity <= 0:         # 만약 장바구니로 추가된 상품의 수량이 0과 같거나 작으면 해당 데이터 삭제
+    if orderItem.quantity < 1:         # 만약 장바구니로 추가된 상품의 수량이 1보다 작으면 해당 데이터 삭제
         orderItem.delete()
 
-    return JsonResponse('Item added', safe=False)
+    return JsonResponse('Item quantity modify', safe=False)
 
+
+# 장바구니 상품 제거
+def cart_delete(request, product_id):
+    customer = request.user.customer              # 로그인된 customer 정보 가져오기
+    product = Product.objects.get(id=product_id)  # product_id에 해당하는 상품 정보 가져오기
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)  # 조건에 맞는 order 데이터 조회   
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product) # 조건에 맞는 orderItem 데이터 조회  
+
+    orderItem.delete() # orderItem 데이터 삭제
+
+    return redirect('products:cart') 
 
 
 

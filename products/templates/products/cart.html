@@ -19,7 +19,7 @@
             <th>수량</th>
             <th>총액</th>
             <th><button><a href="{% url 'products:checkout' %}">구매하기</a></button></th>
-            <th><button><a href="">삭제하기</a></button></th>
+            <th></th>
         </tr>
 
         {% for item in items %}
@@ -36,7 +36,7 @@
             <th>{{ item.get_total|floatformat:"0g" }}원</th>      
             <!-- OrderItem 모델에 설정한 property decoration으로 get_total를 메소드처럼 사용 -> 그래서 1개 상품의 가격*수량 값을 가져오기 -->
             <th><button><a href="{% url 'products:checkout' %}">구매하기</a></button></th>
-            <th><button><a href="">삭제하기</a></button></th>
+            <th><button><a href="{% url 'products:cart_delete' item.product.id %}">삭제하기</a></button></th>
         </tr>
         {% endfor %}
     </table>
