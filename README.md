@@ -39,6 +39,9 @@
 - Git
 - Github
 
+**API 서버**
+- DRF(Django REST Framework)
+
 <br>
 
 ## 3. ERD 설계
@@ -314,7 +317,13 @@
   - 장바구니 페이지에서 상품별 “삭제하기” 버튼 클릭 시, 수량과 상관없이 장바구니 목록에서 삭제하는 기능 생성
     - 새로운 url를 생성하고 cart_delete라는 함수 기반 View를 통해 장바구니 데이터 삭제
   
-
+- **version 3.7 DRF(Django REST Framework)로 API 서버 구축**
+  - pip install djangorestframework 이렇게 DRF 설치 완료
+  - products와 posts 앱 내부에 있는 Product/Order/OrderItem/Post/Brand/Problem 모델과 관련한 CRUD API 서버 설정
+  - products와 posts 앱 내부에 serializers.py를 생성하고 ModelSerializer를 상속받아 각 모델에 해당하는 Serializer 클래스 정의 
+    - 이 때, 요청 시 응답할 필드를 설정하고 OrderItem과 Brand 클래스의 경우에는 depth = 1 코드를 추가해서 1:N관계에 있는 모델의 데이터를 같이 응답할 수 있도록 설정
+  - products와 posts 앱 내부 views.py에서는 ModelViewSet를 상속받아 기본적인 CRUD가 가능하게끔 각 모델에 대한 ViewSet를 정의
+  - products와 posts 앱 내부 urls.py에서 DefaultRouter를 설정하여 API ROOT 페이지를 응답하고 각 모델에 대한 ViewSet를 연결
 
 <br>
 
