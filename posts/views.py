@@ -7,7 +7,8 @@ from django.views.generic import ListView
 from products.cartitems_tag import *      # 중복되는 코드들을 가져오기 위해 products App 내부 cartitems_tag 모듈 가져오기
 from django.core.paginator import Paginator # 페이지네이션을 위한 import
 
-# Create your views here.
+from .serializers import PostModelSerializer, BrandModelSerializer, ProblemModelSerializer
+from rest_framework.viewsets import ModelViewSet
 
 
 
@@ -155,4 +156,21 @@ def board_delete(request, post_id):
 
     return redirect('posts:board')
 
+
+# DRF View 설정
+
+# Post 모델
+class PostModelViewSet(ModelViewSet):      # ModelViewSet을 상속받아 기본적인 CRUD가 가능한 Post Model API 서버 설정
+    queryset = Post.objects.all()
+    serializer_class = PostModelSerializer # serializers.py에서 정의한 PostModelSerializer 설정
+
+# Brand 모델
+class BrandModelViewSet(ModelViewSet):      
+    queryset = Brand.objects.all()
+    serializer_class = BrandModelSerializer
+
+# Problem 모델
+class ProblemModelViewSet(ModelViewSet):      
+    queryset = Problem.objects.all()
+    serializer_class = ProblemModelSerializer
 

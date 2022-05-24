@@ -2,15 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .serializers import ProductSerializer
-from rest_framework import viewsets
 import json
 from django.db.models import Q     # 검색기능구현 시, filter 조건을 or로 설정하기 위해 Q 함수 import
 from django.http import Http404    # 상품 1개 조회 시, 예외처리를 위한 Http404 import 
 from .cartitems_tag import *       # 중복되는 코드들을 가져오기 위해 products App 내부 cartitems_tag 모듈 가져오기
 
+from .serializers import ProductModelSerializer, OrderModelSerializer, OrderItemModelSerializer
+from rest_framework.viewsets import ModelViewSet
 
 
 # 메인 화면
@@ -210,28 +208,22 @@ def cart_delete(request, product_id):
 
 
 
+# DRF View 설정
 
-# RDF를 이용한 문자열 응답 API
-@api_view(['GET'])
-def helloAPI(request):
-    return Response("Hello World!")
-
-
-# RDF를 이용한 상품 정보 1개에 대한 API
-@api_view(['GET'])
-def Productinfo(request, product_id):
-    product = Product.objects.get(id=product_id)
-    serializer = ProductSerializer(product)
-
-    return Response(serializer.data)
-
-
-# RDF를 이용한 CRUD API 
-class ProductViewSet(viewsets.ModelViewSet):
+# Product 모델
+class ProductModelViewSet(ModelViewSet):      # ModelViewSet을 상속받아 기본적인 CRUD가 가능한 Product Model API 서버 설정
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductModelSerializer # serializers.py에서 정의한 ProductModelSerializer 설정
 
+# Order 모델
+class OrderModelViewSet(ModelViewSet):        
+    queryset = Order.objects.all()
+    serializer_class = OrderModelSerializer
 
+# OrderItem 모델
+class OrderItemModelViewSet(ModelViewSet):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemModelSerializer
 
 
 

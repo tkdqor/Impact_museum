@@ -1,13 +1,16 @@
 from django.http import HttpResponse
 from django.urls import path, include
 from . import views
-from .views import helloAPI, Productinfo
+
 from rest_framework import routers
+from .views import ProductModelViewSet, OrderModelViewSet, OrderItemModelViewSet
 
 
-# DefaultRouter 설정
-router = routers.DefaultRouter()
-router.register('viewset', views.ProductViewSet)
+# DRF routers 설정
+router = routers.DefaultRouter()                      # DefaultRouter이기 때문에 API - ROOT 페이지가 생성됨
+router.register('products', ProductModelViewSet)      # ProductModelViewSet 설정
+router.register('orders', OrderModelViewSet)          # OrderModelViewSet 설정
+router.register('orderitems', OrderItemModelViewSet)  # OrderItemModelViewSet 설정
 
 
 # URL name 설정
@@ -27,9 +30,7 @@ urlpatterns = [
     path('<int:product_id>/delete/', views.delete, name='delete'),
 
     # DRF(Django Rest Framework) URL 
-    path('hello/', helloAPI),
-    path('<int:product_id>/productinfo', Productinfo),
-    path('', include(router.urls)),
+    path('drf/', include(router.urls)), # products/drf/로 API ROOT 설정
 
     # 장바구니 관련 URL
     path('cart/', views.cart, name='cart'),                                       # 장바구니 페이지 URL
