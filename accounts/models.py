@@ -8,7 +8,8 @@ from allauth.socialaccount.models import SocialAccount # 소셜로그인 모델 
 
 # Customer 모델
 class Customer(models.Model):
-    user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE, default=1, unique=True)    # User모델과 1대1 관계 / on delete를 사용해서 회원이 지워지면 고객도 지워지게 한다.
+    user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE, default=1, unique=True)    
+    # User모델과 1대1 관계 / on delete를 사용해서 회원이 지워지면 고객도 지워지게 한다.
     name = models.CharField(max_length=100, null=False, default="None", unique=True)          
     email = models.CharField(max_length=100, unique=True)
     problem = models.CharField(max_length=100, null=True, default="disabled")

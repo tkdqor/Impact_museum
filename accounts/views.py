@@ -11,6 +11,7 @@ from products.cartitems_tag import *    # 중복되는 코드들을 가져오기
 def sign_up(request):
     cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
     cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
+    context = { 'cartItems': cartItems, }
 
     if request.method == 'POST':              # HTTP Request가 POST방식일 때, 
         if (request.POST.get('username') and  # POST로 전달한 username 데이터가 있고, 
@@ -35,10 +36,9 @@ def sign_up(request):
             return redirect('products:index')            # 로그인이 된 다음에는 메인 페이지 보여주기
 
         else:
-            context['error'] = '아이디와 비밀번호를 다시 입력해주세요.'   
+            context['error'] = '아이디와 비밀번호를 다시 입력해주세요.' 
             # 만약, 조건을 만족하지 못할 때는 context 딕셔너리에 error라는 key를 저장해서 오류 메세지를 출력하게끔 하기     
 
-    context = { 'cartItems': cartItems, }
 
     return render(request, 'accounts/sign_up.html', context)   # POST방식이 아닌 GET방식의 HTTP Request라면 회원가입 페이지 보여주기
 
