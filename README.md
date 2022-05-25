@@ -419,6 +419,14 @@
     - [해당 내용](https://stackoverflow.com/questions/21563227/django-allauth-example-errno-61-connection-refused)을 참고해서 전자 메일(SMTP) 서버가 없어 allauth가 확인 메일을 보낼 수 없어 발생한 문제라고 파악 
     - 그래서 settings.py에 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 이렇게 추가해서 전자 메일이 콘솔에 인쇄되서 SMTP 서버가 필요하지 않도록 설정
 
+- **version 3.71 - 회원가입 관련 UnboundLocalError 오류 해결**
+  - 회원가입 시, 입력받아야 할 정보들을 입력하지 않고 회원가입 버튼을 누르면 **UnboundLocalError at /accounts/sign_up/    
+    local variable 'context' referenced before assignment** 다음과 같은 오류 발생
+  - def sign_up이라는 함수 내부에 지역 변수 context를 정의하지 않은 채로, 함수 내부에서 회원가입 정보가 입력되지 않을 시 context에 error라는 key를 저장한 것이 원인으로 파악함
+  - 에러 메세지를 해석해보면, 할당 전에 지역 변수 'context’가 참조되었다고 얘기해주고 있음
+  - **그래서 -> def sign_up 함수 바로 밑에 context = { 'cartItems': cartItems, } 이렇게 지역변수 context를 정의함으로써 오류 해결. 그러면 그 밑에 if문이 진행되면서 context 변수를 사용할 수 있게 된다.**
+
+
 
 <br>
 
