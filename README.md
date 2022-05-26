@@ -42,6 +42,9 @@
 **API 서버**
 - DRF(Django REST Framework)
 
+**기타**
+- django-debug-toolbar
+
 <br>
 
 ## 3. ERD 설계
@@ -325,6 +328,14 @@
   - products와 posts 앱 내부 views.py에서는 ModelViewSet를 상속받아 기본적인 CRUD가 가능하게끔 각 모델에 대한 ViewSet를 정의
   - products와 posts 앱 내부 urls.py에서 DefaultRouter를 설정하여 API ROOT 페이지를 응답하고 각 모델에 대한 ViewSet를 연결
 
+- **version 3.73 lazy-loading 개선 사항 반영**
+  - 먼저 페이지 로딩 시 날라가는 쿼리를 확인해보기 위해 django-debug-toolbar 설치 완료
+  - products 앱 내부의 cartitems_tag.py에서 기존에는 **items = order.orderitem_set.all()** 라고 되어있는 코드를 -> **items = order.orderitem_set.select_related('product').all()** 이렇게 select_related 메소드를 사용해서 lazy-loading 문제를 해결
+    - select_related('product') 라고 설정하면서 해당 ORM 코드에서 product와 관련된 데이터를 같이 가져와준다. (product와 orderitem이 1:N관계이기 때문)
+    - 기존에는 장바구니 페이지로 넘어갈 때 관련된 쿼리의 개수가 9개 였는데 총 쿼리가 6개로 줄어든 것을 확인할 수 있었음
+    - 줄어든 쿼리는 cart.html과 checkout.html에 있는 {{ item.product.imageURL }}, {{ item.product.product_name }} 다음 코드에서 개선된 것으로 확인 
+    - select_related 메소드로 product 데이터를 ORM 코드에서 같이 가져와서 데이터베이스에 Hit할 필요가 없어지고, 쿼리가 적게 날라가서 페이지 속도가 개선됨
+
 <br>
 
 ## 5. 핵심 트러블 슈팅
@@ -435,6 +446,11 @@
 
   - **version 3.71에서 수정했던 회원가입 오류를 로그인 오류에서도 확인하여 똑같은 방법으로 수정**
 
+- **version 3.73 - version 3.72와 유사한 오류 수정**
+  - 로그인을 하지 않은 상태에서 -> 상품1개 조회 페이지에서 “결제하기” 버튼 클릭 시, **UnboundLocalError at /products/9/checkout/
+local variable 'product' referenced before assignment** 다음과 같은 오류 발생
+    - 그래서 else문에 return redirect('products:index') 해당 코드를 추가해서 로그인을 하지 않을 때 구매하기 버튼을 누르면 메인 페이지로 돌아가게끔 설정
+  - posts 앱의 views.py에서 공지사항 게시판 글을 조회하는 board_detail 함수와 게시판 글을 수정하는 board_edit 함수 내부에서 Post 모델의 데이터를 조회할 때, **post = get_object_or_404(Post, id=post_id)** 이렇게 잘못된 접근을 했을 때 데이터가 없다는 의미의 404에러를 띄워줄 수 있도록 수정
 
 
 
