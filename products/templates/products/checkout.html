@@ -34,7 +34,7 @@
         <th><img src="{{ product.imageURL }}" width="100px" height="100px">{{ product.product_name }}</th>
         <th>{{ product.price|floatformat:"0g" }}원</th>
         <th>옵션</th>
-        <th>{{ product.item.quantity }}개</th>
+        <th>1개</th>
         <th>원</th>
     </tr>
     
@@ -55,12 +55,23 @@
 </table>
 
 
+{% if product %}    <!-- 상품 1개 조회 페이지에서 결제하기를 누른다면 product가 있으니 상품 1개에 대한 결제 정보만 보여주기 -->
+
+<div>
+    <p>총 주문상품 1개</p>
+    <p>총 결제금액 {{ product.price|floatformat:"0g" }}원</p>
+</div>
+
+{% else %}
+
 <!-- 결제가 이루어질 총 상품 개수와 결제금액을 보여주기 -->
 <div>
     <p>총 주문상품 {{ cartItems }}개</p>
     <p>총 결제금액 {{ order.get_cart_total|floatformat:"0g" }}원</p>
 </div>
     
+{% endif %}
+
 
 <!-- 결제수단 선택하기 -->
 <div>

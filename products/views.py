@@ -7,6 +7,7 @@ from django.db.models import Q     # 검색기능구현 시, filter 조건을 or
 from django.http import Http404    # 상품 1개 조회 시, 예외처리를 위한 Http404 import 
 from .cartitems_tag import *       # 중복되는 코드들을 가져오기 위해 products App 내부 cartitems_tag 모듈 가져오기
 
+# DRF 관련 import
 from .serializers import ProductModelSerializer, OrderModelSerializer, OrderItemModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
@@ -143,6 +144,7 @@ def checkout2(request, product_id):
         cartItems = order['get_cart_items']               
         # 마찬가지로 로그인하지 않아도 화면을 볼 수 있게 설정 
         # 오류가 나지 않게 하기 위해 바로 윗줄에서 정의한 order 변수에 키값으로 접근해서 get_cart_items이 0이 되게끔 설정
+        return redirect('products:index')
 
     context = {'product': product, 'items': items, 'order':order, 'cartItems': cartItems}  # 장바구니 개수를 표현하기 위해 cartItems 변수를 같이 보내줘야 한다.
 
@@ -152,6 +154,7 @@ def checkout2(request, product_id):
 
 # 장바구니 페이지 -> 결제 화면
 def checkout1(request):
+
     cartItems_data = cartitems_count(request)  # products 앱 내부 cartitems_tag 모듈에 있는 cartitems_count 함수 가져오기
     cartItems = cartItems_data['cartItems']    # cartitems_count 함수의 cartItems 값 가져오기
     items = cartItems_data['items']            # cartitems_count 함수의 items 값 가져오기

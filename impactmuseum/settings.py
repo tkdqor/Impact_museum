@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'products',
+    'debug_toolbar',
 
     # all auth
     'allauth',                    # allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 오기
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  # django-debug-toolbar 설치를 위해 추가
 ]
 
 
@@ -190,3 +192,9 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # 구글 소셜 로그인 시 오류 관련 - 전자 메일이 콘솔에 출력되어 SMTP 서버가 필요하지 않도록 설정
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# django-debug-toolbar 설치 과정에서 추가 / 본인 IP만 볼 수 있도록 설정
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

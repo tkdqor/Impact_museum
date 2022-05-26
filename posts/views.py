@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
@@ -115,7 +115,7 @@ def board_create(request):
 
 # 공지사항 게시판 글 조회하기
 def board_detail(request, post_id):
-    post = Post.objects.get(id=post_id)
+    post = get_object_or_404(Post, id=post_id)
     # login_user = request.user.customer       # 로그인된 유저의 customer 정보 가져오기
     # post_author = post.author                # 게시글 작성자 정보 가져오기
     # print(login_user == post_author)         # True로 출력이 되므로 위의 2개의 변수가 서로 같다는 것을 확인
@@ -132,7 +132,7 @@ def board_detail(request, post_id):
 # 공지사항 게시판 글 수정하기
 def board_edit(request, post_id):
     posts_category = Post.Category.choices  # GET 방식으로 request 시, 카테고리 수정할 수 있도록 Post 모델의 Category 클래스에 접근해서 항목들을 보내주기
-    post = Post.objects.get(id=post_id)
+    post = get_object_or_404(Post, id=post_id)
 
     context = {
         'posts_category': posts_category,

@@ -43,6 +43,12 @@ urlpatterns = [
 if settings.DEBUG:                                            # settings의 DEBUG 옵션이 TRUE일 경우에만 이미지 파일 serving 허용
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+    # django debug toolbar URL 설정
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]
+
 
 
 
