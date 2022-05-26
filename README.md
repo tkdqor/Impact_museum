@@ -426,6 +426,16 @@
   - 에러 메세지를 해석해보면, 할당 전에 지역 변수 'context’가 참조되었다고 얘기해주고 있음
   - **그래서 -> def sign_up 함수 바로 밑에 context = { 'cartItems': cartItems, } 이렇게 지역변수 context를 정의함으로써 오류 해결. 그러면 그 밑에 if문이 진행되면서 context 변수를 사용할 수 있게 된다.**
 
+- **version 3.72 - 회원가입 관련 IntegrityError 오류 예외처리**
+  - Customer 모델의 user/name/email 필드에 unique=True 속성을 추가한 이후에, 중복된 정보로 회원가입을 시도할 경우 **IntegrityError at /accounts/sign_up/    
+    (1062, "Duplicate entry 'sss' for key 'auth_user.username'")** 다음과 같은 오류 발생
+  - 그래서 try-except로 예외처리 진행 완료
+    - **accounts 앱 내부 views.py에 정의되어 있는 회원가입 함수인 sign_up 내부의 회원가입 if문을 try-except로 묶고 -> IntegrityError가 발생할 때 context['error'] = '이미 가입된 회원 정보입니다. 다른 정보를 입력해주세요.' 이렇게 context에 에러메세지를 추가해서 template에 띄우도록 설정 완료**
+    - 이제 중복된 정보로 가입 시, 해당 메세지가 나와서 다른 정보로 회원가입을 시도하게끔 설정
+
+  - **version 3.71에서 수정했던 회원가입 오류를 로그인 오류에서도 확인하여 똑같은 방법으로 수정**
+
+
 
 
 <br>
