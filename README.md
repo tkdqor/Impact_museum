@@ -42,7 +42,7 @@
 **API 서버**
 - DRF(Django REST Framework)
 
-**기타**
+**디버깅 툴**
 - django-debug-toolbar
 
 <br>
