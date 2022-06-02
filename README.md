@@ -83,6 +83,17 @@
   - template 필터를 사용해 게시글 전체 순서 번호 출력
   - 공지사항의 성격을 고려, 관리자 계정으로 로그인 했을 경우에만 글 생성 버튼 활성화 설정 / 상세 페이지에서는 로그인된 유저와 해당 글 작성자가 같은 경우에만 수정 및 삭제 버튼 활성화 설정
 
+- **서버 관련 : AWS RDS로 MySQL DBMS 서버 구축**
+  - AWS RDS를 이용해서 어떤 환경에서 접속해도 connect timed out 에러가 발생하지 않도록 MySQL 3306 포트를 Anywhere-IPv4로 설정
+  - MySQL이 현재 시점에서 Oracle다음으로 가장 많이 사용하는 DBMS이기 때문에 안정적이라고 판단해서 MySQL로 DBMS를 설정
+  - Strict MODE란, 데이터의 무결성을 MySQL에서 체크해주는 기능인 Strict MODE 설정 ex) NOT NULL로 설정하면 무조건 값을 넣어줘야 에러가 발생하지 않게 됨
+
+- **DRF를 바탕으로 API 서버 구현**
+  - DRF(Django REST Framework) 라이브러리를 설치하여 API 서버 구축
+  - products와 posts 앱 내부에 있는 Product/Order/OrderItem/Post/Brand/Problem 모델과 관련한 CRUD API 서버 설정
+  - OrderItem과 Brand 모델의 경우, depth = 1 코드를 추가해서 1:N관계에 있는 모델의 데이터를 같이 응답할 수 있도록 설정
+
+
 <br>
 
 ## 5. 트러블 이슈
