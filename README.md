@@ -86,7 +86,7 @@
 - **서버 관련 : AWS RDS로 MySQL DBMS 서버 구축**
   - AWS RDS를 이용해서 어떤 환경에서 접속해도 connect timed out 에러가 발생하지 않도록 MySQL 3306 포트를 Anywhere-IPv4로 설정
   - MySQL이 현재 시점에서 Oracle다음으로 가장 많이 사용하는 DBMS이기 때문에 안정적이라고 판단해서 MySQL로 DBMS를 설정
-  - Strict MODE란, 데이터의 무결성을 MySQL에서 체크해주는 기능인 Strict MODE 설정 ex) NOT NULL로 설정하면 무조건 값을 넣어줘야 에러가 발생하지 않게 됨
+  - 데이터의 무결성을 MySQL에서 체크해주는 기능인 Strict MODE 설정 ex) NOT NULL로 설정하면 무조건 값을 넣어줘야 에러가 발생하지 않게 됨
 
 - **DRF를 바탕으로 API 서버 구현**
   - DRF(Django REST Framework) 라이브러리를 설치하여 API 서버 구축
