@@ -96,6 +96,10 @@
   - products와 posts 앱 내부에 있는 Product/Order/OrderItem/Post/Brand/Problem 모델과 관련한 CRUD API 서버 설정
   - OrderItem과 Brand 모델의 경우, depth = 1 코드를 추가해서 1:N관계에 있는 모델의 데이터를 같이 응답할 수 있도록 설정
 
+- **인메모리 Database : AWS EC2로 Redis 서버 구축**
+  - AWS EC2를 생성해 디스크가 아닌, 메모리에 데이터를 저장하는 인메모리 Database인 Redis 서버를 구축
+  - 서비스에서 로그인 시, 기존 django_session 모델이 아닌 Redis 서버에서 메모리에 세션이 저장된 것을 확인할 수 있게 됨
+  - 이렇게 설정함으로써, 그 전 보다는 더 빠르게 기존 사용자를 파악할 수 있고 세션 값이 영구적으로 저장할 필요는 없기 때문에 Redis로 세션 값을 관리하는 것이 적합하다고 판단됨
 
 <br>
 
