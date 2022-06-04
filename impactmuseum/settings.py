@@ -198,3 +198,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+
+# Redis 서버 연결하기 - 로그인 세션 저장
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS = {
+    'host': env('REDIS_HOST'), # EC2 인스턴스 퍼블릭 IPv4 주소
+    'port': env('REDIS_PORT'),
+    'db': env('REDIS_DB'),     # 첫번째 redis 서버
+    'prefix': 'session',       # redis 서버에 표시할 이름
+    'socket_timeout': 1,       # 1초 이상 시간 지연 시 연결 종료
+    'retry_on_timeout': False, # timeout으로 연결 실패 시 재시도 하지 않기
+    'password': env('REDIS_PASSWORD'),
+}
