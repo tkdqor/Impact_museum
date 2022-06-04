@@ -45,6 +45,9 @@
 **디버깅 툴**
 - django-debug-toolbar
 
+**인메모리 Database**
+- Redis 5.0.7
+
 <br>
 
 ## 3. ERD 설계
@@ -488,6 +491,21 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - 기존에는 장바구니 페이지로 넘어갈 때 관련된 쿼리의 개수가 9개 였는데 총 쿼리가 6개로 줄어든 것을 확인할 수 있었음
     - 줄어든 쿼리는 cart.html과 checkout.html에 있는 {{ item.product.imageURL }}, {{ item.product.product_name }} 다음 코드에서 개선된 것으로 확인 
     - select_related 메소드로 product 데이터를 ORM 코드에서 같이 가져와서 데이터베이스에 Hit할 필요가 없어지고, 쿼리가 적게 날라가서 페이지 속도가 개선됨
+
+- **version 3.8 AWS EC2를 이용해서 Redis 인메모리 데이터베이스 서버 구축**
+  - **로그인 시 서버에 저장되고 있는 세션을 redis 서버 메모리에 저장할 수 있도록 설정**
+  - 서버가 여러 대 늘어나서 사용자가 다른 서버에 요청을 보내더라도 세션을 이렇게 Redis 서버로 공유하면 항상 로그인 유지가 가능해진다.
+    - AWS EC2를 새롭게 생성하고 터미널로 해당 EC2에 접속한 다음, Redis server 5.0.7버전 설치
+    - 메모리 사이즈를 제한하기 위해 redis.conf 파일에서 maxmemory 512mb로 설정 
+    - 그리고 데이터가 쌓일 때 기존 데이터를 삭제해줘야 할 텐데, 사용하지 않는 데이터를 순차적으로 삭제하는 것으로 maxmemory-policy allkeys-lru로 설정
+    - 추가로 외부에서도 이 redis 서버에 접속할 수 있게 redis.conf 파일에서 bind 0.0.0.0로 설정
+    - 그 다음, 프로젝트에 pip install django-redis-sessions로 설치해주고 settings.py에 Redis 서버 연결 코드 추가
+    - 여기까지 진행하고 서비스에서 로그인을 한 다음, Redis 서버에 접속해 redis-cli 입력 후, KEYS *를 입력해보면 세션 값이 저장된 것을 확인할 수 있다.
+  - **기존에는 django_session 모델에 로그인이 될 때 session_key 값이 추가되었고 로그아웃을 하면 해당 row가 삭제되었는데, 지금은 로그인이 되어도 django_session 모델에 세션 값이 추가되지 않는다.**
+    - 서비스에서 로그아웃 시 세션 값이 바로 삭제된다. 
+
+  - **추가로 settings.py에 있는 Redis 관련 중요한 정보를 환경변수로 처리**
+    - 민감한 정보를 github 레포지토리에 노출시키지 않도록 settings.py에 있는 redis와 관련된 중요한 정보들을 환경변수로 관리할 수 있게 .env 파일에 변수로 지정
 
 <br>
 
