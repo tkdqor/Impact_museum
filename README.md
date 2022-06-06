@@ -231,7 +231,11 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - 이제 다시 **pip install -r requirements.txt** 해당 명령어를 시도했을 때 requirements.txt에 있는 내용들을 바탕으로 필요한 패키지들을 전부 설치 완료
     - **결론적으로 mysql과 관련된 문제였음을 확인할 수 있었음**
 
-
+- **배포 과정 중, AWS EC2에서 runserver 실행 오류 발생**
+  - Ubuntu EC2에서 www라는 디렉터리를 생성하고 git clone를 통해 impact museum 소스코드를 가져온 이후, manage.py가 있는 위치에서 **python manage.py runserver 0.0.0.0:8000** 다음과 같은 코드를 입력했을 때, **django.core.exceptions.ImproperlyConfigured: Set the SECRET_KEY environment variable** 라는 오류가 발생
+  - github 저장소에 있는 소스코드에는 .gitignore 파일로 환경변수들을 설정한 .env 파일이 없어 settings.py에 있는 코드들이 실행되지 못한 것으로 확인
+  - **vi .env** 해당 명령어로 .env 파일을 EC2 내부에 생성하고 기존의 설정 값들을 그대로 입력해주기 / 단, DEBUG 항목은 False로 수정
+  - .env 파일 작성 후, 브라우저에 EC2 IP주소:8000으로 접속했을 때 정상적으로 접속이 되는 것을 확인
 
 
 <br>
