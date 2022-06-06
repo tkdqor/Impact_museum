@@ -217,6 +217,22 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - 그래서 else문에 return redirect('products:index') 해당 코드를 추가해서 로그인을 하지 않을 때 구매하기 버튼을 누르면 메인 페이지로 돌아가게끔 설정
   - posts 앱의 views.py에서 공지사항 게시판 글을 조회하는 board_detail 함수와 게시판 글을 수정하는 board_edit 함수 내부에서 Post 모델의 데이터를 조회할 때, **post = get_object_or_404(Post, id=post_id)** 이렇게 잘못된 접근을 했을 때 데이터가 없다는 의미의 404에러를 띄워줄 수 있도록 수정
 
+- **배포 과정 중, AWS EC2에서 requirements.txt 적용 오류 발생**
+  - 새롭게 생성한 AWS EC2에 pip install -r requirements.txt 명령어로 필요한 라이브러리 설치 시, **ERROR: Command errored out with exit status 1: python setup.py egg_info Check the logs for full command output.** 다음과 같은 오류 발생
+  - 처음에는 pip 버전이 문제라고 판단하여 **pip install pip==18.1.** 명령어로 버전을 다운그레이드 한 다음, 다시 시도 했으나 setuptools와 관련된 메세지가 뜨고 똑같이 오류 발생
+  - 다시 pip 버전을 최신으로 업데이트하고, **pip install --upgrade setuptools** 명령어로 setuptools를 업데이트 후 다시 시도
+  - 그 다음으로는 **error: subprocess-exited-with-error... python setup.py egg_info did not run successfully.** 와 **error: metadata-generation-failed** 라는 오류가 발생. 즉, 하위 프로세스와 패키지 메타데이터에서 오류가 발생
+  - **sudo -H pip3 install --upgrade --ignore-installed pip setuptools** 해당 명령어로 pip와 setuptools 재설치를 진행했으나, **ERROR: launchpadlib 1.10.13 requires testresources, which is not installed.** 라는 에러 발생
+  - **sudo apt install python3-testresources** 라는 명령어로 testresources를 설치 후 다시 requirements.txt를 실행했으나 똑같은 오류 발생
+  - **error: subprocess-exited-with-error** 해당 에러를 자세히 읽어봤을 때, mysqlclient이 설치가 되지 않아 발생하는 것으로 추측
+  - **sudo apt-get install mysql-server, mysql-client** 해당 명령어로 설치하려 했으나 **OSError: mysql_config not found** 이렇게 찾을 수 없다고 확인
+  - **sudo apt-get install python3-dev libmysqlclient-dev** 이후에 다음과 같은 명령어로 mysql 관련 라이브러리 설치 완료
+  - **pip install mysqlclient** 명령어로 mysqlclient 설치 완료
+  - 이제 다시 **pip install -r requirements.txt** 해당 명령어를 시도했을 때 requirements.txt에 있는 내용들을 바탕으로 필요한 패키지들을 전부 설치 완료
+    - **결론적으로 mysql과 관련된 문제였음을 확인할 수 있었음**
+
+
+
 
 <br>
 
