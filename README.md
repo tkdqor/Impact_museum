@@ -49,6 +49,11 @@
 **인메모리 Database**
 - Redis 5.0.7
 
+**배포**
+- AWS Route 53
+- Nginx
+- uWSGI
+
 <br>
 
 ## 3. ERD 설계
