@@ -93,13 +93,12 @@
 
 - **DRF를 바탕으로 API 서버 구현**
   - DRF(Django REST Framework) 라이브러리를 설치하여 API 서버 구축
-  - products와 posts 앱 내부에 있는 Product/Order/OrderItem/Post/Brand/Problem 모델과 관련한 CRUD API 서버 설정
-  - OrderItem과 Brand 모델의 경우, depth = 1 코드를 추가해서 1:N관계에 있는 모델의 데이터를 같이 응답할 수 있도록 설정
+  - products와 posts 앱 내부에 있는 Product/Post 모델과 관련한 CRUD API 서버 설정
 
 - **인메모리 Database : AWS EC2로 Redis 서버 구축**
   - AWS EC2를 생성해 디스크가 아닌, 메모리에 데이터를 저장하는 인메모리 Database인 Redis 서버를 구축
   - 서비스에서 로그인 시, 기존 django_session 모델이 아닌 Redis 서버에서 메모리에 세션이 저장된 것을 확인할 수 있게 됨
-  - 이렇게 설정함으로써, 그 전 보다는 더 빠르게 기존 사용자를 파악할 수 있고 세션 값이 영구적으로 저장할 필요는 없기 때문에 Redis로 세션 값을 관리하는 것이 적합하다고 판단됨
+  - 이렇게 설정함으로써 그 전 보다는 더 빠르게 기존 사용자를 파악할 수 있고 세션 값을 영구적으로 저장할 필요는 없기 때문에 Redis로 관리하는 것이 적합하다고 판단됨
 
 <br>
 
@@ -216,6 +215,26 @@
 local variable 'product' referenced before assignment** 다음과 같은 오류 발생
     - 그래서 else문에 return redirect('products:index') 해당 코드를 추가해서 로그인을 하지 않을 때 구매하기 버튼을 누르면 메인 페이지로 돌아가게끔 설정
   - posts 앱의 views.py에서 공지사항 게시판 글을 조회하는 board_detail 함수와 게시판 글을 수정하는 board_edit 함수 내부에서 Post 모델의 데이터를 조회할 때, **post = get_object_or_404(Post, id=post_id)** 이렇게 잘못된 접근을 했을 때 데이터가 없다는 의미의 404에러를 띄워줄 수 있도록 수정
+
+- **배포 과정 중, AWS EC2에서 requirements.txt 적용 오류 발생**
+  - 새롭게 생성한 AWS EC2에 pip install -r requirements.txt 명령어로 필요한 라이브러리 설치 시, **ERROR: Command errored out with exit status 1: python setup.py egg_info Check the logs for full command output.** 다음과 같은 오류 발생
+  - 처음에는 pip 버전이 문제라고 판단하여 **pip install pip==18.1.** 명령어로 버전을 다운그레이드 한 다음, 다시 시도 했으나 setuptools와 관련된 메세지가 뜨고 똑같이 오류 발생
+  - 다시 pip 버전을 최신으로 업데이트하고, **pip install --upgrade setuptools** 명령어로 setuptools를 업데이트 후 다시 시도
+  - 그 다음으로는 **error: subprocess-exited-with-error... python setup.py egg_info did not run successfully.** 와 **error: metadata-generation-failed** 라는 오류가 발생. 즉, 하위 프로세스와 패키지 메타데이터에서 오류가 발생
+  - **sudo -H pip3 install --upgrade --ignore-installed pip setuptools** 해당 명령어로 pip와 setuptools 재설치를 진행했으나, **ERROR: launchpadlib 1.10.13 requires testresources, which is not installed.** 라는 에러 발생
+  - **sudo apt install python3-testresources** 라는 명령어로 testresources를 설치 후 다시 requirements.txt를 실행했으나 똑같은 오류 발생
+  - **error: subprocess-exited-with-error** 해당 에러를 자세히 읽어봤을 때, mysqlclient이 설치가 되지 않아 발생하는 것으로 추측
+  - **sudo apt-get install mysql-server, mysql-client** 해당 명령어로 설치하려 했으나 **OSError: mysql_config not found** 이렇게 찾을 수 없다고 확인
+  - **sudo apt-get install python3-dev libmysqlclient-dev** 이후에 다음과 같은 명령어로 mysql 관련 라이브러리 설치 완료
+  - **pip install mysqlclient** 명령어로 mysqlclient 설치 완료
+  - 이제 다시 **pip install -r requirements.txt** 해당 명령어를 시도했을 때 requirements.txt에 있는 내용들을 바탕으로 필요한 패키지들을 전부 설치 완료
+    - **결론적으로 mysql과 관련된 문제였음을 확인할 수 있었음**
+
+- **배포 과정 중, AWS EC2에서 runserver 실행 오류 발생**
+  - Ubuntu EC2에서 www라는 디렉터리를 생성하고 git clone를 통해 impact museum 소스코드를 가져온 이후, manage.py가 있는 위치에서 **python manage.py runserver 0.0.0.0:8000** 다음과 같은 코드를 입력했을 때, **django.core.exceptions.ImproperlyConfigured: Set the SECRET_KEY environment variable** 라는 오류가 발생
+  - github 저장소에 있는 소스코드에는 .gitignore 파일로 환경변수들을 설정한 .env 파일이 없어 settings.py에 있는 코드들이 실행되지 못한 것으로 확인
+  - **vi .env** 해당 명령어로 .env 파일을 EC2 내부에 생성하고 기존의 설정 값들을 그대로 입력해주기 / 단, DEBUG 항목은 False로 수정
+  - .env 파일 작성 후, 브라우저에 EC2 IP주소:8000으로 접속했을 때 정상적으로 접속이 되는 것을 확인
 
 
 <br>
@@ -482,9 +501,8 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   
 - **version 3.7 DRF(Django REST Framework)로 API 서버 구축**
   - pip install djangorestframework 이렇게 DRF 설치 완료
-  - products와 posts 앱 내부에 있는 Product/Order/OrderItem/Post/Brand/Problem 모델과 관련한 CRUD API 서버 설정
+  - products와 posts 앱 내부에 있는 Product/Post 모델과 관련한 CRUD API 서버 설정
   - products와 posts 앱 내부에 serializers.py를 생성하고 ModelSerializer를 상속받아 각 모델에 해당하는 Serializer 클래스 정의 
-    - 이 때, 요청 시 응답할 필드를 설정하고 OrderItem과 Brand 클래스의 경우에는 depth = 1 코드를 추가해서 1:N관계에 있는 모델의 데이터를 같이 응답할 수 있도록 설정
   - products와 posts 앱 내부 views.py에서는 ModelViewSet를 상속받아 기본적인 CRUD가 가능하게끔 각 모델에 대한 ViewSet를 정의
   - products와 posts 앱 내부 urls.py에서 DefaultRouter를 설정하여 API ROOT 페이지를 응답하고 각 모델에 대한 ViewSet를 연결
 
@@ -512,8 +530,9 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - 민감한 정보를 github 레포지토리에 노출시키지 않도록 settings.py에 있는 redis와 관련된 중요한 정보들을 환경변수로 관리할 수 있게 .env 파일에 변수로 지정
 
 <br>
-
+ 
 ## 7. 회고 / 느낀점
 - 프로젝트를 진행하면서 가장 중요하다고 느꼈던 부분은 바로 '모델링'이었다. 프로젝트 시작 시 모델링이 자세하게 구축이 되어있었다면 조금 더 편리하게 개발을 진행할 수 있었지 않았을까 하는 아쉬움이 많다. 여전히 모델간의 관계, 모델의 필드를 계속해서 수정해나가고 있기 때문에 앞으로도 꾸준히 모델링을 진행해나가지 않을까 싶다.
 - 에러가 기본적으로 항상 발생한다고 생각하는 마인드가 필요하다고 느꼈다. 강의에서 배운 내용을 그대로 해당 프로젝트에 적용을 시키는 과정에서도 강의 내용과 다른 오류가 발생할 수 있고, 그 과정에서 내가 몰랐던 내용들을 이해할 수 있는 좋은 단계가 된다. 따라서 항상 오류는 발생하고 그 오류를 해결하면 내가 발전할 수 있다고 생각하는 것이 좋은 마인드이다.
+- 해당 프로젝트의 규모가 점점 커진다고 생각했을 때, 백엔드 개발자로서 고민해야 하는 부분이 무엇일지 생각해보자. 일단 지금까지는 사용자들의 로그인 세션 데이터를 AWS EC2를 생성하고 Redis 서버를 구축해서 메모리에 해당 데이터를 저장할 수 있도록 진행했다. 만약 추후에 사용자가 늘어나서 AWS RDS로 연결한 MySQL의 연결 상태가 좋지 못하다던지, 하나의 EC2로는 감당할 수 없을 만큼 사용자가 늘어난다면 어떤 방안들을 마련해야할지 고민해보자.
 
