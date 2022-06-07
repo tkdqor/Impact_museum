@@ -247,6 +247,11 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - **vi .env** 해당 명령어로 .env 파일을 EC2 내부에 생성하고 기존의 설정 값들을 그대로 입력해주기 / 단, DEBUG 항목은 False로 수정
   - .env 파일 작성 후, 브라우저에 EC2 IP주소:8000으로 접속했을 때 정상적으로 접속이 되는 것을 확인
 
+- **uWSGI 설치 이후, uwsgi.ini이라는 설정 파일 관련 오류**
+  - wsgi가 django를 실행할 때 어떻게 실행할지, 그리고 python 프로젝트나 실행 포인트는 어디인지 설정해주는 uwsgi.ini 파일 관련 오류 발생
+  - uwsgi.ini 파일 내부에서 chdir의 경우, django 프로젝트 폴더의 경로를 설정해줘야 한다. 즉, manage.py 파일이 위치해있는 경로를 의미한다.
+  - 해당 부분을 잘못 설정하여 moduleNotFoundError 발생
+  - ddd
 
 <br>
 
