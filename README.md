@@ -253,6 +253,10 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - 해당 부분을 잘못 설정하여 **moduleNotFoundError** 발생
   - 그래서 chdir=/home/ubuntu/www/Impact_museum 이렇게 EC2 내부의 프로젝트 폴더 경로를 설정해서 오류 해결
 
+- **배포 과정 중, media 디렉터리 파일 적용 오류 발생**
+  - static 파일의 경우, 루트 디렉터리에 위치한 static 디렉터리에 모두 옮겨서 적용 진행
+  - 그러나 media 파일의 경우 배포된 서비스에 적용되지 못함
+
 <br>
 
 ## 7. 개발 이력
@@ -550,6 +554,19 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - PostModelSerializer 클래스 내부에 read_only_fields = ('id', 'top_fixed') 코드 추가
   - Post 모델의 데이터를 생성하기 위한 POST API를 가능하게끔 하기 위해 id와 top_fixed 필드에 따로 데이터를 넣지 않도록 설정
   - id는 자동으로 늘어나고 top_fixed는 False가 default로 되어있기 때문에 굳이 생성하지 않아도 된다고 판단
+
+- **www.impactmuseum.com 이라는 도메인으로 배포 완료**
+  - AWS EC2를 새롭게 생성하여 EC2 내부에서 impact museum github 소스코드를 git clone으로 가져오고 virtualenv 가상환경 설치 진행
+  - requirements.txt로 필요한 라이브러리들을 반영하고 웹 서버와 django 앱 서버를 연결시켜주는 uWSGI 설치 진행
+    - uwsgi.ini 파일 내부에 프로젝트 위치 설정 및 unix 소켓 파일 생성 / 또한 uWSGI를 백그라운드에서 실행시켜 runserver를 실행하지 않고도 uWSGI만 구동시키면, 터미널 종료와 상관없이 항상 웹 서비스가 도메인과 연결되도록 설정
+  - 그리고 웹 서버인 nginx 설치 진행
+    - nginx.conf 파일에 nginx가 uwsgi에 정보를 넘길 수 있도록 설정
+    - sites-enabled 디렉터리에 있는 default 파일에는, 이미 기본적으로 IP주소:8000 일허게 우리가 입력해도 80포트로 포트포워딩 되도록 설정되어있음
+    - 그래서 여기까지 IP주소만 브라우저에 입력해도 웹 서비스가 동작하는 것을 확인
+  - 가비아에서 도메인 구입 후, AWS Route 53에서 호스팅 영역 생성 진행
+    - 가비아 도메인을 AWS의 네임서버와 연동시켜서 이후에 도메인과 관련된 모든 작업을 AWS 내부에서만 수행할 수 있게끔 변경
+    - 그래서 해당 도메인과 연동되어있는 네임서버를 AWS의 네임서버로 교체
+  - 이제 브라우저에 http://www.impactmuseum.com/ 라는 주소로 입력 시, 웹 서비스가 작동된다.
 
 <br>
  
