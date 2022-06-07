@@ -63,6 +63,12 @@
 - Customer 모델과 Post 모델은 1:N관계로 설정 - 1명의 사용자 또는 관리자가 여러 개의 글을 남길 수 있기 때문
 <br>
 
+## 4. API 문서
+- [Product 모델 CRUD API](https://documenter.getpostman.com/view/20920872/Uz5KkEUi)
+- [Post 모델 CRUD API](https://documenter.getpostman.com/view/20920872/Uz5KkEUk)
+- Postman을 이용해서 
+
+
 ## 4. 핵심 기능
 - **메인 페이지 : DB에 저장된 상품을 보여주고 상품 검색이 가능하도록 구현**
   - Product 모델 데이터를 id필드 기준 역순으로 8개의 상품만 화면에 나오도록 설정
