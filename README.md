@@ -65,8 +65,8 @@
 <br>
 
 ## 4. API 문서
-- [Product 모델 CRUD API](https://documenter.getpostman.com/view/20920872/Uz5KkEUi)
-- [Post 모델 CRUD API](https://documenter.getpostman.com/view/20920872/Uz5KkEUk)
+- [Product 모델 CRUD API 문서](https://documenter.getpostman.com/view/20920872/Uz5KkEUi)
+- [Post 모델 CRUD API 문서](https://documenter.getpostman.com/view/20920872/Uz5KkEUk)
 - 개발한 API를 테스트하는 플랫폼인 Postman을 이용해서 API 문서 작성 완료
 
 - ex) Product API 문서 예시
