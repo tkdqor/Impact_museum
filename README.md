@@ -41,6 +41,7 @@
 
 **API 서버**
 - DRF(Django REST Framework)
+- Postman
 
 **디버깅 툴**
 - django-debug-toolbar
@@ -66,10 +67,14 @@
 ## 4. API 문서
 - [Product 모델 CRUD API](https://documenter.getpostman.com/view/20920872/Uz5KkEUi)
 - [Post 모델 CRUD API](https://documenter.getpostman.com/view/20920872/Uz5KkEUk)
-- Postman을 이용해서 
+- 개발한 API를 테스트하는 플랫폼인 Postman을 이용해서 API 문서 작성 완료
+
+- ex) Product API 문서 예시
+<img width="1419" alt="image" src="https://user-images.githubusercontent.com/95380638/172448350-23b410fc-7d93-4b06-987c-73041996828c.png">
 
 
-## 4. 핵심 기능
+
+## 5. 핵심 기능
 - **메인 페이지 : DB에 저장된 상품을 보여주고 상품 검색이 가능하도록 구현**
   - Product 모델 데이터를 id필드 기준 역순으로 8개의 상품만 화면에 나오도록 설정
   - 검색 기능의 경우, 상품명이나 해당 상품의 브랜드(회사명)를 검색하면 나올 수 있도록 기능 구현 
@@ -108,7 +113,7 @@
 
 <br>
 
-## 5. 트러블 이슈
+## 6. 트러블 이슈
 - **models.py 설정 시 FloatField 및 IntegerField 관련 에러 발생**
   - models.py 설정 시 FloatField 및 IntegerField의 경우, default=0 처럼 default 값 설정 필요
 
@@ -245,7 +250,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 
 <br>
 
-## 6. 개발 이력
+## 7. 개발 이력
 - **version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축**
   
 - **version 1.4 URL Configuration으로 app별 URL 관리 / Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료**
@@ -543,7 +548,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 
 <br>
  
-## 7. 회고 / 느낀점
+## 8. 회고 / 느낀점
 - 프로젝트를 진행하면서 가장 중요하다고 느꼈던 부분은 바로 '모델링'이었다. 프로젝트 시작 시 모델링이 자세하게 구축이 되어있었다면 조금 더 편리하게 개발을 진행할 수 있었지 않았을까 하는 아쉬움이 많다. 여전히 모델간의 관계, 모델의 필드를 계속해서 수정해나가고 있기 때문에 앞으로도 꾸준히 모델링을 진행해나가지 않을까 싶다.
 - 에러가 기본적으로 항상 발생한다고 생각하는 마인드가 필요하다고 느꼈다. 강의에서 배운 내용을 그대로 해당 프로젝트에 적용을 시키는 과정에서도 강의 내용과 다른 오류가 발생할 수 있고, 그 과정에서 내가 몰랐던 내용들을 이해할 수 있는 좋은 단계가 된다. 따라서 항상 오류는 발생하고 그 오류를 해결하면 내가 발전할 수 있다고 생각하는 것이 좋은 마인드이다.
 - 해당 프로젝트의 규모가 점점 커진다고 생각했을 때, 백엔드 개발자로서 고민해야 하는 부분이 무엇일지 생각해보자. 일단 지금까지는 사용자들의 로그인 세션 데이터를 AWS EC2를 생성하고 Redis 서버를 구축해서 메모리에 해당 데이터를 저장할 수 있도록 진행했다. 만약 추후에 사용자가 늘어나서 AWS RDS로 연결한 MySQL의 연결 상태가 좋지 못하다던지, 하나의 EC2로는 감당할 수 없을 만큼 사용자가 늘어난다면 어떤 방안들을 마련해야할지 고민해보자.
