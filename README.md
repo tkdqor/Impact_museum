@@ -93,8 +93,7 @@
 
 - **DRF를 바탕으로 API 서버 구현**
   - DRF(Django REST Framework) 라이브러리를 설치하여 API 서버 구축
-  - products와 posts 앱 내부에 있는 Product/Order/OrderItem/Post/Brand/Problem 모델과 관련한 CRUD API 서버 설정
-  - OrderItem과 Brand 모델의 경우, depth = 1 코드를 추가해서 1:N관계에 있는 모델의 데이터를 같이 응답할 수 있도록 설정
+  - products와 posts 앱 내부에 있는 Product/Post 모델과 관련한 CRUD API 서버 설정
 
 - **인메모리 Database : AWS EC2로 Redis 서버 구축**
   - AWS EC2를 생성해 디스크가 아닌, 메모리에 데이터를 저장하는 인메모리 Database인 Redis 서버를 구축
@@ -502,9 +501,8 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   
 - **version 3.7 DRF(Django REST Framework)로 API 서버 구축**
   - pip install djangorestframework 이렇게 DRF 설치 완료
-  - products와 posts 앱 내부에 있는 Product/Order/OrderItem/Post/Brand/Problem 모델과 관련한 CRUD API 서버 설정
+  - products와 posts 앱 내부에 있는 Product/Post 모델과 관련한 CRUD API 서버 설정
   - products와 posts 앱 내부에 serializers.py를 생성하고 ModelSerializer를 상속받아 각 모델에 해당하는 Serializer 클래스 정의 
-    - 이 때, 요청 시 응답할 필드를 설정하고 OrderItem과 Brand 클래스의 경우에는 depth = 1 코드를 추가해서 1:N관계에 있는 모델의 데이터를 같이 응답할 수 있도록 설정
   - products와 posts 앱 내부 views.py에서는 ModelViewSet를 상속받아 기본적인 CRUD가 가능하게끔 각 모델에 대한 ViewSet를 정의
   - products와 posts 앱 내부 urls.py에서 DefaultRouter를 설정하여 API ROOT 페이지를 응답하고 각 모델에 대한 ViewSet를 연결
 
