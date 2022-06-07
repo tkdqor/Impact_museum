@@ -5,6 +5,7 @@ class PostModelSerializer(ModelSerializer):  # ModelSerializer를 상속해서 �
     class Meta:
         model = Post
         fields = ('id', 'author', 'title', 'category', 'body', 'created_at', 'updated_at', 'top_fixed')
+        read_only_fields = ('id', 'top_fixed')
 
 
 class BrandModelSerializer(ModelSerializer):  

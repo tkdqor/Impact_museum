@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'debug_toolbar',
+    'django_extensions',
 
     # all auth
     'allauth',                    # allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 오기
@@ -210,4 +211,11 @@ SESSION_REDIS = {
     'socket_timeout': 1,       # 1초 이상 시간 지연 시 연결 종료
     'retry_on_timeout': False, # timeout으로 연결 실패 시 재시도 하지 않기
     'password': env('REDIS_PASSWORD'),
+}
+
+
+# django-extensions 그룹 모델 지정
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
