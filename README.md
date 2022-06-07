@@ -529,6 +529,12 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - **추가로 settings.py에 있는 Redis 관련 중요한 정보를 환경변수로 처리**
     - 민감한 정보를 github 레포지토리에 노출시키지 않도록 settings.py에 있는 redis와 관련된 중요한 정보들을 환경변수로 관리할 수 있게 .env 파일에 변수로 지정
 
+- **version 3.82 serializers.py 코드 수정**
+  - posts 앱의 serializers.py 코드 수정
+  - PostModelSerializer 클래스 내부에 read_only_fields = ('id', 'top_fixed') 코드 추가
+  - Post 모델의 데이터를 생성하기 위한 POST API를 가능하게끔 하기 위해 id와 top_fixed 필드에 따로 데이터를 넣지 않도록 설정
+  - id는 자동으로 늘어나고 top_fixed는 False가 default로 되어있기 때문에 굳이 생성하지 않아도 된다고 판단
+
 <br>
  
 ## 7. 회고 / 느낀점
