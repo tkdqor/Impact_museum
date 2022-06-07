@@ -250,8 +250,8 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 - **uWSGI 설치 이후, uwsgi.ini이라는 설정 파일 관련 오류**
   - wsgi가 django를 실행할 때 어떻게 실행할지, 그리고 python 프로젝트나 실행 포인트는 어디인지 설정해주는 uwsgi.ini 파일 관련 오류 발생
   - uwsgi.ini 파일 내부에서 chdir의 경우, django 프로젝트 폴더의 경로를 설정해줘야 한다. 즉, manage.py 파일이 위치해있는 경로를 의미한다.
-  - 해당 부분을 잘못 설정하여 moduleNotFoundError 발생
-  - ddd
+  - 해당 부분을 잘못 설정하여 **moduleNotFoundError** 발생
+  - 그래서 chdir=/home/ubuntu/www/Impact_museum 이렇게 EC2 내부의 프로젝트 폴더 경로를 설정해서 오류 해결
 
 <br>
 
