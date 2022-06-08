@@ -110,6 +110,7 @@
 - **DRF를 바탕으로 API 서버 구현**
   - DRF(Django REST Framework) 라이브러리를 설치하여 API 서버 구축
   - products와 posts 앱 내부에 있는 Product/Post 모델과 관련한 CRUD API 서버 설정
+  - Postman를 이용해서 Product/Post API 문서 작성 완료
 
 - **인메모리 Database : AWS EC2로 Redis 서버 구축**
   - AWS EC2를 생성해 디스크가 아닌, 메모리에 데이터를 저장하는 인메모리 Database인 Redis 서버를 구축
