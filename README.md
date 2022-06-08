@@ -29,6 +29,7 @@
 
 **클라우드 서버 활용**
 - AWS(Amazon Web Service)
+  - EC2
   - RDS (MySQL 데이터베이스 서버)
 
 **API 활용(소셜 로그인)**
