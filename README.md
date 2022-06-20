@@ -392,8 +392,10 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - 추가로 관리자 계정의 경우, {% if request.user.is_staff %} 라는 if문을 사용해서 관리자 여부 : O 이렇게 표시되도록 수정
   
 - **version 3.2 allauth 라이브러리 설치**    
-  - 소셜 로그인을 위한 django allauth 라이브러리 설치      
-  - settings.py INSTALLED_APPS에 추가로 'django.contrib.sites' 등록 / 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites 모델 등록     
+  - **소셜 로그인을 위한 django allauth 라이브러리 설치** 
+    - **django-allauth 라이브러리를 선택한 이유는, 거의 대부분의 소셜 로그인을 지원하고 회원가입시킬 수 있는 범용성이 좋다는 판단으로 선택**
+  - settings.py INSTALLED_APPS에 추가로 'django.contrib.sites' 등록 / 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites 모델 등록
+    - django_site 모델에 127.0.0.1:8000 이런식으로 domain과 name 필드를 설정해줘야, redirect url를 우리가 정한대로 설정할 수 있다. settings.py에 있는 SITE_ID가 해당 모델의 pk값을 의미하게 된다.     
   - settings.py INSTALLED_APPS에 추가로 'allauth'와 'allauth.account' 등록 / allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 올 수 있게 설정    
     - 'allauth.socialaccount' 을 등록해서 allauth로 SNS 계정 연동이 가능하게 해주는 모듈 설정     
     - 그 모듈안에 providers 다음에 auth0 / google / kakao 이렇게 우리가 연동하기를 원하는 provider를 각각 설정     
@@ -404,7 +406,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - migrate 진행 이후, sites 앱의 Sites라는 모델 / socialaccount 앱의 socialaccount, socialapp, socialapp_sites, socialtoken 모델이 추가됨
   
 - **version 3.21 구글 및 카카오 소셜 로그인 기능 구현(내 구글 및 카카오 계정만 가능)**    
-  - Google Cloud Platform 사이트에 가서 새로운 impact-museum 프로젝트 생성    
+  - **Google Cloud Platform 사이트에 가서 새로운 impact-museum 프로젝트 생성**    
     - 지금은 게시 상태가 테스트이기 때문에 테스트 사용자로 등록된 구글이메일만이 소셜 로그인이 가능 / OAuth 동의 화면 메뉴에서 내 구글 이메일만 등록
     - 리디렉션 URI는 http://localhost:8000/oauth/google/login/callback/ 이렇게 설정     
   - settings.py에 설정 추가 / allauth에서 account 로그인을 지원하기 위한 인증 로직 및 백엔드 로직을 설정하기 위해 AUTHENTICATION_BACKENDS 변수 설정     
@@ -414,14 +416,15 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - 해당 모델은 우리 사이트의 도메인 값을 넣어주는 역할을 해준다. 그래서 나중에 socialaccount에서 연동을 할 때 SNS한테 전달 할 우리 서버의 도메인 정보를 불러오는 역할도 해주기 때문에 이 모델에 우리의 디폴트 URL를 입력해주기(127.0.0.1:8000) / 지금 테스트 서버이기 때문에 나중에는 배포된 도메인으로 수정해야 함     
     - 이렇게 설정해주면 redirection URI 요청이 들어갈 때 127.0.0.1:8000 정보를 읽어서 보내기 때문에 구글에서 '아, 내가 승인한 도메인 리디렉션 URI가 맞구나' 라고 인식을 해서 승인을 해줄 수 있게됨      
   - 어드민 페이지에 들어가서 Social applications 모델 데이터 추가    
-    - 해당 모델에 Google Provider 추가 / 여기에 클라이언트 ID와 Secret Key 저장하여 나중에 새로 발급 시 바로 바꿀 수 있게 하드코딩 하지 않고 DB에 저장     
+    - Social applications 모델에서는 우리가 데이터를 이용할 provider(ex. Google, Kakao 등)에 대한 정보를 입력. provider 필드에는 google이나 kakao가 들어가고 각각 등록할 때 받은 클라이언트 id와 클라이언트 secret를 저장하여 나중에 새로 발급 시 바로 바꿀 수 있게 하드코딩 하지 않고 DB에 저장
+   
   - 로그인 및 회원가입 페이지 template에 socialaccount 모듈을 load 해주고 socialaccount 안에 있는 필요한 자바스크립트들을 불러올 수 있게 해주는 필터인 providers_media_js를 호출해주기     
     - 추가로 a element를 이용해서 provider_login_url이라는 필터를 사용하고 google provider에 로그인 주소를 가지고 올 수 있게 설정       
     - 여기까지 구글 소셜 로그인 기능 구현 완료
   - **해당 과정에서 구글 로그인 버튼 클릭 시, 오류 발생**    
     - **소셜 로그인 시, customer 모델에 데이터가 들어간게 아니기 때문에 메인페이지와 장바구니 페이지에 들어가면 오류가 발생하고 있음**    
     - **그리고 마이페이지 클릭 시, 닉네임만 데이터가 뜨고 나머지는 customer 모델을 기준으로 코드를 작성했기 때문에 다른 정보가 없음**     
-  - 카카오 개발자 사이트에 가서 새로운 애플리케이션 추가 / Web 플랫폼을 등록하고 Redirect URI를 http://localhost:8000/oauth/kakao/login/callback/ 로 설정   
+  - **카카오 개발자 사이트에 가서 새로운 애플리케이션 추가 / Web 플랫폼을 등록하고 Redirect URI를 http://localhost:8000/oauth/kakao/login/callback/ 로 설정**  
     - 카카오에서는 REST API 키가 클라이언트 ID역할을 하게 됨 / 추가로 Client Secret를 생성
     - 구글 소셜 로그인 기능과 마찬가지로 template에 소셜 로그인 관련 코드 추가 
     - 구글 소셜 로그인 기능과 마찬가지로 Social applications 모델에 들어간 다음, 새롭게 카카오 로그인을 위한 Provider 1개를 추가     
