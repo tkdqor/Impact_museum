@@ -393,7 +393,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   
 - **version 3.2 allauth 라이브러리 설치**    
   - **소셜 로그인을 위한 django allauth 라이브러리 설치** 
-    - **django-allauth 라이브러리를 선택한 이유는, 거의 대부분의 소셜 로그인을 지원하고 회원가입시킬 수 있는 범용성이 좋다는 판단으로 선택**
+    - **django-allauth 라이브러리를 선택한 이유는, 거의 대부분의 소셜 로그인을 지원하고 회원가입 시킬 수 있는 범용성이 좋다는 판단으로 선택**
   - settings.py INSTALLED_APPS에 추가로 'django.contrib.sites' 등록 / 어드민 상에서 카카오 또는 구글 인증 정보 설정을 위해 sites 모델 등록
     - django_site 모델에 127.0.0.1:8000 이런식으로 domain과 name 필드를 설정해줘야, redirect url를 우리가 정한대로 설정할 수 있다. settings.py에 있는 SITE_ID가 해당 모델의 pk값을 의미하게 된다.     
   - settings.py INSTALLED_APPS에 추가로 'allauth'와 'allauth.account' 등록 / allauth에서 사용하는 계정 set들과 관련된 기능들을 가지고 올 수 있게 설정    
