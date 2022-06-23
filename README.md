@@ -146,8 +146,8 @@
 
 - **새로운 username으로 회원가입 시, IntegrityError at /accounts/sign_up/ 그리고 UNIQUE constraint failed: auth_user.username 라는 에러가 발생함**
   - 알고보니, 이미 가입된 username으로 다시 회원가입을 시도해서 발생하는 에러
-  - 이걸 막기 위해 코드를 추가해야 한다. 중복된 username이 있는 경우, 회원가입을 막을 수 있도록 해보기
-  - Customer 모델 user 필드에 unique=True라는 속성을 추가해 중복되는 ID가 없도록 설정
+  - 이걸 막기 위해 코드를 추가해야 한다. 중복된 username이 있는 경우, 회원가입을 막을 수 있도록 Customer 모델 user 필드에 unique=True라는 속성을 추가해 중복되는 ID가 없도록 설정
+  - 추가로 Customer 모델의 name과 email 필드에도 회원가입 시 중복을 막기 위해 unique=True 속성을 추가
 
 - **Django database is locked 라는 에러가 발생**      
   - python manage.py migrate posts zero를 실행하는 과정에서 위에 에러가 발생      
