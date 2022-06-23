@@ -142,7 +142,7 @@
 
 - **Customer 모델의 name과 user 필드의 null, blank를 False로 변경했으나 -> migrations에서 에러 발생**
   - 필드를 non-nullable로 바꾸는데 default를 주지 않았던 게 문제였다. 그래서 name과 user 필드에 default='미지정' 이라고 수정한 다음 migrations를 진행하고 migrate를 했으나 ValueError: Field 'id' expected a number but got '미지정' 라는 오류 발생. 해당 오류를 보고 default=0으로 수정하고 다시 migration/migrate 진행했으나 똑같은 오류 발생.
-  - Customer 모델의 user필드는 User모델과의 OneToOneField로 설정되어 있기 때문에, default값이 문자나 0이 아닌 1이상의 숫자로 설정해야 User모델의 pk와 충돌하지 않게 된다. pk는 자동적으로 1부터 증가하기 때문이다. 그래서 Customer 모델의 user와 name 필드 모두 default=1로 수정하고 / python manage.py showmigrations 명령어를 통해 아직 적용되지 않은 2개의 migration 파일을 삭제한 다음, 다시 migration / migrate 진행하여 오류 해결.
+  - Customer 모델의 user필드는 User모델과의 OneToOneField로 설정되어 있기 때문에, default값이 문자나 0이 아닌 1이상의 숫자로 설정해야 User모델의 pk와 충돌하지 않게 된다. pk는 자동적으로 1부터 증가하기 때문이다. 그래서 Customer 모델의 user 필드는 default=1로 수정하고, name 필드는 default="None"으로 수정 / python manage.py showmigrations 명령어를 통해 아직 적용되지 않은 2개의 migration 파일을 삭제한 다음, 다시 migration / migrate 진행하여 오류 해결.
 
 - **새로운 username으로 회원가입 시, IntegrityError at /accounts/sign_up/ 그리고 UNIQUE constraint failed: auth_user.username 라는 에러가 발생함**
   - 알고보니, 이미 가입된 username으로 다시 회원가입을 시도해서 발생하는 에러
