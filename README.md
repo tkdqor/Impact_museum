@@ -197,6 +197,7 @@
 - **로그인 이후에도 디테일 페이지로 들어가면 Navbar에서 로그인/회원가입 버튼이 출력되는 문제 발생**
   - 로그인이 되었을 경우, {% if user.is_authenticated %} 와 같은 if문으로 마이페이지와 로그아웃 버튼이 출력되어야 하나 게시판 디테일 페이지로 들어갔을 경우에는 로그인/회원가입 버튼이 출력됨
   - board_detail View에서 login_user = request.user.customer와 같이 request.user를 사용한 변수를 주석처리 하고 나서 브라우저를 새로고침 하니까 다시 정상적으로 {% if user.is_authenticated %} 코드가 작동되서 오류를 해결 
+  - 이 경우, 로그인이 완료된 유저가 user가 아닌 login_user라는 변수로 대체되기 때문에 {% if user.is_authenticated %}와 같은 코드가 실행되지 못한 것으로 추정
 
 - **version 3.53 - 소셜 로그인 시, django signal를 이용하여 자동으로 Customer 모델에 데이터를 생성해서 오류 해결**
   - 소셜 로그인 시, User 모델에만 데이터가 생성되고 Customer 모델에는 생기지 않아 오류가 발생했음
