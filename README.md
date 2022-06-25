@@ -285,6 +285,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   
 - **version 2.1 IPython 8.0.1 설치**
   - 설치한 이유는, 문법에 따라서 색상으로 강조를 해줘서 기존의 장고 연동 shell보다 작성하기 편함. 그리고 여러 줄에 걸쳐서 코드 입력 후, 위쪽 화살표로 전체 코드를 다시 불러오기가 편리함.
+  - 터미널에 ipython을 입력하면 IPython을 실행시킬 수 있다.
   
 - **version 2.1 Admin 페이지 개선**
   - admin.py 에서 admin모듈의 ModelAdmin 클래스를 상속받아서 모델 클래스를 정의하고, register 장식자를 이용해 admin에 등록
