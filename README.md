@@ -306,7 +306,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - 메인 상품 목록 및 navbar가 반응할 수 있도록 설정
   
 - **version 2.42 상품 1개 조회 시, DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄울 수 있게 설정**
-  - 그래서 posts 앱의 views.py에 상품 1개 조회 시, 예외처리를 위해 Http404 import 진행
+  - 그래서 products 앱의 views.py에 상품 1개 조회 시, 예외처리를 위해 Http404 import 진행
   - 404에러는 서버에서 요청한 리소스를 찾을 수 없는 경우를 의미
   
 - **version 2.5 로그인/로그아웃 및 회원가입 기능 구현**   
@@ -314,13 +314,13 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - base.html에서 로그인 및 회원가입 버튼을 누르면 -> GET방식으로 HTTP Request 진행 + {% if user.is_authenticated %} -> user라는 변수를 바로 사용할 수 있게 되므로, is_authenticated 함수를 사용 / 해당 함수는 로그인 되어있으면 True를 아니면 False를 반환하는 Boolean 함수이다. -> 따라서 로그인 되어있을 때, 로그아웃 버튼과 마이페이지 버튼을 생성하게 설정 -> 로그아웃 역시 정보 노출이 되지 않게 POST방식으로 진행  
   - sign_up.html에서는 form element로 POST방식으로 HTTP Request진행 -> 아이디 / 비밀번호 / 비밀번호 확인 / 닉네임 / 이메일을 입력받고, 관심있는 사회문제를 선택할 수 있게끔 설정      
   - login.html에서는 로그인 실패 시, 에러 메시지를 띄우고 POST방식으로 HTTP Request 진행 -> 아이디와 비밀번호만 받게끔 설정      
-  - 앱 내부 views.py의 sign_up View에서는, GET방식일 경우 회원가입 페이지를 랜더링하고 POST방식일 경우 회원가입 절차 진행 => POST방식으로 전달한 username / password 데이터가 있는지 확인하고, password와 password_check데이터가 같은지 확인 -> 만약 같다면 User모델의 create_user 함수를 사용해서 username / password데이터로 User 모델에 추가(회원가입) -> 그리고 회원가입 시 입력한 nickname / email 데이터를 변수에 저장하고 User 모델과 OnetoOne관계인 Customer 모델에 해당 유저 및 데이터 추가 -> 위 과정을 다 진행한 다음, 자동으로 auth모듈의 login함수를 통해 로그인을 시키고 메인 페이지로 redirect해주기 -> 만약, 회원가입 정보를 다 받지 못한다면 context 딕셔너리에 error라는 key를 저장해서 에러 메세지 띄우기        
+  - 앱 내부 views.py의 sign_up View에서는, GET방식일 경우 회원가입 페이지를 랜더링하고 POST방식일 경우 회원가입 절차 진행 => POST방식으로 전달한 username / password 데이터가 있는지 확인하고, password와 password_check데이터가 같은지 확인 -> 만약 같다면 User모델의 create_user 함수를 사용해서 username / password 데이터로 User 모델에 추가(회원가입) -> 그리고 회원가입 시 입력한 nickname / email 데이터를 변수에 저장하고 User 모델과 OnetoOne관계인 Customer 모델에 해당 유저 및 데이터 추가 -> 위 과정을 다 진행한 다음, 자동으로 auth모듈의 login함수를 통해 로그인을 시키고 메인 페이지로 redirect해주기 -> 만약, 회원가입 정보를 다 받지 못한다면 context 딕셔너리에 error라는 key를 저장해서 에러 메세지 띄우기        
   - 앱 내부 views.py의 login View에서는, GET방식일 경우 로그인 페이지를 랜더링하고 POST방식일 경우 로그인 절차 진행 => POST방식으로 전달한 username / password 데이터가 있다면, auth 모듈의 authenticate 함수를 사용해서 username / password 데이터를 가진 유저가 있는지 확인 진행 -> 유저가 있다면 user 인스턴스를 return하므로, 그렇다면 auth 모듈의 login함수를 사용해서 로그인 시켜주고 바로 메인페이지로 redirect -> 만약, 그런 유저가 없다면 context에 error key 저장해서 에러 메세지 띄우기 -> 로그인 정보를 다 받지 못한다면 모두 입력하라는 에러 메세지 띄우기      
-  - 앱 내부 views.py의 logout View는 POST방식일 경우 auth모듈의 logout함수를 사용해서 로그아웃 진행 -> 서버 내 쿠키와 세션 정보를 초기화        
-  - +++ 추가해야 할 사항 : Customer 모델의 필드가 현재 user / name / email 이렇게 되어있는데, 여기에 사회문제와 관련된 필드를 추가해서 -> 회원가입 시 받은 정보를 DB에 저장하게끔 하기
+  - 앱 내부 views.py의 logout View는 POST방식일 경우 auth모듈의 logout함수를 사용해서 로그아웃 진행 -> **서버 내 쿠키와 세션 정보를 초기화**        
+  - 추가 진행 사항 : Customer 모델의 필드가 현재 user / name / email 이렇게 되어있는데, 여기에 사회문제와 관련된 필드를 추가해서 -> 회원가입 시 받은 정보를 DB에 저장하게끔 하기
   
-- **version 2.6 모델 이름을 Post에서 -> Product로 수정**
-  - 상품과 관련된 필드들이 Post라는 이름의 모델에 정의되어 있는 것이 맞지 않다고 판단        
+- **version 2.6 모델 이름만 Post에서 -> Product로 수정**
+  - **상품과 관련된 필드들이 Post라는 이름의 모델에 정의되어 있는 것이 맞지 않다고 판단**        
   - 먼저 python manage.py migrate posts zero -> 이렇게 입력하고나서 앱이름/migrations/ 내의 마이그레이션 파일을 모두 삭제       
   - 그리고 앱 내부 파일들을 하나씩 보면서 모델명 변경으로 인해 수정해야 할 사항들 수정         
   - 그리고 나서 python manage.py make migrations posts 를 진행 -> migrations 파일 0001 생성        
@@ -337,8 +337,8 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   
 - **version 2.8 products App 생성 및 모델 위치 수정**      
   - 원래 posts 앱에 있었던 Customer 모델을 accounts 앱에 models.py로 이동시킴 -> 이유는 posts 앱에 모든 모델을 구성하는 것이 비효율적이라고 생각했기 때문       
-  - products라는 App 생성 -> 이유는 posts App에 게시판이 아닌 상품들 관련 기능들이 있었기에 products라는 App에 해당 기능을 수행할 수 있도록 수정        
-  - 기존 posts App에는 게시판을 위한 Post 모델을 posts 앱 내부 models.py에 설정
+  - **products라는 App 생성 -> 이유는 posts App에 게시판이 아닌 상품들 관련 기능들이 있었기에 products라는 App에 해당 기능을 수행할 수 있도록 수정**        
+  - **기존 posts App에는 게시판을 위한 Post 모델을 posts 앱 내부 models.py에 설정**
   
 - **version 2.9 posts App에 Brand 모델 생성**   
   - posts App에 Brand 모델 생성 / 추가한 이유는, 입점 소셜벤처 페이지에서 브랜드를 소개 및 브랜드 상세 페이지를 보여주기 위해 추가   
