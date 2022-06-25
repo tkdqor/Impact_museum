@@ -391,7 +391,6 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 - **version 3.12 마이페이지에서 본인 정보 수정 기능 추가**      
   - 마이페이지에서 정보 수정하기 버튼 클릭 시, 본인이 회원가입 시 입력한 아이디와 닉네임, 이메일, 관심있는 사회문제를 변경할 수 있게 코드 추가      
   - id 정보는 request.user.username으로 접근하고 나머지 정보들은 request.user.customer로 접근한 customer의 필드를 변경하는 방식으로 설정     
-  - 추가로 관리자 계정의 경우, {% if request.user.is_staff %} 라는 if문을 사용해서 관리자 여부 : O 이렇게 표시되도록 수정
   
 - **version 3.2 allauth 라이브러리 설치**    
   - **소셜 로그인을 위한 django allauth 라이브러리 설치** 
