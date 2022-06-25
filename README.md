@@ -274,9 +274,9 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   
 - **version 1.9 어드민 페이지 변경 코드 추가**
   - 어드민 페이지 내 모델의 필드명 표시하기
-  - admin.py 내부 ProductAdmin 클래스에 image_tag 함수 정의
+  - products 앱의 admin.py 내부 ProductAdmin 클래스에 image_tag 함수 정의 / posts 앱의 admin.py 내부 BrandAdmin 클래스에 logo_tag 함수 정의
     - 해당 함수로 HTML 형식으로 반환해서 어드민 페이지에 출력 가능
-    - **image_tag 함수를 사용할 때, mark_safe 함수로 해당 코드가 안전하다는 것을 보장해줘야 한다. [관련 내용 참고](https://clownhacker.tistory.com/148)**
+    - **image_tag 및 logo_tag 함수를 사용할 때, mark_safe 함수로 해당 코드가 안전하다는 것을 보장해줘야 한다. [관련 내용 참고](https://clownhacker.tistory.com/148)**
   
 - **version 2.0 모델 내 필드 추가 및 속성 변경**      
   - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안 되기 때문)       
