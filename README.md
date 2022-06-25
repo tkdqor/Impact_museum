@@ -265,8 +265,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 <br>
 
 ## 7. 개발 이력
-- **version 1.1 상품 추가, 수정, 삭제 등 기본적인 CRUD 구축**
-  
+
 - **version 1.4 URL Configuration으로 app별 URL 관리 / Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료**
   
 - **version 1.5 DB 구성 및 ERD 설계 시작**   
