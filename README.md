@@ -303,7 +303,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - 그래서 메인 페이지에는 DB에 그 이상의 데이터가 있을지라도, 8개의 상품 목록만 항상 보여줄 수 있도록 설정 완료.
   
 - **version 2.41 bootstrap을 이용해서 반응형 웹사이트가 될 수 있게 설정**
-  - 아직 메인 상품 목록 및 navbar 반응할 수 있도록 설정
+  - 메인 상품 목록 및 navbar가 반응할 수 있도록 설정
   
 - **version 2.42 상품 1개 조회 시, DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄울 수 있게 설정**
   - 그래서 posts 앱의 views.py에 상품 1개 조회 시, 예외처리를 위해 Http404 import 진행
