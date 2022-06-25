@@ -295,8 +295,8 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - **image_tag 및 logo_tag 함수를 사용할 때, mark_safe 함수로 해당 코드가 안전하다는 것을 보장해줘야 한다. [관련 내용 참고](https://clownhacker.tistory.com/148)**   
     - settings.py에서 MEDIA_URL과 MEDIA_ROOT를 수정하고 models.py에서 Product 모델 ImageField에 upload_to 속성을 설정 / products앱의 Product모델 디렉터리 밑에 년/월/일 디렉터리로 구분하여 더 깔끔하게 관리할 수 있도록 설정.
   - **메인 화면에서 검색 기능 구현**   
-    - index.html에서 form element를 사용 / action attribute를 비워두어서 현재 form이 있는 같은 주소로 URL를 request하게 되고 Input element에 name를 query로 설정해서 값을 전송하고 / value도 query로 설정해서 검색한 이후에도 값이 남아있게끔 설정   
-    - View index 함수에서 query라는 변수를 지정하고 GET 방식으로 들어온 query라는 이름으로 담긴 값을 담아준다. 그리고 query가 있을 때(검색했을 때) Post 모델 전체를 조회한 posts 변수를 다시 정의해서, filter를 통해 검색한 값이 포함되는 데이터로 설정. Q 함수를 import 해서 제품명 또는 브랜드명을 검색할 수 있도록 설정
+    - base.html에서 form element를 사용 / Input element에 name를 query로 설정해서 값을 전송하고 / value도 query로 설정해서 검색한 이후에도 값이 남아있게끔 설정   
+    - View index 함수에서 query라는 변수를 지정하고 GET 방식으로 들어온 query라는 이름으로 담긴 값을 담아준다. 그리고 query가 있을 때(검색했을 때) Product 모델 전체를 조회한 products 변수를 다시 정의해서, filter를 통해 검색한 값이 포함되는 데이터로 설정. Q 함수를 import 해서 제품명 또는 브랜드명을 검색할 수 있도록 설정
   
 - **version 2.4 상품 목록을 보여주는 메인 페이지 상품 개수 수정**
   - index View 함수에서 posts = Post.objects.all().order_by('-id')[:8] -> 이렇게 전체 Post 데이터에서 id필드를 기준으로 역순처리하고, 8개의 데이터만 가져오기.
