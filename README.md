@@ -274,9 +274,6 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   
 - **version 1.9 어드민 페이지 변경 코드 추가**
   - 어드민 페이지 내 모델의 필드명 표시하기
-  - products 앱의 admin.py 내부 ProductAdmin 클래스에 image_tag 함수 정의 / posts 앱의 admin.py 내부 BrandAdmin 클래스에 logo_tag 함수 정의
-    - 해당 함수로 HTML 형식으로 반환해서 어드민 페이지에 출력 가능
-    - **image_tag 및 logo_tag 함수를 사용할 때, mark_safe 함수로 해당 코드가 안전하다는 것을 보장해줘야 한다. [관련 내용 참고](https://clownhacker.tistory.com/148)**
   
 - **version 2.0 모델 내 필드 추가 및 속성 변경**      
   - Customer 모델 : user 필드 null, blank = False로 변경 / name 필드 null = False로 변경 (user와 name필드가 비어 있으면 안 되기 때문)       
@@ -292,10 +289,12 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - 그리고 나서 클래스의 list_display 속성을 추가하여 -> admin페이지에 모델 별 필드를 표시해서 모델 데이터를 한눈에 파악할 수 있도록 개선
   
 - **version 2.2  Admin 페이지 개선 및 메인 화면에서 검색 기능 구현**   
-  - Admin 페이지 개선    
-    - admin.py에서 mark_safe 함수를 사용해서 Post 모델 객체의 이미지 url를 admin 페이지에서 볼 수 있도록 이미지으로 표시     
-    - settings.py에서 MEDIA_URL과 MEDIA_ROOT를 수정하고 models.py에서 Post 모델 ImageField에 upload_to 속성을 설정 / posts앱의 post모델 디렉터리 밑에 년/월/일 디렉터리로 구분하여 더 깔끔하게 관리할 수 있도록 설정.
-  - 메인 화면에서 검색 기능 구현    
+  - **Admin 페이지 개선**    
+    - products 앱의 admin.py 내부 ProductAdmin 클래스에 image_tag 함수 정의 / posts 앱의 admin.py 내부 BrandAdmin 클래스에 logo_tag 함수 정의
+    - 해당 함수로 HTML 형식으로 반환해서 어드민 페이지에 출력 가능
+    - **image_tag 및 logo_tag 함수를 사용할 때, mark_safe 함수로 해당 코드가 안전하다는 것을 보장해줘야 한다. [관련 내용 참고](https://clownhacker.tistory.com/148)**   
+    - settings.py에서 MEDIA_URL과 MEDIA_ROOT를 수정하고 models.py에서 Product 모델 ImageField에 upload_to 속성을 설정 / products앱의 Product모델 디렉터리 밑에 년/월/일 디렉터리로 구분하여 더 깔끔하게 관리할 수 있도록 설정.
+  - **메인 화면에서 검색 기능 구현**   
     - index.html에서 form element를 사용 / action attribute를 비워두어서 현재 form이 있는 같은 주소로 URL를 request하게 되고 Input element에 name를 query로 설정해서 값을 전송하고 / value도 query로 설정해서 검색한 이후에도 값이 남아있게끔 설정   
     - View index 함수에서 query라는 변수를 지정하고 GET 방식으로 들어온 query라는 이름으로 담긴 값을 담아준다. 그리고 query가 있을 때(검색했을 때) Post 모델 전체를 조회한 posts 변수를 다시 정의해서, filter를 통해 검색한 값이 포함되는 데이터로 설정. Q 함수를 import 해서 제품명 또는 브랜드명을 검색할 수 있도록 설정
   
