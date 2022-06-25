@@ -299,12 +299,11 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - View index 함수에서 query라는 변수를 지정하고 GET 방식으로 들어온 query라는 이름으로 담긴 값을 담아준다. 그리고 query가 있을 때(검색했을 때) Product 모델 전체를 조회한 products 변수를 다시 정의해서, filter를 통해 검색한 값이 포함되는 데이터로 설정. Q 함수를 import 해서 제품명 또는 브랜드명을 검색할 수 있도록 설정
   
 - **version 2.4 상품 목록을 보여주는 메인 페이지 상품 개수 수정**
-  - index View 함수에서 posts = Post.objects.all().order_by('-id')[:8] -> 이렇게 전체 Post 데이터에서 id필드를 기준으로 역순처리하고, 8개의 데이터만 가져오기.
-  - 그래서 index 메인 페이지에는 DB에 그 이상의 데이터가 있을지라도, 8개의 상품 목록만 항상 보여줄 수 있도록 설정 완료.
+  - index View 함수에서 products = Product.objects.all().order_by('-id')[:8] -> 이렇게 전체 Product 모델 데이터에서 id필드를 기준으로 역순처리하고, 8개의 데이터만 가져오기.
+  - 그래서 메인 페이지에는 DB에 그 이상의 데이터가 있을지라도, 8개의 상품 목록만 항상 보여줄 수 있도록 설정 완료.
   
-- **version 2.41 bootstrap의 navbar를 이용해서 반응형 웹사이트가 될 수 있게 설정**
-  - 아직 메인 상품 목록은 되지 않음 / navbar만 반응
-  - 상품 상세 페이지도 아직 미반영
+- **version 2.41 bootstrap을 이용해서 반응형 웹사이트가 될 수 있게 설정**
+  - 아직 메인 상품 목록 및 navbar 반응할 수 있도록 설정
   
 - **version 2.42 상품 1개 조회 시, DoesNotExist 오류가 발생했을 때는 Http404, 즉 Page not found 오류를 띄울 수 있게 설정**
   - 그래서 posts 앱의 views.py에 상품 1개 조회 시, 예외처리를 위해 Http404 import 진행
