@@ -595,6 +595,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - graphviz는 시각화에 쓰이는 라이브러리로, 구조화된 정보를 그래프나 다이어그램 등으로 만들어주는 기능이 있다. 
     - pygraphviz는 python 언어로 graphviz를 사용할 수 있게 해주는 패키지이다. 해당 패키지를 설치하면 python을 이용해서 graphviz의 그래프를 생성하고 편집하는 작업들을 할 수 있다.
   - python manage.py graph_models -a -o 파일명.png -> 해당 명령어를 통해 모델 ERD 파일을 생성하고 readme 파일에 변경 완료
+  - [django-extensions graph models 관련 명령어](https://django-extensions.readthedocs.io/en/latest/graph_models.html)
 
 <br>
  
