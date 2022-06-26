@@ -270,7 +270,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - 즉, Mac M1은 /opt/homebrew 이러한 경로에 brew가 설치되어 있음. 그래서, python pip install의 옵션을 주어 설치 진행
     - python -m pip install 다음에 --global-option= 이렇게 해주면 설치 명령 전에 setup.py를 호출해서 전역 옵션을 추가해줄 수 있음
     - python setup.py의 명령어 중 하나로 --global-option=build_ext 이렇게 build_ext를 실행시키기 / 컴파일 역할을 해주는 명령어
-    - 그다음, --global-option="-I$(brew --prefix graphviz)/include/" 이 명령어와 --global-option="-L$(brew --prefix graphviz)/lib/" \ pygraphviz 이 명령어로 homebrew의 설치경로를 표시하는 --prefix를 이용해서 include와 lib 디렉터리에 graphviz가 설치된 경로를 찾아 pygraphviz를 설치
+    - 그다음, --global-option= 다음에 "-I달러(brew --prefix graphviz)/include/" 이 명령어와 "-L달러(brew --prefix graphviz)/lib/" \ pygraphviz 이 명령어로 homebrew의 설치경로를 표시하는 --prefix를 이용해서 include와 lib 디렉터리에 graphviz가 설치된 경로를 찾아 pygraphviz를 설치
 
 
 
