@@ -497,6 +497,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - posts.paginator.count : paginator로 출력 할 총 객체 수
     - posts.start_index : 해당 paginator 페이지의 첫번째 데이터 index를 출력 / ex) 1페이지 당 10개로 설정했으니 1페이지는 1, 2페이지는 11
     - forloop.counter0 : for문을 순회하면서 0부터 출력 / 다른 paginator 페이지에서는 다시 0부터 출력
+    - **{{ posts.paginator.count|sub:forloop.counter0 }} 이렇게 하면 되지 않을까 생각해봤으나, 1페이지에서는 문제가 없지만 2페이지에서는 forloop.counter0이 다시 0부터 시작하기 때문에 꼭 posts.start_index를 차감하고 1를 더해줘야 한다.**
 
 - **version 3.51 공지사항 게시판 상단에 고정 기능 추가**
   - [해당 블로그 참고](https://parkhyeonchae.github.io/2020/04/09/django-project-22/)
