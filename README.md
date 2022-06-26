@@ -536,7 +536,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
   - products와 posts 앱 내부 urls.py에서 DefaultRouter를 설정하여 API ROOT 페이지를 응답하고 각 모델에 대한 ViewSet를 연결
 
 - **version 3.73 lazy-loading 개선 사항 반영**
-  - 먼저 페이지 로딩 시 날라가는 쿼리를 확인해보기 위해 django-debug-toolbar 설치 완료
+  - **먼저 페이지 로딩 시 날라가는 쿼리를 확인해보기 위해 django-debug-toolbar 설치 완료**
   - products 앱 내부의 cartitems_tag.py에서 기존에는 **items = order.orderitem_set.all()** 라고 되어있는 코드를 -> **items = order.orderitem_set.select_related('product').all()** 이렇게 select_related 메소드를 사용해서 lazy-loading 문제를 해결
     - select_related('product') 라고 설정하면서 해당 ORM 코드에서 product와 관련된 데이터를 같이 가져와준다. (product와 orderitem이 1:N관계이기 때문)
     - 기존에는 장바구니 페이지로 넘어갈 때 관련된 쿼리의 개수가 9개 였는데 총 쿼리가 6개로 줄어든 것을 확인할 수 있었음
