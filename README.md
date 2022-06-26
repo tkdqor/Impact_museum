@@ -58,7 +58,7 @@
 <br>
 
 ## 3. ERD 설계
-![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/164652569-aac5f937-414b-4796-a933-f9622375b4a7.png)
+![impactmuseum](https://user-images.githubusercontent.com/95380638/175813894-a568e420-3f24-4fa0-8268-a998201a73b2.png)
 
 
 - Customer 모델은 User 모델과 1:1관계로 설정 - 사용자에 대한 정보를 더 자유롭게 받기 위해 Customer라는 모델을 1:1관계로 추가
@@ -576,6 +576,11 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - 가비아 도메인을 AWS의 네임서버와 연동시켜서 이후에 도메인과 관련된 모든 작업을 AWS 내부에서만 수행할 수 있게끔 변경
     - 그래서 해당 도메인과 연동되어있는 네임서버를 AWS의 네임서버로 교체
   - 이제 브라우저에 http://www.impactmuseum.com/ 라는 주소로 입력 시, 웹 서비스가 작동된다.
+
+- **version 3.9.0 데이터베이스 ERD 확인을 위한 Django-extensions 설치**
+  - 데이터베이스 모델 내용이 변경될 때마다 https://draw.io/ 라는 사이트를 이용해 직접 ERD를 변경했으나, django-extensions의 기능을 이용하면 자체적으로 모델 ERD 파일을 생성할 수 있기 때문에 설치 진행
+  - 파일을 생성해주기 위해 homebrew를 통해서 graphviz와 pygraphviz 라이브러리 설치 완료
+  - python manage.py graph_models -a -o 파일명.png -> 해당 명령어를 통해 모델 ERD 파일을 생성하고 readme 파일에 변경 완료
 
 <br>
  
