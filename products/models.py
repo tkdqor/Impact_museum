@@ -25,7 +25,7 @@ class Product(models.Model):
     class Meta:              # Product 모델안에 Meta 클래스 속성으로 id필드에 대한 역순을 설정할 수도 있음 -> 최신 상품목록을 보여주기 위함
         ordering = ['-id']   # 그런데, View 함수에서 Product.objects.all().order_by로 설정하면 Meta 클래스는 무시됨
 
-
+    # 메서드를 필드인 것처럼 사용할 수 있게 @prooerty 데코레이터 설정
     @property
     def imageURL(self):      # 이미지가 있다면 보여주고 없다면 상품 목록 페이지로 redirect 시켜주기
         try:
@@ -66,7 +66,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)   # Product 모델과 1:N관계 / 장바구니 기록을 남기기 위해 Post가 사라져도 남게끔 설정
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)    # Order 모델과 1:N관계 / 주문내역이 사라져도 장바구니 기록을 남길 수 있게 설정
-    quantity = models.IntegerField(default=0, null=False, blank=False)
+    quantity = models.IntegerField(default=0, null=False, blank=False)                    # 장바구니 수량 값이 비어있으면 안되니까 null, blank를 False로 설정
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

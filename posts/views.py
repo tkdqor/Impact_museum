@@ -53,7 +53,7 @@ def socialproblem(request):
     problems = Problem.objects.all()     # Problem 모델에 담겨있는 모든 사회문제들 가져오기
 
     
-    selected_problem = int(request.GET.get('socialproblem', 1))   # 사회문제 페이지에서 선택된 문제의 pk 받기 / int()로 정수화 / default로 0 설정
+    selected_problem = int(request.GET.get('socialproblem', 1))   # 사회문제 페이지에서 선택된 문제의 pk 받기 / int()로 정수화 / default로 1 설정
     if selected_problem:                                          # 만약 사회문제가 선택되었다면,
         selected_problem = Problem.objects.get(id=selected_problem)  # Problem 모델에서 받은 pk로 조회한 데이터를 저장
         selected_brands = selected_problem.brand_set.all()        # 선택된 문제와 1:N관계를 가지는 브랜드들을 조회

@@ -42,7 +42,7 @@ def sign_up(request):
                 context['error'] = '아이디와 비밀번호를 다시 입력해주세요.' 
                 # 만약, 조건을 만족하지 못할 때는 context 딕셔너리에 error라는 key를 저장해서 오류 메세지를 출력하게끔 하기    
                  
-    except IntegrityError:
+    except IntegrityError: # 가입정보가 중복이 될 때 발생하는 IntegrityError(무결성 오류)
         context['error'] = '이미 가입된 회원 정보입니다. 다른 정보를 입력해주세요.' 
 
 
