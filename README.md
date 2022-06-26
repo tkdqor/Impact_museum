@@ -493,7 +493,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 - **version 3.5 공지사항 게시판 게시글 전체 번호 내림차순으로 출력하기**
   - posts 앱 내부에 templatetags라는 패키지를 만들고 그 안에 post_filter.py라는 파일을 생성
   - 해당 파일에 sub라는 filter를 정의해서 template 값에서 수를 차감할 수 있게 설정
-  - board.html에서 위의 필터를 사용해서 {{ posts.paginator.count|sub:posts.start_index|sub:forloop.counter0|add:1 }} 이렇게 게시글 전체 번호를 내림차순으로 출력
+  - **board.html에서 위의 필터를 사용해서 {{ posts.paginator.count|sub:posts.start_index|sub:forloop.counter0|add:1 }} 이렇게 게시글 전체 번호를 내림차순으로 출력**
     - posts.paginator.count : paginator로 출력 할 총 객체 수
     - posts.start_index : 해당 paginator 페이지의 첫번째 데이터 index를 출력 / ex) 1페이지 당 10개로 설정했으니 1페이지는 1, 2페이지는 11
     - forloop.counter0 : for문을 순회하면서 0부터 출력 / 다른 paginator 페이지에서는 다시 0부터 출력
