@@ -570,7 +570,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - uwsgi.ini 파일 내부에 프로젝트 위치 설정 및 unix 소켓 파일 생성 / 또한 uWSGI를 백그라운드에서 실행시켜 runserver를 실행하지 않고도 uWSGI만 구동시키면, 터미널 종료와 상관없이 항상 웹 서비스가 도메인과 연결되도록 설정
   - 그리고 웹 서버인 nginx 설치 진행
     - nginx.conf 파일에 nginx가 uwsgi에 정보를 넘길 수 있도록 설정
-    - sites-enabled 디렉터리에 있는 default 파일에는, 이미 기본적으로 IP주소:8000 일허게 우리가 입력해도 80포트로 포트포워딩 되도록 설정되어있음
+    - sites-enabled 디렉터리에 있는 default 파일에는, 이미 기본적으로 IP주소:8000 이렇게 우리가 입력해도 80포트로 포트포워딩 되도록 설정되어있음
     - 그래서 여기까지 IP주소만 브라우저에 입력해도 웹 서비스가 동작하는 것을 확인
   - 가비아에서 도메인 구입 후, AWS Route 53에서 호스팅 영역 생성 진행
     - 가비아 도메인을 AWS의 네임서버와 연동시켜서 이후에 도메인과 관련된 모든 작업을 AWS 내부에서만 수행할 수 있게끔 변경
