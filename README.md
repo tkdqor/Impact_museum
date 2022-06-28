@@ -58,7 +58,7 @@
 <br>
 
 ## 3. ERD 설계
-![Untitled Diagram-Page-1](https://user-images.githubusercontent.com/95380638/164652569-aac5f937-414b-4796-a933-f9622375b4a7.png)
+![impactmuseum](https://user-images.githubusercontent.com/95380638/175813894-a568e420-3f24-4fa0-8268-a998201a73b2.png)
 
 
 - Customer 모델은 User 모델과 1:1관계로 설정 - 사용자에 대한 정보를 더 자유롭게 받기 위해 Customer라는 모델을 1:1관계로 추가
@@ -261,6 +261,18 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 - **배포 과정 중, media 디렉터리 파일 적용 오류 발생**
   - static 파일의 경우, 루트 디렉터리에 위치한 static 디렉터리에 모두 옮겨서 적용 진행
   - 그러나 media 파일의 경우 배포된 서비스에 적용되지 못함
+
+- **version 3.9.0에서 pygraphviz 설치 오류 발생**
+  - 먼저 homebrew를 통해서 brew install graphviz 다음과 같은 명령어로 graphviz 설치 완료
+  - 그 다음 pygraphviz를 설치하기 위해 pip install pygraphviz 명령어로 설치를 진행하려 했으나 계속 오류 발생
+  - [해당 글](https://githubhot.com/repo/pygraphviz/pygraphviz/issues/398)을 통해서 Mac의 CPU(인텔 또는 M1)에 따라 다른 위치에 brew가 설치된다는 점을 확인
+    - brew info graphviz 라는 명령어를 입력해보면, graphviz가 /opt/homebrew/Cellar/graphviz/3.0.0 다음과 같은 경로에 설치된 것을 확인할 수 있음
+    - 즉, Mac M1은 /opt/homebrew 이러한 경로에 brew가 설치되어 있음. 그래서, python pip install의 옵션을 주어 설치 진행
+    - python -m pip install 다음에 --global-option= 이렇게 해주면 설치 명령 전에 setup.py를 호출해서 전역 옵션을 추가해줄 수 있음
+    - python setup.py의 명령어 중 하나로 --global-option=build_ext 이렇게 build_ext를 실행시키기 / 컴파일 역할을 해주는 명령어
+    - 그다음, --global-option= 다음에 "-I달러(brew --prefix graphviz)/include/" 이 명령어와 "-L달러(brew --prefix graphviz)/lib/" \ pygraphviz 이 명령어로 homebrew의 설치경로를 표시하는 --prefix를 이용해서 include와 lib 디렉터리에 graphviz가 설치된 경로를 찾아 pygraphviz를 설치
+
+
 
 <br>
 
@@ -576,6 +588,14 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
     - 가비아 도메인을 AWS의 네임서버와 연동시켜서 이후에 도메인과 관련된 모든 작업을 AWS 내부에서만 수행할 수 있게끔 변경
     - 그래서 해당 도메인과 연동되어있는 네임서버를 AWS의 네임서버로 교체
   - 이제 브라우저에 http://www.impactmuseum.com/ 라는 주소로 입력 시, 웹 서비스가 작동된다.
+
+- **version 3.9.0 데이터베이스 ERD 확인을 위한 Django-extensions 설치**
+  - 데이터베이스 모델 내용이 변경될 때마다 https://draw.io/ 라는 사이트를 이용해 직접 ERD를 변경했으나, django-extensions의 기능을 이용하면 자체적으로 모델 ERD 파일을 생성할 수 있기 때문에 설치 진행
+  - **파일을 생성해주기 위해 homebrew를 통해서 graphviz와 pygraphviz 라이브러리 설치 완료**
+    - graphviz는 시각화에 쓰이는 라이브러리로, 구조화된 정보를 그래프나 다이어그램 등으로 만들어주는 기능이 있다. 
+    - pygraphviz는 python 언어로 graphviz를 사용할 수 있게 해주는 패키지이다. 해당 패키지를 설치하면 python을 이용해서 graphviz의 그래프를 생성하고 편집하는 작업들을 할 수 있다.
+  - python manage.py graph_models -a -o 파일명.png -> 해당 명령어를 통해 모델 ERD 파일을 생성하고 readme 파일에 변경 완료
+  - [django-extensions graph models 관련 명령어](https://django-extensions.readthedocs.io/en/latest/graph_models.html)
 
 <br>
  
