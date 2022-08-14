@@ -5,7 +5,7 @@
 <br>
 
 ## 1. 제작 기간 & 참여 인원
-- 2021년 2월 12일 ~
+- 2022년 2월 12일 ~ 2022년 6월 28일
 - 개인 프로젝트
 <br>
 
@@ -78,9 +78,45 @@
 - ex) Product API 문서 예시
 <img width="1419" alt="image" src="https://user-images.githubusercontent.com/95380638/172448350-23b410fc-7d93-4b06-987c-73041996828c.png">
 
+<br>
 
+## 5. 스크린샷
+<img width="1435" alt="image" src="https://user-images.githubusercontent.com/95380638/184549644-c9dc2b50-5132-4b83-9a82-a7a4b366bb60.png">
 
-## 5. 핵심 기능
+<br>
+
+<details>
+<summary>🚀 다른 페이지 스크린샷</summary>
+<div markdown="1">
+<ul>
+  <li>
+    <p>상품 상세 페이지</p>
+    <img width="1380" alt="image" src="https://user-images.githubusercontent.com/95380638/184549693-47990a0e-724b-4ba7-8b3e-7eeaf66a558d.png">
+  </li>
+  <li>
+    <p>사회 문제 페이지</p>
+    <img width="1402" alt="image" src="https://user-images.githubusercontent.com/95380638/184549762-e0e49219-d68d-4cbe-b970-8e31ada3b726.png">
+    <img width="877" alt="image" src="https://user-images.githubusercontent.com/95380638/184549772-885802c9-dc2a-4529-a06e-31371ed3e044.png">
+  </li>
+  <li>
+    <p>소셜벤처 페이지</p>
+    <img width="1418" alt="image" src="https://user-images.githubusercontent.com/95380638/184549783-29a48cb6-3737-4849-b3d6-109274b6ae44.png">
+  </li>
+  <li>
+    <p>소셜벤처 상세 페이지</p>
+    <img width="1434" alt="image" src="https://user-images.githubusercontent.com/95380638/184549842-5582992e-96fe-4d7e-b460-c2009d658bad.png">
+  </li>
+  <li>
+    <p>공지사항 페이지</p>
+    <img width="1438" alt="image" src="https://user-images.githubusercontent.com/95380638/184549921-22d63327-cfae-407a-90ca-27653396968e.png">
+    <img width="1433" alt="image" src="https://user-images.githubusercontent.com/95380638/184549908-4e7f66af-0a7e-494f-ae39-7d0502e39a7d.png">
+</ul>
+</div>
+</details>
+
+<br>
+
+## 6. 핵심 기능
 - **메인 페이지 : DB에 저장된 상품을 보여주고 상품 검색이 가능하도록 구현**
   - Product 모델 데이터를 id필드 기준 역순으로 8개의 상품만 화면에 나오도록 설정
   - 검색 기능의 경우, 상품명이나 해당 상품의 브랜드(회사명)를 검색하면 나올 수 있도록 기능 구현 
@@ -128,7 +164,7 @@
 
 <br>
 
-## 6. 트러블 이슈
+## 7. 트러블 이슈
 - **models.py 설정 시 FloatField 및 IntegerField 관련 에러 발생**
   - models.py 설정 시 FloatField 및 IntegerField의 경우, default=0 처럼 default 값 설정 필요
 
@@ -276,7 +312,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 
 <br>
 
-## 7. 개발 이력
+## 8. 개발 이력
 
 - **version 1.4 URL Configuration으로 app별 URL 관리 / Template & Static Inheritance 설정 완료 및 app별 namespacing 설정 완료**
   
@@ -599,7 +635,7 @@ local variable 'product' referenced before assignment** 다음과 같은 오류 
 
 <br>
  
-## 8. 회고 / 느낀점
+## 9. 회고 / 느낀점
 - 프로젝트를 진행하면서 가장 중요하다고 느꼈던 부분은 바로 '모델링'이었다. 프로젝트 시작 시 모델링이 자세하게 구축이 되어있었다면 조금 더 편리하게 개발을 진행할 수 있었지 않았을까 하는 아쉬움이 많다. 여전히 모델간의 관계, 모델의 필드를 계속해서 수정해나가고 있기 때문에 앞으로도 꾸준히 모델링을 진행해나가지 않을까 싶다.
 - 에러가 기본적으로 항상 발생한다고 생각하는 마인드가 필요하다고 느꼈다. 강의에서 배운 내용을 그대로 해당 프로젝트에 적용을 시키는 과정에서도 강의 내용과 다른 오류가 발생할 수 있고, 그 과정에서 내가 몰랐던 내용들을 이해할 수 있는 좋은 단계가 된다. 따라서 항상 오류는 발생하고 그 오류를 해결하면 내가 발전할 수 있다고 생각하는 것이 좋은 마인드이다.
 - 해당 프로젝트의 규모가 점점 커진다고 생각했을 때, 백엔드 개발자로서 고민해야 하는 부분이 무엇일지 생각해보자. 일단 지금까지는 사용자들의 로그인 세션 데이터를 AWS EC2를 생성하고 Redis 서버를 구축해서 메모리에 해당 데이터를 저장할 수 있도록 진행했다. 만약 추후에 사용자가 늘어나서 AWS RDS로 연결한 MySQL의 연결 상태가 좋지 못하다던지, 하나의 EC2로는 감당할 수 없을 만큼 사용자가 늘어난다면 어떤 방안들을 마련해야할지 고민해보자.
